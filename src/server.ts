@@ -1,14 +1,34 @@
+import { Server } from "@overnightjs/core";
 import express from "express";
 import cors from "cors";
-import * as dotenv from "dotenv";
 
-const app = express();
+import { InvestmentController } from "./presentation/controllers";
 
-app.use(express.json());
-app.use(cors());
+export class SetupServer extends Server {
+  constructor(private port: number = 3333) {
+    super();
+  }
+  public start(): void {
+    console.log("this.port", this.port);
+    this.app.listen(this.port, () => {
+      console.log(`Server started on port ${this.port}`);
+      // logger.info('Server listening of port', this.port);
+    });
+  }
 
-dotenv.config();
+  public async init(): Promise<void> {
+    this.setupExpress();
+    this.setupControllers();
+  }
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server started on port ${process.env.PORT}`);
-});
+  private setupExpress(): void {
+    this.app.use(express.json());
+    this.app.use(cors());
+  }
+
+  private setupControllers(): void {
+    const investmentController = new InvestmentController();
+
+    this.addControllers([investmentController]);
+  }
+}

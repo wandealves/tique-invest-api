@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "build": "tsc -p .",
-    "start": "ts-node ./src/server.ts",
-    "dev": "nodemon ./src/server.ts"
+    "start": "ts-node ./src/index.ts",
+    "dev": "nodemon ./src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/wandealves/tique-invest-api#readme",
   "dependencies": {
+    "@overnightjs/core": "^1.7.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
