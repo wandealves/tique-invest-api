@@ -4,7 +4,7 @@
   "description": "API de gestão de investimentos",
   "main": "server.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p .",
     "start": "ts-node ./src/server.ts",
     "dev": "nodemon ./src/server.ts"
   },
