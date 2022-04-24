@@ -1,12 +1,16 @@
 import * as dotenv from "dotenv";
 
-import { SetupServer } from "./server";
+import { SetupServer } from "@/main/server";
+
+enum ExitStatus {
+  Failure = 1,
+  Sucess = 0
+}
 
 (async (): Promise<void> => {
   dotenv.config();
 
   try {
-    console.log("process.env.PORT", process.env.PORT);
     const server = new SetupServer(Number(process.env.PORT));
     await server.init();
     server.start();
@@ -15,12 +19,12 @@ import { SetupServer } from "./server";
     exitSignals.map(sig =>
       process.on(sig, async () => {
         try {
-          // await server.close();
-          //logger.info(`App exited with sucess`);
-          /// process.exit(ExitStatus.Sucess);
+          console.log("App exited with sucess", sig);
+          process.exit(ExitStatus.Sucess);
         } catch (error) {
+          console.log("App exited with error:", error);
           // logger.error(`App exited with error: ${error}`);
-          //process.exit(ExitStatus.Failure);
+          process.exit(ExitStatus.Failure);
         }
       })
     );

@@ -5,6 +5,10 @@
     "baseUrl": "./src",
     "outDir": "./dist",
     "rootDir": "./src",
+    "paths": {
+      "@/tests/*": ["../tests/*"],
+      "@/*": ["*"]
+    },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -12,5 +16,7 @@
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
-  }
+  },
+  "include": ["src", "tests"],
+  "exclude": []
 }
