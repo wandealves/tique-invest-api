@@ -1,8 +1,10 @@
 import { Server } from "@overnightjs/core";
 import express from "express";
 import cors from "cors";
+import { Router } from 'express'
 
 import { InvestmentController } from "../presentation/controllers";
+import {adaptRoute} from '@/main/adapters'
 
 export class SetupServer extends Server {
   constructor(private port: number = 3333) {

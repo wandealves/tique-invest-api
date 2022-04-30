@@ -1,12 +1,21 @@
 import { Request, Response } from "express";
-import { Controller, Get } from "@overnightjs/core";
+import { Controller, Get, Post } from "@overnightjs/core";
+
+import { ok } from "@/presentation/helpers";
+import { InvestmentDTO } from "@/presentation/dtos";
+import { makeInvestmentDTO } from "@/main/factories";
 
 @Controller("investments")
 export class InvestmentController {
   constructor() {}
 
-  @Get("")
-  public async getAll(request: Request, response: Response): Promise<Response> {
-    return response.json({ ok: true });
+  @Post("")
+  public async post(request: Request, response: Response): Promise<Response> {
+    return ok(response, makeInvestmentDTO(request.body));
   }
+
+  //@Get("")
+  //public async getAll(request: Request, response: Response): Promise<Response> {
+  // return ok(response, { ok: true });
+  //}
 }

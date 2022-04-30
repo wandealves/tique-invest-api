@@ -1,4 +1,3 @@
-export type HttpResponse = {
-  statusCode: number
-  body: any
-}
+import { Response } from "express";
+
+export class HttpResponse extends Response {}
