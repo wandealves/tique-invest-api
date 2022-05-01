@@ -1,22 +1,21 @@
-/*import { Controller } from '@/presentation/protocols'
+import { Request, Response } from "express";
 
-import { Request, Response } from 'express'
+import { HttpResponse } from "@/presentation/protocols";
 
-export const adaptRoute = (controller: Controller) => {
+export const adaptRoute = (handle: (data?: any) => Promise<HttpResponse>) => {
   return async (req: Request, res: Response) => {
     const request = {
       ...(req.body || {}),
       ...(req.params || {})
-    }
-    console.log('OPA01',controller)
-    const httpResponse = await controller.handle(request)
-    console.log('OPA02',httpResponse)
+    };
+
+    const httpResponse = await handle(request);
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-      res.status(httpResponse.statusCode).json(httpResponse.body)
+      res.status(httpResponse.statusCode).json(httpResponse.body);
     } else {
       res.status(httpResponse.statusCode).json({
         error: httpResponse.body.message
-      })
+      });
     }
-  }
-}*/
+  };
+};
