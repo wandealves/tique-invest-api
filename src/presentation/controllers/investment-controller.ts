@@ -1,7 +1,5 @@
-import { Request, Response } from "express";
-
-import { ok } from "@/presentation/helpers";
 import { InvestmentDTO } from "@/presentation/dtos";
+import { ok } from "@/presentation/helpers";
 import { HttpResponse } from "@/presentation/protocols";
 
 export class InvestmentController {
