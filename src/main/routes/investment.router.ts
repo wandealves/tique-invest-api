@@ -7,5 +7,5 @@ export default (router: Router): void => {
   const controller = new InvestmentController();
 
   router.post("/investments", adaptRoute(controller.post));
-  //router.get("/investments", controller.getAll);
+  router.get("/investments", adaptRoute(controller.getAll));
 };

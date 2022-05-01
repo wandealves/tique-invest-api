@@ -19,4 +19,8 @@ export class InvestmentController {
   public async post(request: any): Promise<HttpResponse> {
     return ok(request);
   }
+
+  public async getAll(): Promise<HttpResponse> {
+    return ok({ id: 9, name: "OPA0889" });
+  }
 }
