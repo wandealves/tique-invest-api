@@ -1,7 +1,7 @@
 import * as dotenv from "dotenv";
 
 import { server } from "@/main/server";
-
+//   "test": "jest --passWithNoTests --runInBand --no-cache",
 enum ExitStatus {
   Failure = 1,
   Sucess = 0
