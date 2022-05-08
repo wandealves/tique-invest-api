@@ -41,7 +41,7 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   const encrypterStub = makeEncrypter();
   const createAccountRepositoryStub = makeCreateAccountRepository();
-  const sut = new AccountRepository(encrypterStub,createAccountRepositoryStub);
+  const sut = new AccountRepository(encrypterStub, createAccountRepositoryStub);
 
   return {
     sut,
@@ -92,5 +92,20 @@ describe("Repository Accounr Usecase", () => {
       email: "valid_email",
       password: "hashed_password"
     });
+  });
+  test("Should throw if create Account throws", async () => {
+    const { sut, createAccountRepositoryStub } = makeSut();
+
+    jest
+      .spyOn(createAccountRepositoryStub, "create")
+      .mockReturnValueOnce(new Promise((_, reject) => reject(new Error())));
+
+    const accountdata = {
+      name: "valid_name",
+      email: "valid_email",
+      password: "valid_password"
+    };
+    const promise = sut.create(accountdata);
+    await expect(promise).rejects.toThrow();
   });
 });

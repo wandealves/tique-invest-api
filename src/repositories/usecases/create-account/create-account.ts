@@ -20,7 +20,7 @@ export class AccountRepository implements CreateAccount {
 
   async create(accountData: CreateAccountModel): Promise<AccountModel | null> {
     const hashedPassword = await this.encrypter.encrypt(accountData.password);
-    this.createAccountRepository.create({
+    await this.createAccountRepository.create({
       ...accountData,
       password: hashedPassword
     });
