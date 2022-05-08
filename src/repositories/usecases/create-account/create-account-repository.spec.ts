@@ -1,5 +1,5 @@
 import { AccountRepository } from "./create-account-repository";
-import { Encrypter } from "../../protocols/encrypter";
+import { Encrypter } from "./create-account-protocols";
 
 interface SutTypes {
   sut: AccountRepository;
