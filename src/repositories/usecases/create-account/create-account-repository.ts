@@ -13,7 +13,7 @@ export class AccountRepository implements CreateAccount {
   }
 
   async create(account: CreateAccountModel): Promise<AccountModel | null> {
-    await this.encrypter.encrypt(account.password)
+    await this.encrypter.encrypt(account.password);
     return new Promise(resolve => resolve(null));
   }
 }
