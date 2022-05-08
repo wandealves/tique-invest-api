@@ -1,11 +1,29 @@
 module.exports = {
   roots: ["<rootDir>/src"],
   collectCoverage: true,
-  collectCoverageFrom: ["<rootDir>/src/**/*.ts", "!<rootDir>/node_modules/"],
+  collectCoverageFrom: [
+    "<rootDir>/src/**/*.ts",
+    "!<rootDir>/node_modules/",
+    "!<rootDir>/src/main/index.ts",
+    "!<rootDir>/src/main/server.ts",
+    "!<rootDir>/src/presentation/controllers/index.ts",
+    "!<rootDir>/src/presentation/protocols/index.ts"
+  ],
   coverageDirectory: "coverage",
   testEnvironment: "node",
   transform: {
     ".+\\.ts$": "ts-jest"
   },
-  testPathIgnorePatterns: ["/node_modules/", "/dist"]
+  testPathIgnorePatterns: ["/node_modules/", "/dist"],
+  modulePathIgnorePatterns: [
+    "<rootDir>/src/main/adapters",
+    "<rootDir>/src/main/docs",
+    "<rootDir>/src/main/config",
+    "<rootDir>/src/main/factories",
+    "<rootDir>/src/main/middlewares",
+    "<rootDir>/src/main/routes",
+    "<rootDir>/src/presentation/dtos",
+    "<rootDir>/src/presentation/errors",
+    "<rootDir>/src/presentation/helpers"
+  ]
 };

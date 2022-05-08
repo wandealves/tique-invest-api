@@ -1,15 +1,31 @@
 import { AccountRepository } from "./create-account-repository";
+import { Encrypter } from "../../protocols/encrypter";
+
+interface SutTypes {
+  sut: AccountRepository;
+  encrypterStub: Encrypter;
+}
+
+const makeSut = (): SutTypes => {
+  class EncrypterStub {
+    async encrypt(value: string): Promise<string> {
+      return new Promise(resolver => resolver("hashed_password"));
+    }
+  }
+
+  const encrypterStub = new EncrypterStub();
+  const sut = new AccountRepository(encrypterStub);
+
+  return {
+    sut,
+    encrypterStub
+  };
+};
 
 describe("Repository Accounr Usecase", () => {
   test("Should call Encrypter with correct password", async () => {
-    class EncrypterStub {
-      async encrypt(value: string): Promise<string> {
-        return new Promise(resolver => resolver("hashed_password"));
-      }
-    }
+    const { sut, encrypterStub } = makeSut();
 
-    const encrypterStub = new EncrypterStub();
-    const sut = new AccountRepository(encrypterStub);
     const encryptSpy = jest.spyOn(encrypterStub, "encrypt");
     const accountdata = {
       name: "valid_name",
