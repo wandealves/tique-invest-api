@@ -7,13 +7,13 @@
     "build": "tsc -p .",
     "start": "ts-node -r tsconfig-paths/register ./src/main/index.ts",
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/main/index.ts",
-    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
-    "test:clear": "npx jest -- --clearCache",
+    "test:clear": "npx jest --clearCache",
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info"
   },
   "repository": {
