@@ -108,4 +108,19 @@ describe("Repository Accounr Usecase", () => {
     const promise = sut.create(accountdata);
     await expect(promise).rejects.toThrow();
   });
+  test("Should return an account on success", async () => {
+    const { sut, createAccountRepositoryStub } = makeSut();
+    const accountdata = {
+      name: "valid_name",
+      email: "valid_email",
+      password: "valid_password"
+    };
+    const account = await sut.create(accountdata);
+    expect(account).toEqual({
+      id: "valid_id",
+      name: "valid_name",
+      email: "valid_email",
+      password: "hashed_password"
+    });
+  });
 });
