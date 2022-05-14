@@ -8,7 +8,7 @@ module.exports = {
     "!<rootDir>/src/main/server.ts",
     "!<rootDir>/src/presentation/controllers/index.ts",
     "!<rootDir>/src/presentation/protocols/index.ts",
-    "!<rootDir>/src/repositories/usecases/create-account/create-account-protocols.ts"
+    "!<rootDir>/src/data/usecases/create-account/create-account-protocols.ts"
   ],
   coverageDirectory: "coverage",
   testEnvironment: "node",
