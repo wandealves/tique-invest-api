@@ -1,6 +1,6 @@
-import { InvestmentDTO } from "@/presentation/dtos";
-import { ok } from "@/presentation/helpers";
-import { HttpResponse } from "@/presentation/protocols";
+import { InvestmentDTO } from "../dtos";
+import { ok } from "../helpers";
+import { HttpResponse } from "../protocols";
 
 export class InvestmentController {
   constructor() {}

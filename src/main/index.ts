@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 
-import { server } from "@/main/server";
+import { server } from "./server";
 //   "test": "jest --passWithNoTests --runInBand --no-cache",
 enum ExitStatus {
   Failure = 1,
@@ -11,9 +11,9 @@ enum ExitStatus {
   dotenv.config();
 
   try {
-    await server(Number(process.env.PORT));
+    await server(Number(process.env.PORT || 3333));
   } catch (error) {
-    // logger.error(`App exited with error: ${error}`);
+    console.log(`App exited with error: ${error}`);
     //process.exit(ExitStatus.Failure);
   }
 })();

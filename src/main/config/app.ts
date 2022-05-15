@@ -1,6 +1,6 @@
-import setupSwagger from "@/main/config/swagger";
-import setupMiddlewares from "@/main/config/middlewares";
-import setupRoutes from "@/main/config/routes";
+import setupSwagger from "./swagger";
+import setupMiddlewares from "./middlewares";
+import setupRoutes from "./routes";
 
 import express, { Express } from "express";
 

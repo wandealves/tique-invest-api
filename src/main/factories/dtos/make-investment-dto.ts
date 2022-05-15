@@ -1,4 +1,4 @@
-import { InvestmentDTO } from "@/presentation/dtos";
+import { InvestmentDTO } from "../../../presentation/dtos";
 
 export const makeInvestmentDTO = ({
   id,
