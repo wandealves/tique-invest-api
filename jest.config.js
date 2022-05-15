@@ -8,7 +8,8 @@ module.exports = {
     "!<rootDir>/src/main/server.ts",
     "!<rootDir>/src/presentation/controllers/index.ts",
     "!<rootDir>/src/presentation/protocols/index.ts",
-    "!<rootDir>/src/main/adapters/express-route-adapter.ts"
+    "!<rootDir>/src/main/adapters/express-route-adapter.ts",
+    "!<rootDir>/src/services/helpers/tests/test-helper.ts"
   ],
   coverageDirectory: "coverage",
   testEnvironment: "node",
