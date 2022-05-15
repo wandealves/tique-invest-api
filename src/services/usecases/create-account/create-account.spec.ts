@@ -4,7 +4,7 @@ import {
   CreateAccountModel,
   AccountModel,
   CreateAccountRepository
-} from "./create-account-protocols";
+} from "../protocols/create-account-protocols";
 
 const makeEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {

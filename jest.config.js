@@ -8,7 +8,7 @@ module.exports = {
     "!<rootDir>/src/main/server.ts",
     "!<rootDir>/src/presentation/controllers/index.ts",
     "!<rootDir>/src/presentation/protocols/index.ts",
-    "!<rootDir>/src/data/usecases/create-account/create-account-protocols.ts"
+    "!<rootDir>/src/main/adapters/express-route-adapter.ts"
   ],
   coverageDirectory: "coverage",
   testEnvironment: "node",
@@ -25,6 +25,7 @@ module.exports = {
     "<rootDir>/src/presentation/dtos",
     "<rootDir>/src/presentation/errors",
     "<rootDir>/src/presentation/helpers",
-    "<rootDir>/src/domain/models"
+    "<rootDir>/src/domain/models",
+    "<rootDir>/src/services/usecases/protocols"
   ]
 };

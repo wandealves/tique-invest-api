@@ -4,7 +4,7 @@ import {
   AccountModel,
   Encrypter,
   CreateAccountRepository
-} from "./create-account-protocols";
+} from "../protocols/create-account-protocols";
 
 export class AccountRepository implements CreateAccount {
   private readonly encrypter: Encrypter;
