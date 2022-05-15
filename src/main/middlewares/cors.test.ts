@@ -5,7 +5,7 @@ describe("CORS Middleware", () => {
   test("Should enable CORS", async () => {
     const app = await setupApp();
 
-    app.post("/test_cors", (req, res) => {
+    app.get("/test_cors", (req, res) => {
       res.send();
     });
 
