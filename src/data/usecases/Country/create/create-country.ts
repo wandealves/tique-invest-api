@@ -12,9 +12,7 @@ export class CreateCountry implements ICreateCountry {
   }
 
   async create(country: Country): Promise<number> {
-    console.log('country',country)
     const result = await this.countryRepository.create(country);
-    console.log('result',result)
     return result;
   }
 }
