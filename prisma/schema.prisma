@@ -25,33 +25,38 @@ enum TypeAsset {
 
 model Country {
   id         Int          @id @default(autoincrement())
+  name       String       @db.VarChar(300)
   Investment Investment[]
 
   @@map("countries")
 }
 
 model User {
-  id         Int     @id @default(autoincrement())
-  name       String  @db.VarChar(300)
-  email      String  @unique @db.VarChar(500)
-  avatar_url String? @db.VarChar()
+  id        Int     @id @default(autoincrement())
+  name      String  @db.VarChar(300)
+  email     String  @unique @db.VarChar(500)
+  avatarUrl String? @db.VarChar()
 
-  Assets Asset[]
+  Assets     Asset[]
+  Investment Investment[]
 
   @@index([email])
   @@map("users")
 }
 
 model Asset {
-  id       Int       @id @default(autoincrement())
-  name     String    @db.VarChar(20)
-  code     String    @unique @db.VarChar(10)
-  price    Decimal   @default(0)
-  quantity Float     @default(0)
-  icon_url String?   @db.VarChar()
-  user     User?     @relation(fields: [user_id], references: [id])
-  user_id  Int?
-  type     TypeAsset
+  id       Int     @id @default(autoincrement())
+  name     String  @db.VarChar(20)
+  code     String  @unique @db.VarChar(10)
+  price    Decimal @default(0)
+  quantity Float   @default(0)
+  iconUrl  String? @db.VarChar()
+
+  type         TypeAsset
+  user         User?       @relation(fields: [userId], references: [id])
+  userId       Int?
+  Investment   Investment? @relation(fields: [investmentId], references: [id])
+  investmentId Int?
 
   @@index([code])
   @@map("assets")
@@ -62,6 +67,9 @@ model Investment {
   total     Decimal @default(0)
   country   Country @relation(fields: [countryId], references: [id])
   countryId Int
+  user      User?   @relation(fields: [userId], references: [id])
+  userId    Int?
+  assets    Asset[]
 
   @@map("investments")
 }
