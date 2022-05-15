@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//Models
+
+enum TypeAsset {
+  ACAO
+  BDR
+  CDB
+  COE
+  FIIS
+  LCI
+  LCA
+  LC
+  MULTIMERCADO
+  TESOURODIRETO
+  OPCOES
+}
+
+model Country {
+  id         Int          @id @default(autoincrement())
+  Investment Investment[]
+
+  @@map("countries")
+}
+
+model User {
+  id         Int     @id @default(autoincrement())
+  name       String  @db.VarChar(300)
+  email      String  @unique @db.VarChar(500)
+  avatar_url String? @db.VarChar()
+
+  Assets Asset[]
+
+  @@index([email])
+  @@map("users")
+}
+
+model Asset {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(20)
+  code     String    @unique @db.VarChar(10)
+  price    Decimal   @default(0)
+  quantity Float     @default(0)
+  icon_url String?   @db.VarChar()
+  user     User?     @relation(fields: [user_id], references: [id])
+  user_id  Int?
+  type     TypeAsset
+
+  @@index([code])
+  @@map("assets")
+}
+
+model Investment {
+  id        Int     @id @default(autoincrement())
+  total     Decimal @default(0)
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId Int
+
+  @@map("investments")
+}
