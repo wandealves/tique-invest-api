@@ -1,10 +1,10 @@
 import { Country, ICountryRepository } from "../../../protocols";
-import { CreateCountry } from "./create-country";
+import { DeleteCountry } from "./delete-country";
 
 const makeCountryRepositoryRepository = (): ICountryRepository => {
   class CountryRepositoryStub implements ICountryRepository {
     delete(id: number): Promise<void> {
-      throw new Error("Method not implemented.");
+      return new Promise(resolver => resolver());
     }
     async create(country: Country): Promise<number> {
       return new Promise(resolver => resolver(1));
@@ -15,13 +15,13 @@ const makeCountryRepositoryRepository = (): ICountryRepository => {
 };
 
 interface SutTypes {
-  sut: CreateCountry;
+  sut: DeleteCountry;
   countryRepositoryStub: ICountryRepository;
 }
 
 const makeSut = (): SutTypes => {
   const countryRepositoryStub = makeCountryRepositoryRepository();
-  const sut = new CreateCountry(countryRepositoryStub);
+  const sut = new DeleteCountry(countryRepositoryStub);
 
   return {
     sut,
@@ -29,31 +29,29 @@ const makeSut = (): SutTypes => {
   };
 };
 
-describe("Caso de Uso Criar Países", () => {
-  test("Deve chamar criar do repositório com valores corretos", async () => {
+describe("Caso de Uso Deletar País", () => {
+  test("Deve chamar deletar do repositório com valores corretos", async () => {
     const { sut, countryRepositoryStub } = makeSut();
-    const countrydata: Country = new Country(1, "valid_name");
 
-    const createSpy = jest.spyOn(countryRepositoryStub, "create");
+    const createSpy = jest.spyOn(countryRepositoryStub, "delete");
 
-    await sut.create(countrydata);
-    expect(createSpy).toHaveBeenCalledWith(countrydata);
+    await sut.execute(1);
+    expect(createSpy).toHaveBeenCalledWith(1);
   });
-  test("Deve lançar exceção se criar país for chamado", async () => {
+  test("Deve lançar exceção se funcionalidade de deletar país for chamado", async () => {
     const { sut, countryRepositoryStub } = makeSut();
 
     jest
-      .spyOn(countryRepositoryStub, "create")
+      .spyOn(countryRepositoryStub, "delete")
       .mockReturnValueOnce(new Promise((_, reject) => reject(new Error())));
 
     const countrydata: Country = new Country(1, "valid_name");
-    const promise = sut.create(countrydata);
+    const promise = sut.execute(1);
     await expect(promise).rejects.toThrow();
   });
-  test("Deve retornar sucesso ao criar país", async () => {
-    const { sut, countryRepositoryStub } = makeSut();
-    const countrydata: Country = new Country(1, "valid_name");
-    const country = await sut.create(countrydata);
-    expect(country).toEqual(1);
+  test("Deve retornar sucesso ao deletar país", async () => {
+    const { sut } = makeSut();
+    const country = await sut.execute(1);
+    expect(country).toBe(void 0);
   });
 });
