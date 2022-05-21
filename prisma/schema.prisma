@@ -57,13 +57,14 @@ model Asset {
 }
 
 model PurchasedAsset {
-  id       Int      @id @default(autoincrement())
-  price    Decimal  @default(0)
-  quantity Float    @default(0)
-  total    Decimal  @default(0)
-  date     DateTime
-  month    Int
-  year     Int
+  id            Int      @id @default(autoincrement())
+  price         Decimal  @default(0)
+  quantity      Float    @default(0)
+  total         Decimal  @default(0)
+  totalWithFees Decimal  @default(0)
+  date          DateTime
+  month         Int
+  year          Int
 
   assetId      Int
   Asset        Asset       @relation(fields: [assetId], references: [id])
