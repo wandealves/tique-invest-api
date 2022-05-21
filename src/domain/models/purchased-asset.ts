@@ -6,14 +6,14 @@ import { Investment } from "./investment";
 import { Fees } from "./fees";
 
 export class PurchasedAsset {
-  private readonly id: number;
-  private readonly price: number;
-  private readonly quantity: number;
-  private readonly total: number;
+  private id: number;
+  private price: number;
+  private quantity: number;
+  private total: number;
   private totalWithFees: number;
-  private readonly date: Date;
-  private readonly month: number;
-  private readonly year: number;
+  private date: Date;
+  private month: number;
+  private year: number;
 
   private readonly asset: Asset;
   private readonly investment: Investment;
@@ -49,7 +49,7 @@ export class PurchasedAsset {
   }
 
   /**
-   * Calcula totla com taxas
+   * Calcula total com taxas
    *
    * @param purchasedsAsset: Lista de ativos comprados
    * @param feeValues: Total de taxas
@@ -83,5 +83,9 @@ export class PurchasedAsset {
     }
 
     return purchasedsAsset;
+  }
+
+  public getTotalWithFees(): number {
+    return this.totalWithFees;
   }
 }

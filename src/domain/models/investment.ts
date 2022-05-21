@@ -9,21 +9,18 @@ export class Investment {
   private readonly type: TypeAsset;
   private readonly country: Country;
   private readonly user: User;
-  private readonly purchasedAssets: PurchasedAsset[];
 
   constructor(
     id: number,
     total: number,
     type: TypeAsset,
     country: Country,
-    user: User,
-    purchasedAssets: PurchasedAsset[]
+    user: User
   ) {
     this.id = id;
     this.total = total;
     this.type = type;
     this.country = country;
     this.user = user;
-    this.purchasedAssets = purchasedAssets;
   }
 }

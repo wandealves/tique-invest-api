@@ -26,7 +26,6 @@ module.exports = {
     "<rootDir>/src/presentation/dtos",
     "<rootDir>/src/presentation/errors",
     "<rootDir>/src/presentation/helpers",
-    "<rootDir>/src/domain/models",
     "<rootDir>/src/services/usecases/protocols"
   ]
 };
