@@ -9,7 +9,7 @@ datasource db {
 
 //Models
 
-enum TypeAsset {
+enum TypeInvestment {
   ACAO
   BDR
   CDB
@@ -35,10 +35,10 @@ model User {
   id        Int     @id @default(autoincrement())
   name      String  @db.VarChar(300)
   email     String  @unique @db.VarChar(500)
+  cpf       String  @unique @db.VarChar(20)
   avatarUrl String? @db.VarChar()
 
-  Investment     Investment[]
-  PurchasedAsset PurchasedAsset[]
+  Investment Investment[]
 
   @@index([email])
   @@map("users")
@@ -50,32 +50,28 @@ model Asset {
   code    String  @unique @db.VarChar(10)
   iconUrl String? @db.VarChar()
 
-  type            TypeAsset
-  PurchasedAssets PurchasedAsset[]
-
   @@index([code])
   @@map("assets")
 }
 
 model PurchasedAsset {
-  id       Int     @id @default(autoincrement())
-  price    Decimal @default(0)
-  quantity Float   @default(0)
+  id       Int      @id @default(autoincrement())
+  price    Decimal  @default(0)
+  quantity Float    @default(0)
+  date     DateTime
+  month    Int
+  year     Int
 
-  asset        Asset       @relation(fields: [assetId], references: [id])
-  assetId      Int
-  Investment   Investment? @relation(fields: [investmentId], references: [id])
   investmentId Int?
-  user         User        @relation(fields: [userId], references: [id])
-  userId       Int
+  Investment   Investment? @relation(fields: [investmentId], references: [id])
 
-  @@index([assetId, userId])
-  @@map("purchased-assets")
+  @@map("purchasedAssets")
 }
 
 model Investment {
-  id    Int     @id @default(autoincrement())
-  total Decimal @default(0)
+  id    Int            @id @default(autoincrement())
+  total Decimal        @default(0)
+  type  TypeInvestment
 
   country         Country          @relation(fields: [countryId], references: [id])
   countryId       Int
