@@ -50,6 +50,8 @@ model Asset {
   code    String  @unique @db.VarChar(10)
   iconUrl String? @db.VarChar()
 
+  PurchasedAsset PurchasedAsset[]
+
   @@index([code])
   @@map("assets")
 }
@@ -62,8 +64,11 @@ model PurchasedAsset {
   month    Int
   year     Int
 
+  assetId      Int
+  Asset        Asset       @relation(fields: [assetId], references: [id])
   investmentId Int?
   Investment   Investment? @relation(fields: [investmentId], references: [id])
+
 
   @@map("purchasedAssets")
 }
