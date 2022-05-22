@@ -56,11 +56,8 @@ export class PurchasedAsset {
    */
   public calculatePurchaseValueWithFees(
     purchasedsAsset: PurchasedAsset[],
-    feeValues: number[]
+    totalFees: number
   ): PurchasedAsset[] {
-    const fees = new Fees();
-    const totalFees = fees.calculateTotalFees(feeValues);
-
     const totalPurchaseValue = _.reduce(
       purchasedsAsset,
       function (sum, item) {
@@ -70,11 +67,11 @@ export class PurchasedAsset {
     );
 
     for (const item of purchasedsAsset) {
-      const apportionmentPercentage = fees.calculateApportionmentPercentage(
+      const apportionmentPercentage = this.calculateApportionmentPercentage(
         totalPurchaseValue,
         item.total
       );
-      const calculatedRates = fees.calculateFee(
+      const calculatedRates = this.calculateFee(
         apportionmentPercentage,
         totalFees
       );
@@ -83,6 +80,63 @@ export class PurchasedAsset {
     }
 
     return purchasedsAsset;
+  }
+
+  /**
+   * Calcula a taxa do ativo com rateio
+   *
+   * @param apportionmentPercentage : Porcetagem de rateio
+   * @param totalFees: Total de taxas
+   * @returns
+   */
+  public calculateFee(
+    apportionmentPercentage: number,
+    totalFees: number
+  ): number {
+    if (!totalFees) return 0;
+
+    const result = (apportionmentPercentage / 100) * totalFees;
+
+    return _.toNumber(result.toFixed(2));
+  }
+
+  /**
+   * Calcula a porcetagem de rateio de um ativo
+   *
+   * @param totalPurchaseValue = Total do valor de compra sem taxas de todos ativos ativo
+   * @param purchasePriceOfAnAssetWithoutFees = Valor da compra de um ativo sem taxas
+   * @returns
+   */
+  public calculateApportionmentPercentage(
+    totalPurchaseValue: number,
+    purchasePriceOfAnAssetWithoutFees: number
+  ): number {
+    if (!totalPurchaseValue) return 0;
+
+    const result =
+      (purchasePriceOfAnAssetWithoutFees * 100) / totalPurchaseValue;
+
+    return _.toNumber(result.toFixed(2));
+  }
+
+  /**
+   * Calcula o total de taxas
+   *
+   * @param fees: Lista de valores de taxas
+   * @returns
+   */
+  public calculateTotalFees(fees: Fees[]): number {
+    if (_.size(fees) === 0) return 0;
+
+    const result = _.reduce(
+      fees,
+      function (sum, fee) {
+        return sum + fee.getTax();
+      },
+      0
+    );
+
+    return _.toNumber(result.toFixed(2));
   }
 
   public getTotalWithFees(): number {
