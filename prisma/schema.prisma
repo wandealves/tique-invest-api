@@ -85,7 +85,19 @@ model Investment {
   user            User?            @relation(fields: [userId], references: [id])
   userId          Int?
   PurchasedAssets PurchasedAsset[]
+  Fees            Fees[]
 
   @@index([userId])
   @@map("investments")
+}
+
+model Fees {
+  id   Int     @id @default(autoincrement())
+  name String  @db.VarChar(20)
+  tax  Decimal @default(0)
+
+  investmentId Int
+  Investment   Investment @relation(fields: [investmentId], references: [id])
+
+  @@map("fees")
 }
