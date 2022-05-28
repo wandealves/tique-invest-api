@@ -1,10 +1,10 @@
 import _ from "lodash";
 
 export class Fees {
-  private readonly id: number;
-  private readonly name: string;
-  private readonly tax: number;
-  private readonly investmentId: number;
+  private id: number;
+  private name: string;
+  private tax: number;
+  private investmentId: number;
 
   constructor(id: number, name: string, tax: number, investmentId: number) {
     this.id = id;
@@ -13,7 +13,17 @@ export class Fees {
     this.investmentId = investmentId;
   }
 
-  public getTax():number{
+  // get getName(): string {
+  // return this.name;
+  // }
+  //set setName(name: string) {
+  //this.name = name;
+  //}
+
+  get getTax(): number {
     return this.tax;
   }
+  // set setTax(tax: number) {
+  // this.tax = tax;
+  //}
 }

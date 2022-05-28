@@ -33,7 +33,14 @@ const makeSut = (): SutTypes => {
     "cpf_valid",
     "avatar_valid"
   );
-  const investment = new Investment(1, 2000, TypeAsset.ACAO, country, user);
+  const investment = new Investment(
+    1,
+    2000,
+    25,
+    TypeAsset.ACAO,
+    country,
+    user
+  );
 
   const purchasedAsset = new PurchasedAsset(
     1,

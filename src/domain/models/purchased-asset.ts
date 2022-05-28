@@ -15,8 +15,8 @@ export class PurchasedAsset {
   private month: number;
   private year: number;
 
-  private readonly asset: Asset;
-  private readonly investment: Investment;
+  private asset: Asset;
+  private investment: Investment;
 
   constructor(
     id: number,
@@ -131,7 +131,7 @@ export class PurchasedAsset {
     const result = _.reduce(
       fees,
       function (sum, fee) {
-        return sum + fee.getTax();
+        return sum + fee.getTax;
       },
       0
     );
