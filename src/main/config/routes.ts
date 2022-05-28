@@ -2,6 +2,8 @@ import { Express, Router } from "express";
 import { readdirSync } from "fs";
 import { join } from "path";
 
+import "../container";
+
 export default (app: Express): void => {
   const router = Router();
   app.use("/api", router);
