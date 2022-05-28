@@ -1,9 +1,9 @@
 import { Investment } from "../../domain/models";
-import { IInvestmentRepository } from "../../services/interfaces/repository";
+import { IInvestmentRepository } from "../../domain/intefaces/repositories";
 
 export class InvestmentRepository implements IInvestmentRepository {
   create(investment: Investment): Promise<number> {
-    return Promise.resolve(10)
+    return Promise.resolve(10);
   }
   delete(id: number): Promise<void> {
     throw new Error("Method not implemented.");

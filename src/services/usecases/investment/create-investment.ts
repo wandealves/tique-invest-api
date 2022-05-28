@@ -5,7 +5,7 @@ import {
   Investment
 } from "../protocols/investment-protocols";
 
-import { IInvestmentRepository } from "../../interfaces/repository";
+import { IInvestmentRepository } from "../../../domain/intefaces/repositories";
 
 @injectable()
 export class CreateInvestment implements ICreateInvestment {

@@ -1,4 +1,4 @@
-import { Investment } from "../../../domain/models";
+import { Investment } from "../../models";
 
 export interface IInvestmentRepository {
   create(investment: Investment): Promise<number>;

@@ -1,6 +1,6 @@
 import { container } from "tsyringe";
 
-import { IInvestmentRepository } from "../../services/interfaces/repository";
+import { IInvestmentRepository } from "../../domain/intefaces/repositories";
 import { InvestmentRepository } from "../../infra/repositories";
 
 container.register<IInvestmentRepository>(
