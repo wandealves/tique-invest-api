@@ -1,4 +1,5 @@
 import * as dotenv from "dotenv";
+import "reflect-metadata";
 
 import { server } from "./server";
 //   "test": "jest --passWithNoTests --runInBand --no-cache",

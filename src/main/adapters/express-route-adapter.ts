@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import { HttpResponse } from "@/presentation/protocols";
-import { BaseDTO, InvestmentDTO } from "@/presentation/dtos";
 
 export const adaptRoute = (
   handle: (data?: any) => Promise<HttpResponse>

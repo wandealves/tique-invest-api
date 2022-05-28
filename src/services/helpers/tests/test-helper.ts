@@ -1,4 +1,4 @@
-import { Country, ICountryRepository } from "../../protocols";
+import { Country, ICountryRepository } from "../../interfaces";
 
 export const makeCountryRepositoryRepository = (): ICountryRepository => {
   class CountryRepositoryStub implements ICountryRepository {

@@ -1,4 +1,4 @@
-import { Country, ICountryRepository } from "../../../protocols";
+import { Country, ICountryRepository } from "../../../interfaces";
 import { CreateCountry } from "./create-country";
 import { makeCountryRepositoryRepository } from "../../../helpers";
 

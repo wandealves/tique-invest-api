@@ -1,4 +1,4 @@
-import { IQueryCountry, ICountryRepository, Country } from "../../../protocols";
+import { IQueryCountry, ICountryRepository, Country } from "../../../interfaces";
 
 export class QueryCountry implements IQueryCountry {
   private readonly countryRepository: ICountryRepository;

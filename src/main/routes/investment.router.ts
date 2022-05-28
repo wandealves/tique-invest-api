@@ -3,9 +3,11 @@ import { Router } from "express";
 import { InvestmentController } from "../../presentation/controllers";
 import { adaptRoute } from "../adapters";
 
-export default (router: Router): void => {
-  const controller = new InvestmentController();
+import "../../shared/container";
 
-  router.post("/investments", adaptRoute(controller.post));
-  router.get("/investments", adaptRoute(controller.getAll));
+export default (router: Router): void => {
+  const investmentController = new InvestmentController();
+
+  router.post("/investments", adaptRoute(investmentController.post));
+  router.get("/investments", adaptRoute(investmentController.getAll));
 };
