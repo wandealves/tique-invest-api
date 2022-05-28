@@ -1,10 +1,9 @@
-import { Entity } from "./entity";
-
-export class Country extends Entity {
-  private readonly name: string;
+export class Country {
+  private id: number;
+  private name: string;
 
   constructor(id: number, name: string) {
-    super(id);
+    this.id = id;
     this.name = name;
   }
 }
