@@ -129,4 +129,18 @@ export class PurchasedAsset {
 
     return _.toNumber(result.toFixed(2));
   }
+
+  /**
+   * Calcular preço médio
+   * 
+   * @param totalWithFees: Valor total da compra com taxas
+   * @param totalAmount: Quantidade total de ativos comprados
+   * @returns 
+   */
+  public calculateAveragePrice(
+    totalWithFees: number,
+    totalAmount: number
+  ): number {
+    return totalWithFees / totalAmount;
+  }
 }

@@ -135,4 +135,11 @@ describe("PurchasedAsset Domain", () => {
 
     expect(totalFees).toEqual(0);
   });
+  test("Deve calcular preço médio", () => {
+    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
+
+    const total = purchasedAsset.calculateAveragePrice(200, 10);
+
+    expect(total).toEqual(20);
+  });
 });
