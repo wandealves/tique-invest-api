@@ -15,8 +15,6 @@ export class InvestmentController {
     const investment = createInvestmentDtoToInvestmentModel(request);
     const result = await createInvestment.create(investment);
 
-    console.log("investment", investment);
-
     return ok({ value: result });
   }
 

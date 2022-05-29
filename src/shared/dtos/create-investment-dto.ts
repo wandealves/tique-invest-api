@@ -1,10 +1,11 @@
-import { CreatePurchasedAssetDto } from "../../shared/dtos";
+import { CreatePurchasedAssetDto, FeesDto } from "../../shared/dtos";
 
 export interface CreateInvestmentDto {
-  id:number
+  id: number;
   type: string;
   countryId: number;
   userId: number;
 
+  fees: FeesDto[];
   assets: CreatePurchasedAssetDto[];
 }

@@ -15,17 +15,7 @@ export class PurchasedAsset {
   private month: number;
   private year: number;
 
-  private asset: Asset;
-  private investment: Investment;
-
-  constructor(
-    id: number,
-    price: number,
-    quantity: number,
-    date: Date,
-    asset: Asset,
-    investment: Investment
-  ) {
+  constructor(id: number, price: number, quantity: number, date: Date) {
     this.id = id;
     this.price = price;
     this.quantity = quantity;
@@ -34,9 +24,6 @@ export class PurchasedAsset {
     this.date = date;
     this.month = getMonth(this.date);
     this.year = getYear(this.date);
-
-    this.asset = asset;
-    this.investment = investment;
   }
 
   /**

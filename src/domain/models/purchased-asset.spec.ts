@@ -33,50 +33,15 @@ const makeSut = (): SutTypes => {
     "cpf_valid",
     "avatar_valid"
   );
-  const investment = new Investment(
-    1,
-    2000,
-    25,
-    TypeAsset.ACAO,
-    country,
-    user
-  );
+  const investment = new Investment(1, 2000, 25, TypeAsset.ACAO, 1, 1);
 
-  const purchasedAsset = new PurchasedAsset(
-    1,
-    200,
-    10,
-    new Date(),
-    asset,
-    investment
-  );
+  const purchasedAsset = new PurchasedAsset(1, 200, 10, new Date());
 
-  const purchasedAssetOne = new PurchasedAsset(
-    1,
-    6.39,
-    2,
-    new Date(),
-    asset,
-    investment
-  );
+  const purchasedAssetOne = new PurchasedAsset(1, 6.39, 2, new Date());
 
-  const purchasedAssetTwo = new PurchasedAsset(
-    2,
-    6.39,
-    9,
-    new Date(),
-    asset,
-    investment
-  );
+  const purchasedAssetTwo = new PurchasedAsset(2, 6.39, 9, new Date());
 
-  const purchasedAssetThree = new PurchasedAsset(
-    2,
-    33.17,
-    30,
-    new Date(),
-    asset,
-    investment
-  );
+  const purchasedAssetThree = new PurchasedAsset(2, 33.17, 30, new Date());
 
   const purchasedsAsset: PurchasedAsset[] = [
     purchasedAssetOne,
