@@ -1,8 +1,6 @@
 import { getMonth, getYear } from "date-fns";
 import _ from "lodash";
 
-import { Asset } from "./asset";
-import { Investment } from "./investment";
 import { Fees } from "./fees";
 
 export class PurchasedAsset {
@@ -15,7 +13,17 @@ export class PurchasedAsset {
   private month: number;
   private year: number;
 
-  constructor(id: number, price: number, quantity: number, date: Date) {
+  private assetId: number;
+  private investmentId: number;
+
+  constructor(
+    id: number,
+    price: number,
+    quantity: number,
+    date: Date,
+    assetId: number,
+    investmentId: number
+  ) {
     this.id = id;
     this.price = price;
     this.quantity = quantity;
@@ -24,6 +32,9 @@ export class PurchasedAsset {
     this.date = date;
     this.month = getMonth(this.date);
     this.year = getYear(this.date);
+
+    this.assetId = assetId;
+    this.investmentId = investmentId;
   }
 
   /**
@@ -38,35 +49,23 @@ export class PurchasedAsset {
   /**
    * Calcula total com taxas
    *
-   * @param purchasedsAsset: Lista de ativos comprados
-   * @param feeValues: Total de taxas
+   * @param totalAssetsPurchased: Total ativos comprados
+   * @param totalFees: Total de taxas
    */
-  public calculatePurchaseValueWithFees(
-    purchasedsAsset: PurchasedAsset[],
+  public calculateTotalWithFees(
+    totalAssetsPurchased: number,
     totalFees: number
-  ): PurchasedAsset[] {
-    const totalPurchaseValue = _.reduce(
-      purchasedsAsset,
-      function (sum, item) {
-        return sum + item.total;
-      },
-      0
+  ): number {
+    const apportionmentPercentage = this.calculateApportionmentPercentage(
+      totalAssetsPurchased,
+      this.total
+    );
+    const calculatedRates = this.calculateRateWithApportionment(
+      apportionmentPercentage,
+      totalFees
     );
 
-    for (const item of purchasedsAsset) {
-      const apportionmentPercentage = this.calculateApportionmentPercentage(
-        totalPurchaseValue,
-        item.total
-      );
-      const calculatedRates = this.calculateFee(
-        apportionmentPercentage,
-        totalFees
-      );
-
-      item.totalWithFees = item.total + calculatedRates;
-    }
-
-    return purchasedsAsset;
+    return this.total + calculatedRates;
   }
 
   /**
@@ -76,7 +75,7 @@ export class PurchasedAsset {
    * @param totalFees: Total de taxas
    * @returns
    */
-  public calculateFee(
+  public calculateRateWithApportionment(
     apportionmentPercentage: number,
     totalFees: number
   ): number {
@@ -124,9 +123,5 @@ export class PurchasedAsset {
     );
 
     return _.toNumber(result.toFixed(2));
-  }
-
-  public getTotalWithFees(): number {
-    return this.totalWithFees;
   }
 }

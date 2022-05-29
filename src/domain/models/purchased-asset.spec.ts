@@ -13,7 +13,6 @@ interface SutTypes {
   country: Country;
   user: User;
   investment: Investment;
-  purchasedAsset: PurchasedAsset;
   purchasedsAsset: PurchasedAsset[];
   feeList: Fees[];
 }
@@ -35,13 +34,23 @@ const makeSut = (): SutTypes => {
   );
   const investment = new Investment(1, 2000, 25, TypeAsset.ACAO, 1, 1);
 
-  const purchasedAsset = new PurchasedAsset(1, 200, 10, new Date());
-
-  const purchasedAssetOne = new PurchasedAsset(1, 6.39, 2, new Date());
-
-  const purchasedAssetTwo = new PurchasedAsset(2, 6.39, 9, new Date());
-
-  const purchasedAssetThree = new PurchasedAsset(2, 33.17, 30, new Date());
+  const purchasedAssetOne = new PurchasedAsset(
+    1,
+    6.39,
+    2,
+    new Date(2021, 2, 4),
+    1,
+    1
+  );
+  const purchasedAssetTwo = new PurchasedAsset(1, 6.39, 9, new Date(), 1, 1);
+  const purchasedAssetThree = new PurchasedAsset(
+    2,
+    33.17,
+    30,
+    new Date(),
+    2,
+    1
+  );
 
   const purchasedsAsset: PurchasedAsset[] = [
     purchasedAssetOne,
@@ -59,7 +68,6 @@ const makeSut = (): SutTypes => {
     country,
     user,
     investment,
-    purchasedAsset,
     purchasedsAsset,
     feeList
   };
@@ -67,67 +75,67 @@ const makeSut = (): SutTypes => {
 
 describe("PurchasedAsset Domain", () => {
   test("Deve calcular total do ativo comprado", () => {
-    const { purchasedAsset } = makeSut();
+    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
     const total = purchasedAsset.calculateTotal();
 
-    expect(total).toEqual(2000);
+    expect(total).toEqual(995.1);
   });
-  test("Deve calcular total com taxas", () => {
-    const { purchasedAsset, purchasedsAsset, feeList } = makeSut();
+  test("Deve calcular total com taxas de um ativo", () => {
+    const { feeList } = makeSut();
+
+    const totalAssetsPurchased = 1065.39;
+
+    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
 
     const totalFees = purchasedAsset.calculateTotalFees(feeList);
 
-    const values = purchasedAsset.calculatePurchaseValueWithFees(
-      purchasedsAsset,
+    const totalWithFees = purchasedAsset.calculateTotalWithFees(
+      totalAssetsPurchased,
       totalFees
     );
 
-    const totalPurchaseValue = _.reduce(
-      values,
-      function (sum, item) {
-        return sum + item.getTotalWithFees();
-      },
-      0
-    );
-
-    expect(totalPurchaseValue).toEqual(1065.7);
+    expect(totalWithFees).toEqual(995.39);
   });
   test("Deve calcular a taxa do ativo com rateio com total de taxas válida", () => {
-    const { purchasedAsset } = makeSut();
+    const { feeList } = makeSut();
 
-    const feesOne = new Fees(1, "name_valid", 0.24, 1);
-    const feestwo = new Fees(1, "name_valid", 2.18, 1);
-
-    const feeList = [feesOne, feestwo];
+    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
 
     const apportionmentPercentage =
-      purchasedAsset.calculateApportionmentPercentage(7952.23, 1755.0);
+      purchasedAsset.calculateApportionmentPercentage(1065.39, 995.1);
+
     const totalFees = purchasedAsset.calculateTotalFees(feeList);
 
-    const fee = purchasedAsset.calculateFee(apportionmentPercentage, totalFees);
+    const fee = purchasedAsset.calculateRateWithApportionment(
+      apportionmentPercentage,
+      totalFees
+    );
 
-    expect(fee).toEqual(0.53);
+    expect(fee).toEqual(0.29);
   });
   test("Deve calcular a taxa do ativo com rateio com total de taxa zerada", () => {
-    const { purchasedAsset } = makeSut();
+    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
 
     const apportionmentPercentage =
-      purchasedAsset.calculateApportionmentPercentage(7952.23, 1755.0);
+      purchasedAsset.calculateApportionmentPercentage(1065.39, 995.1);
 
-    const fee = purchasedAsset.calculateFee(apportionmentPercentage, 0);
+    const fee = purchasedAsset.calculateRateWithApportionment(
+      apportionmentPercentage,
+      0
+    );
 
     expect(fee).toEqual(0);
   });
   test("Deve calcular a porcetagem de rateio de um ativo com total de ativos compradas válida", () => {
-    const { purchasedAsset } = makeSut();
+    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
 
     const apportionmentPercentage =
-      purchasedAsset.calculateApportionmentPercentage(7952.23, 1755.0);
+      purchasedAsset.calculateApportionmentPercentage(1065.39, 995.1);
 
-    expect(apportionmentPercentage).toEqual(22.07);
+    expect(apportionmentPercentage).toEqual(93.4);
   });
   test("Deve calcular a porcetagem de rateio de um ativo com total de ativos compradas zerada", () => {
-    const { purchasedAsset } = makeSut();
+    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
 
     const apportionmentPercentage =
       purchasedAsset.calculateApportionmentPercentage(0, 1755.0);
@@ -135,19 +143,16 @@ describe("PurchasedAsset Domain", () => {
     expect(apportionmentPercentage).toEqual(0);
   });
   test("Deve calcular o total de taxas com taxas informadas", () => {
-    const { purchasedAsset } = makeSut();
+    const { feeList } = makeSut();
 
-    const feesOne = new Fees(1, "name_valid", 0.24, 1);
-    const feestwo = new Fees(1, "name_valid", 2.18, 1);
-
-    const feeList = [feesOne, feestwo];
+    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
 
     const totalFees = purchasedAsset.calculateTotalFees(feeList);
 
-    expect(totalFees).toEqual(2.42);
+    expect(totalFees).toEqual(0.31);
   });
   test("Deve calcular o total de taxas sem taxas informada", () => {
-    const { purchasedAsset } = makeSut();
+    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
 
     const totalFees = purchasedAsset.calculateTotalFees([]);
 
