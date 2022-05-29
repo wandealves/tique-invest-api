@@ -1,5 +1,6 @@
 import { getMonth, getYear } from "date-fns";
 import _ from "lodash";
+import { threadId } from "worker_threads";
 
 import { Fees } from "./fees";
 
@@ -35,6 +36,10 @@ export class PurchasedAsset {
 
     this.assetId = assetId;
     this.investmentId = investmentId;
+  }
+
+  get getTotal(): number {
+    return this.total;
   }
 
   /**

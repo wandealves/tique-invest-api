@@ -1,38 +1,18 @@
 import _ from "lodash";
 
 import { PurchasedAsset } from "./purchased-asset";
-import { Asset } from "./asset";
 import { Investment } from "./investment";
-import { Country } from "./country";
 import { Fees } from "./fees";
-import { User } from "./user";
 import { TypeAsset } from "./enums/type-asset";
 
 interface SutTypes {
-  asset: Asset;
-  country: Country;
-  user: User;
   investment: Investment;
   purchasedsAsset: PurchasedAsset[];
   feeList: Fees[];
 }
 
 const makeSut = (): SutTypes => {
-  const asset = new Asset(
-    1,
-    "name_asset_valid",
-    "code_asset_valid",
-    "icon_valid"
-  );
-  const country = new Country(1, "Brasil");
-  const user = new User(
-    1,
-    "user_valid",
-    "email_valid",
-    "cpf_valid",
-    "avatar_valid"
-  );
-  const investment = new Investment(1, 2000, 25, TypeAsset.ACAO, 1, 1);
+  const investment = new Investment(1, TypeAsset.ACAO, 1, 1);
 
   const purchasedAssetOne = new PurchasedAsset(
     1,
@@ -64,9 +44,6 @@ const makeSut = (): SutTypes => {
   const feeList = [feesOne, feestwo];
 
   return {
-    asset,
-    country,
-    user,
     investment,
     purchasedsAsset,
     feeList
