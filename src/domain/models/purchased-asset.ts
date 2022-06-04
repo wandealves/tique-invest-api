@@ -94,6 +94,26 @@ export class PurchasedAsset {
   }
 
   /**
+   * Calcula o total de taxas
+   *
+   * @param fees: Lista de valores de taxas
+   * @returns
+   */
+  public calculateTotalFees(fees: Fees[]): number {
+    if (_.size(fees) === 0) return 0;
+
+    const result = _.reduce(
+      fees,
+      function (sum, fee) {
+        return sum + fee.tax;
+      },
+      0
+    );
+
+    return _.toNumber(result.toFixed(2));
+  }
+
+  /**
    * Calcula a taxa do ativo com rateio
    *
    * @param apportionmentPercentage : Porcetagem de rateio
@@ -126,26 +146,6 @@ export class PurchasedAsset {
 
     const result =
       (purchasePriceOfAnAssetWithoutFees * 100) / totalPurchaseValue;
-
-    return _.toNumber(result.toFixed(2));
-  }
-
-  /**
-   * Calcula o total de taxas
-   *
-   * @param fees: Lista de valores de taxas
-   * @returns
-   */
-  public calculateTotalFees(fees: Fees[]): number {
-    if (_.size(fees) === 0) return 0;
-
-    const result = _.reduce(
-      fees,
-      function (sum, fee) {
-        return sum + fee.tax;
-      },
-      0
-    );
 
     return _.toNumber(result.toFixed(2));
   }
