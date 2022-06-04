@@ -5,7 +5,6 @@ import { Fees } from "./fees";
 import { TransactionType, CurrencyCode } from "./enums";
 
 export class PurchasedAsset {
-  private readonly _id: number;
   private readonly _price: number;
   private readonly _quantity: number;
   private readonly _total: number;
@@ -33,7 +32,6 @@ export class PurchasedAsset {
   }
 
   constructor(
-    id: number,
     price: number,
     quantity: number,
     brokerName: string,
@@ -43,7 +41,6 @@ export class PurchasedAsset {
     walletId: number,
     assetId: number
   ) {
-    this._id = id;
     this._price = price;
     this._quantity = quantity;
     this._brokerName = brokerName;

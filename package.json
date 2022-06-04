@@ -17,11 +17,15 @@
     "url": "https://github.com/wandealves/tique-invest-api/issues"
   },
   "homepage": "https://github.com/wandealves/tique-invest-api#readme",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "build": "tsc -p .",
     "start": "sucrase-node ./src/main/index.ts",
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/main/index.ts",
     "migrate:dev": "npx prisma migrate dev",
+    "seed": "npx prisma db seed",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",

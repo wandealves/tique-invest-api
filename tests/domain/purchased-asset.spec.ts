@@ -11,7 +11,6 @@ interface SutTypes {
 
 const makeSut = (): SutTypes => {
   const purchasedAssetOne = new PurchasedAsset(
-    1,
     6.39,
     2,
     "broker_valid",
@@ -22,7 +21,6 @@ const makeSut = (): SutTypes => {
     1
   );
   const purchasedAssetTwo = new PurchasedAsset(
-    1,
     6.39,
     9,
     "broker_valid",
@@ -33,7 +31,6 @@ const makeSut = (): SutTypes => {
     1
   );
   const purchasedAssetThree = new PurchasedAsset(
-    2,
     33.17,
     30,
     "broker_valid",
@@ -64,7 +61,6 @@ const makeSut = (): SutTypes => {
 describe("PurchasedAsset Domain", () => {
   test("Deve calcular total do ativo comprado", () => {
     const purchasedAsset = new PurchasedAsset(
-      2,
       33.17,
       30,
       "broker_valid",
@@ -84,7 +80,6 @@ describe("PurchasedAsset Domain", () => {
     const totalAssetsPurchased = 1065.39;
 
     const purchasedAsset = new PurchasedAsset(
-      2,
       33.17,
       30,
       "broker_valid",
@@ -106,7 +101,6 @@ describe("PurchasedAsset Domain", () => {
   });
   test("Deve calcular total com taxas sem lista de taxas informado", () => {
     const purchasedAsset = new PurchasedAsset(
-      2,
       33.17,
       30,
       "broker_valid",
@@ -125,7 +119,6 @@ describe("PurchasedAsset Domain", () => {
     const { feeList } = makeSut();
 
     const purchasedAsset = new PurchasedAsset(
-      2,
       33.17,
       30,
       "broker_valid",
@@ -150,7 +143,6 @@ describe("PurchasedAsset Domain", () => {
   });
   test("Deve calcular a taxa do ativo com rateio com total de taxa zerada", () => {
     const purchasedAsset = new PurchasedAsset(
-      2,
       33.17,
       30,
       "broker_valid",
@@ -173,7 +165,6 @@ describe("PurchasedAsset Domain", () => {
   });
   test("Deve calcular a porcetagem de rateio de um ativo com total de ativos compradas válida", () => {
     const purchasedAsset = new PurchasedAsset(
-      2,
       33.17,
       30,
       "broker_valid",
@@ -191,7 +182,6 @@ describe("PurchasedAsset Domain", () => {
   });
   test("Deve calcular a porcetagem de rateio de um ativo com total de ativos compradas zerada", () => {
     const purchasedAsset = new PurchasedAsset(
-      2,
       33.17,
       30,
       "broker_valid",
@@ -211,7 +201,6 @@ describe("PurchasedAsset Domain", () => {
     const { feeList } = makeSut();
 
     const purchasedAsset = new PurchasedAsset(
-      2,
       33.17,
       30,
       "broker_valid",
@@ -228,7 +217,6 @@ describe("PurchasedAsset Domain", () => {
   });
   test("Deve calcular o total de taxas sem taxas informada", () => {
     const purchasedAsset = new PurchasedAsset(
-      2,
       33.17,
       30,
       "broker_valid",
@@ -245,7 +233,6 @@ describe("PurchasedAsset Domain", () => {
   });
   test("Deve calcular preço médio", () => {
     const purchasedAsset = new PurchasedAsset(
-      2,
       33.17,
       30,
       "broker_valid",

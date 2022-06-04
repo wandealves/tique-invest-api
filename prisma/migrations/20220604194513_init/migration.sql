@@ -29,7 +29,7 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "assets" (
     "id" SERIAL NOT NULL,
-    "name" VARCHAR(20) NOT NULL,
+    "name" VARCHAR(500) NOT NULL,
     "code" VARCHAR(10) NOT NULL,
     "iconUrl" VARCHAR,
     "type" "TypeAsset" NOT NULL,
@@ -61,6 +61,7 @@ CREATE TABLE "wallets" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(150) NOT NULL,
     "total" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "totalFees" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "currencyCode" "CurrencyCode" NOT NULL,
     "userId" INTEGER NOT NULL,
 

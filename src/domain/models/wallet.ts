@@ -1,7 +1,5 @@
 import _ from "lodash";
 
-import { PurchasedAsset } from "./purchased-asset";
-
 import { CurrencyCode } from "./enums";
 
 export class Wallet {
