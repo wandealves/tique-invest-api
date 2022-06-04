@@ -1,17 +1,15 @@
-import { CreateInvestmentDto } from "./dtos";
-import { Investment, Country, User } from "../domain/models";
-import { TypeAsset } from "../domain/models/enums/type-asset";
+import _ from "lodash";
 
-export const createInvestmentDtoToInvestmentModel = (
-  dto: CreateInvestmentDto
-) => {
-  return new Investment(
-    dto.id,
-    0,
-    0,
-    stringToTypeAsset(dto.type.toString()),
-    new Country(dto.countryId, ""),
-    new User(dto.userId, "", "", "", "")
+import { PurchasedAsset } from "../domain/models";
+import { TypeAsset } from "../domain/models/enums/type-asset";
+import { CreatePurchasedAssetDto } from "../shared/dtos";
+
+export const createPurchasedAssets = (
+  dtos: CreatePurchasedAssetDto[]
+): PurchasedAsset[] => {
+  return _.map(
+    dtos,
+    dto => new PurchasedAsset(0, dto.price, dto.quantity, dto.date, dto.id, 0)
   );
 };
 

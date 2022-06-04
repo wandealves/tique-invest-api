@@ -1,5 +1,5 @@
-import { Investment } from "../../models/investment";
+import { CreateInvestmentDto } from "../../../shared/dtos";
 
 export interface ICreateInvestment {
-  create: (investment: Investment) => Promise<number>;
+  create: (dto: CreateInvestmentDto) => Promise<number>;
 }

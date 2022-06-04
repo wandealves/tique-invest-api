@@ -20,6 +20,14 @@ export class Investment {
     this.userId = userId;
   }
 
+  set setTotal(total: number) {
+    this.total = total;
+  }
+
+  set setTotalFees(totalFees: number) {
+    this.totalFees = totalFees;
+  }
+
   /**
    * Calcula total sem taxas
    *
