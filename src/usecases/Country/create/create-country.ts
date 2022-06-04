@@ -2,7 +2,7 @@ import {
   Country,
   ICreateCountry,
   ICountryRepository
-} from "../../../interfaces";
+} from "../../interfaces";
 
 export class CreateCountry implements ICreateCountry {
   private readonly countryRepository: ICountryRepository;

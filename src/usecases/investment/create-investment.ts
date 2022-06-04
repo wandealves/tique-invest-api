@@ -10,9 +10,9 @@ import {
 import {
   stringToTypeAsset,
   createPurchasedAssets
-} from "../../../shared/mapper";
+} from "../../shared/mapper";
 
-import { IInvestmentRepository } from "../../../domain/intefaces/repositories";
+import { IInvestmentRepository } from "../../domain/intefaces/repositories";
 
 @injectable()
 export class CreateInvestment implements ICreateInvestment {

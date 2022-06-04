@@ -1,8 +1,8 @@
 import { container } from "tsyringe";
 
 import { CreateInvestmentDto } from "../../shared/dtos";
-import { CreateInvestment } from "../../services/usecases/investment";
-import { createInvestmentDtoToInvestmentModel } from "../../shared/mapper";
+import { CreateInvestment } from "../../usecases/investment/create-investment";
+//import { createInvestmentDtoToInvestmentModel } from "../../shared/mapper";
 
 import { ok } from "../helpers";
 import { HttpResponse } from "../protocols";
@@ -11,11 +11,11 @@ export class InvestmentController {
   constructor() {}
 
   public async post(request: CreateInvestmentDto): Promise<HttpResponse> {
-    const createInvestment = container.resolve(CreateInvestment);
+    /*const createInvestment = container.resolve(CreateInvestment);
     const investment = createInvestmentDtoToInvestmentModel(request);
-    const result = await createInvestment.create(investment);
+    const result = await createInvestment.create(investment);*/
 
-    return ok({ value: result });
+    return ok({ value: 'OK' });
   }
 
   public async getAll(): Promise<HttpResponse> {

@@ -1,7 +1,7 @@
 import {
   IDeleteCountry,
   ICountryRepository
-} from "../../../interfaces";
+} from "../../interfaces";
 
 export class DeleteCountry implements IDeleteCountry {
   private readonly countryRepository: ICountryRepository;
