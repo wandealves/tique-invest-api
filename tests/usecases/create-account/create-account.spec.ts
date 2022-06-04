@@ -1,10 +1,10 @@
-import { AccountRepository } from "./create-account";
+import { AccountRepository } from "../../../src/usecases/create-account/create-account";
 import {
   Encrypter,
   CreateAccountModel,
   AccountModel,
   CreateAccountRepository
-} from "../protocols/create-account-protocols";
+} from "../../../src/usecases/protocols/create-account-protocols";
 
 const makeEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {

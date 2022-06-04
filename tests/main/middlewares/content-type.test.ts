@@ -1,5 +1,7 @@
 import request from "supertest";
-import { setupApp } from "../config/app";
+import "reflect-metadata";
+
+import { setupApp } from "../../../src/main/config/app";
 
 describe("Content Type Middleware", () => {
   test("Should return default content type json", async () => {

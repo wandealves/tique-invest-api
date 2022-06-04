@@ -1,9 +1,9 @@
 import _ from "lodash";
 
-import { PurchasedAsset } from "./purchased-asset";
-import { Investment } from "./investment";
-import { Fees } from "./fees";
-import { TypeAsset } from "./enums/type-asset";
+import { PurchasedAsset } from "../../src/domain/models/purchased-asset";
+import { Investment } from "../../src/domain/models/investment";
+import { Fees } from "../../src/domain/models/fees";
+import { TypeAsset } from "../../src/domain/models/enums/type-asset";
 
 interface SutTypes {
   investment: Investment;
