@@ -1,5 +1,11 @@
 -- CreateEnum
-CREATE TYPE "TypeInvestment" AS ENUM ('ACAO', 'BDR', 'CDB', 'COE', 'FIIS', 'LCI', 'LCA', 'LC', 'MULTIMERCADO', 'TESOURODIRETO', 'OPCOES');
+CREATE TYPE "TypeAsset" AS ENUM ('ACAO', 'BDR', 'CDB', 'COE', 'FIIS', 'LCI', 'LCA', 'LC', 'MULTIMERCADO', 'TESOURODIRETO', 'OPCOES');
+
+-- CreateEnum
+CREATE TYPE "CurrencyCode" AS ENUM ('BRL', 'EUR', 'USD');
+
+-- CreateEnum
+CREATE TYPE "TransactionType" AS ENUM ('COMPRA', 'VENDA');
 
 -- CreateTable
 CREATE TABLE "countries" (
@@ -26,6 +32,7 @@ CREATE TABLE "assets" (
     "name" VARCHAR(20) NOT NULL,
     "code" VARCHAR(10) NOT NULL,
     "iconUrl" VARCHAR,
+    "type" "TypeAsset" NOT NULL,
 
     CONSTRAINT "assets_pkey" PRIMARY KEY ("id")
 );
@@ -36,26 +43,28 @@ CREATE TABLE "purchasedAssets" (
     "price" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "quantity" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "total" DECIMAL(65,30) NOT NULL DEFAULT 0,
-    "totalWithFees" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "fees" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "date" TIMESTAMP(3) NOT NULL,
     "month" INTEGER NOT NULL,
     "year" INTEGER NOT NULL,
+    "brokerName" VARCHAR(200) NOT NULL,
+    "transactionType" "TransactionType" NOT NULL,
+    "currencyCode" "CurrencyCode" NOT NULL,
     "assetId" INTEGER NOT NULL,
-    "investmentId" INTEGER,
+    "walletId" INTEGER,
 
     CONSTRAINT "purchasedAssets_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "investments" (
+CREATE TABLE "wallets" (
     "id" SERIAL NOT NULL,
+    "name" VARCHAR(150) NOT NULL,
     "total" DECIMAL(65,30) NOT NULL DEFAULT 0,
-    "totalFees" DECIMAL(65,30) NOT NULL DEFAULT 0,
-    "type" "TypeInvestment" NOT NULL,
-    "countryId" INTEGER NOT NULL,
-    "userId" INTEGER,
+    "currencyCode" "CurrencyCode" NOT NULL,
+    "userId" INTEGER NOT NULL,
 
-    CONSTRAINT "investments_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "wallets_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -73,17 +82,11 @@ CREATE UNIQUE INDEX "assets_code_key" ON "assets"("code");
 -- CreateIndex
 CREATE INDEX "assets_code_idx" ON "assets"("code");
 
--- CreateIndex
-CREATE INDEX "investments_userId_idx" ON "investments"("userId");
-
 -- AddForeignKey
 ALTER TABLE "purchasedAssets" ADD CONSTRAINT "purchasedAssets_assetId_fkey" FOREIGN KEY ("assetId") REFERENCES "assets"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "purchasedAssets" ADD CONSTRAINT "purchasedAssets_investmentId_fkey" FOREIGN KEY ("investmentId") REFERENCES "investments"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "purchasedAssets" ADD CONSTRAINT "purchasedAssets_walletId_fkey" FOREIGN KEY ("walletId") REFERENCES "wallets"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "investments" ADD CONSTRAINT "investments_countryId_fkey" FOREIGN KEY ("countryId") REFERENCES "countries"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "investments" ADD CONSTRAINT "investments_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "wallets" ADD CONSTRAINT "wallets_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

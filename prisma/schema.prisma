@@ -9,7 +9,7 @@ datasource db {
 
 //Models
 
-enum TypeInvestment {
+enum TypeAsset {
   ACAO
   BDR
   CDB
@@ -23,10 +23,20 @@ enum TypeInvestment {
   OPCOES
 }
 
+enum CurrencyCode {
+  BRL
+  EUR
+  USD
+}
+
+enum TransactionType {
+  COMPRA
+  VENDA
+}
+
 model Country {
-  id         Int          @id @default(autoincrement())
-  name       String       @db.VarChar(300)
-  Investment Investment[]
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(300)
 
   @@map("countries")
 }
@@ -38,55 +48,56 @@ model User {
   cpf       String  @unique @db.VarChar(20)
   avatarUrl String? @db.VarChar()
 
-  Investment Investment[]
+  Wallet Wallet[]
 
   @@index([email])
   @@map("users")
 }
 
 model Asset {
-  id      Int     @id @default(autoincrement())
-  name    String  @db.VarChar(20)
-  code    String  @unique @db.VarChar(10)
-  iconUrl String? @db.VarChar()
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(20)
+  code    String    @unique @db.VarChar(10)
+  iconUrl String?   @db.VarChar()
+  type    TypeAsset
 
-  PurchasedAsset PurchasedAsset[]
+  purchasedAsset PurchasedAsset[]
 
   @@index([code])
   @@map("assets")
 }
 
 model PurchasedAsset {
-  id            Int      @id @default(autoincrement())
-  price         Decimal  @default(0)
-  quantity      Float    @default(0)
-  total         Decimal  @default(0)
-  totalWithFees Decimal  @default(0)
-  date          DateTime
-  month         Int
-  year          Int
+  id              Int             @id @default(autoincrement())
+  price           Decimal         @default(0)
+  quantity        Float           @default(0)
+  total           Decimal         @default(0)
+  fees            Decimal         @default(0)
+  date            DateTime
+  month           Int
+  year            Int
+  brokerName      String          @db.VarChar(200)
+  transactionType TransactionType
+  currencyCode    CurrencyCode
 
-  assetId      Int
-  Asset        Asset       @relation(fields: [assetId], references: [id])
-  investmentId Int?
-  Investment   Investment? @relation(fields: [investmentId], references: [id])
-
+  assetId  Int
+  Asset    Asset   @relation(fields: [assetId], references: [id])
+  walletId Int?
+  wallet   Wallet? @relation(fields: [walletId], references: [id])
 
   @@map("purchasedAssets")
 }
 
-model Investment {
-  id        Int            @id @default(autoincrement())
-  total     Decimal        @default(0)
-  totalFees Decimal        @default(0)
-  type      TypeInvestment
+model Wallet {
+  id           Int          @id @default(autoincrement())
+  name         String       @db.VarChar(150)
+  total        Decimal      @default(0)
+  currencyCode CurrencyCode
 
-  country         Country          @relation(fields: [countryId], references: [id])
-  countryId       Int
-  user            User?            @relation(fields: [userId], references: [id])
-  userId          Int?
-  PurchasedAssets PurchasedAsset[]
+  purchasedAsset PurchasedAsset[]
 
-  @@index([userId])
-  @@map("investments")
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  @@map("wallets")
 }
