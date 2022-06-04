@@ -3,6 +3,7 @@ import _ from "lodash";
 import { PurchasedAsset } from "../../src/domain/models/purchased-asset";
 import { Investment } from "../../src/domain/models/investment";
 import { TypeAsset } from "../../src/domain/models/enums/type-asset";
+import { TransactionType, CurrencyCode } from "../../src/domain/models/enums";
 
 interface SutTypes {
   investment: Investment;
@@ -16,16 +17,32 @@ const makeSut = (): SutTypes => {
     1,
     6.39,
     2,
+    "broker_valid",
     new Date(2021, 2, 4),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL,
     1,
     1
   );
-  const purchasedAssetTwo = new PurchasedAsset(1, 6.39, 9, new Date(), 1, 1);
+  const purchasedAssetTwo = new PurchasedAsset(
+    1,
+    6.39,
+    9,
+    "broker_valid",
+    new Date(),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL,
+    1,
+    1
+  );
   const purchasedAssetThree = new PurchasedAsset(
     2,
     33.17,
     30,
+    "broker_valid",
     new Date(),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL,
     2,
     1
   );

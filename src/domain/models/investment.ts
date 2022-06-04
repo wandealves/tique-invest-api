@@ -39,7 +39,7 @@ export class Investment {
     return _.reduce(
       purchasedAssets,
       function (sum, item) {
-        return sum + item.getTotal;
+        return sum + item.total;
       },
       0
     );

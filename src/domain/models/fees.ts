@@ -1,27 +1,14 @@
-import _ from "lodash";
-
 export class Fees {
-  private id: number;
-  private name: string;
-  private tax: number;
-  private investmentId: number;
+  private readonly _name: string;
+  private readonly _tax: number;
 
-  constructor(id: number, name: string, tax: number, investmentId: number) {
-    this.id = id;
-    this.name = name;
-    this.tax = tax;
-    this.investmentId = investmentId;
+  constructor(name: string, tax: number) {
+    this._name = name;
+    this._tax = tax;
   }
 
-  // get getName(): string {
-  // return this.name;
-  // }
-  //set setName(name: string) {
-  //this.name = name;
-  //}
-
-  get getTax(): number {
-    return this.tax;
+  get tax(): number {
+    return this._tax;
   }
   // set setTax(tax: number) {
   // this.tax = tax;

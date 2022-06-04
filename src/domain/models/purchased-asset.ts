@@ -1,45 +1,65 @@
 import { getMonth, getYear } from "date-fns";
 import _ from "lodash";
-import { threadId } from "worker_threads";
 
 import { Fees } from "./fees";
+import { TransactionType, CurrencyCode } from "./enums";
 
 export class PurchasedAsset {
-  private id: number;
-  private price: number;
-  private quantity: number;
-  private total: number;
-  private totalWithFees: number;
-  private date: Date;
-  private month: number;
-  private year: number;
+  private readonly _id: number;
+  private readonly _price: number;
+  private readonly _quantity: number;
+  private readonly _total: number;
+  private readonly _fees: number;
+  private readonly _date: Date;
+  private readonly _month: number;
+  private readonly _year: number;
+  private readonly _brokerName: string;
+  private readonly _transactionType: TransactionType;
+  private readonly _currencyCode: CurrencyCode;
 
-  private assetId: number;
-  private investmentId: number;
+  private readonly _assetId: number;
+  private readonly _walletId: number;
+
+  get price(): number {
+    return this._price;
+  }
+
+  get quantity(): number {
+    return this._quantity;
+  }
+
+  get total(): number {
+    return this._total;
+  }
 
   constructor(
     id: number,
     price: number,
     quantity: number,
+    brokerName: string,
     date: Date,
-    assetId: number,
-    investmentId: number
+    transactionType: TransactionType,
+    currencyCode: CurrencyCode,
+    walletId: number,
+    assetId: number
   ) {
-    this.id = id;
-    this.price = price;
-    this.quantity = quantity;
-    this.total = this.calculateTotal();
-    this.totalWithFees = 0;
-    this.date = date;
-    this.month = getMonth(this.date);
-    this.year = getYear(this.date);
+    this._id = id;
+    this._price = price;
+    this._quantity = quantity;
+    this._brokerName = brokerName;
 
-    this.assetId = assetId;
-    this.investmentId = investmentId;
-  }
+    this._date = date;
+    this._month = getMonth(this._date);
+    this._year = getYear(this._date);
 
-  get getTotal(): number {
-    return this.total;
+    this._transactionType = transactionType;
+    this._currencyCode = currencyCode;
+
+    this._assetId = assetId;
+    this._walletId = walletId;
+
+    this._total = this.calculateTotal();
+    this._fees = 0;
   }
 
   /**
@@ -122,7 +142,7 @@ export class PurchasedAsset {
     const result = _.reduce(
       fees,
       function (sum, fee) {
-        return sum + fee.getTax;
+        return sum + fee.tax;
       },
       0
     );
@@ -132,10 +152,10 @@ export class PurchasedAsset {
 
   /**
    * Calcular preço médio
-   * 
+   *
    * @param totalWithFees: Valor total da compra com taxas
    * @param totalAmount: Quantidade total de ativos comprados
-   * @returns 
+   * @returns
    */
   public calculateAveragePrice(
     totalWithFees: number,

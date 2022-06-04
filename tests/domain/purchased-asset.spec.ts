@@ -1,33 +1,45 @@
 import _ from "lodash";
 
 import { PurchasedAsset } from "../../src/domain/models/purchased-asset";
-import { Investment } from "../../src/domain/models/investment";
 import { Fees } from "../../src/domain/models/fees";
-import { TypeAsset } from "../../src/domain/models/enums/type-asset";
+import { TransactionType, CurrencyCode } from "../../src/domain/models/enums";
 
 interface SutTypes {
-  investment: Investment;
   purchasedsAsset: PurchasedAsset[];
   feeList: Fees[];
 }
 
 const makeSut = (): SutTypes => {
-  const investment = new Investment(1, TypeAsset.ACAO, 1, 1);
-
   const purchasedAssetOne = new PurchasedAsset(
     1,
     6.39,
     2,
+    "broker_valid",
     new Date(2021, 2, 4),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL,
     1,
     1
   );
-  const purchasedAssetTwo = new PurchasedAsset(1, 6.39, 9, new Date(), 1, 1);
+  const purchasedAssetTwo = new PurchasedAsset(
+    1,
+    6.39,
+    9,
+    "broker_valid",
+    new Date(),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL,
+    1,
+    1
+  );
   const purchasedAssetThree = new PurchasedAsset(
     2,
     33.17,
     30,
+    "broker_valid",
     new Date(),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL,
     2,
     1
   );
@@ -38,13 +50,12 @@ const makeSut = (): SutTypes => {
     purchasedAssetThree
   ];
 
-  const feesOne = new Fees(1, "name_valid", 0.05, 1);
-  const feestwo = new Fees(1, "name_valid", 0.26, 1);
+  const feesOne = new Fees("name_valid", 0.05);
+  const feestwo = new Fees("name_valid", 0.26);
 
   const feeList = [feesOne, feestwo];
 
   return {
-    investment,
     purchasedsAsset,
     feeList
   };
@@ -52,7 +63,17 @@ const makeSut = (): SutTypes => {
 
 describe("PurchasedAsset Domain", () => {
   test("Deve calcular total do ativo comprado", () => {
-    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
+    const purchasedAsset = new PurchasedAsset(
+      2,
+      33.17,
+      30,
+      "broker_valid",
+      new Date(),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL,
+      2,
+      1
+    );
     const total = purchasedAsset.calculateTotal();
 
     expect(total).toEqual(995.1);
@@ -62,7 +83,17 @@ describe("PurchasedAsset Domain", () => {
 
     const totalAssetsPurchased = 1065.39;
 
-    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
+    const purchasedAsset = new PurchasedAsset(
+      2,
+      33.17,
+      30,
+      "broker_valid",
+      new Date(),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL,
+      2,
+      1
+    );
 
     const totalFees = purchasedAsset.calculateTotalFees(feeList);
 
@@ -76,7 +107,17 @@ describe("PurchasedAsset Domain", () => {
   test("Deve calcular a taxa do ativo com rateio com total de taxas válida", () => {
     const { feeList } = makeSut();
 
-    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
+    const purchasedAsset = new PurchasedAsset(
+      2,
+      33.17,
+      30,
+      "broker_valid",
+      new Date(),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL,
+      2,
+      1
+    );
 
     const apportionmentPercentage =
       purchasedAsset.calculateApportionmentPercentage(1065.39, 995.1);
@@ -91,7 +132,17 @@ describe("PurchasedAsset Domain", () => {
     expect(fee).toEqual(0.29);
   });
   test("Deve calcular a taxa do ativo com rateio com total de taxa zerada", () => {
-    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
+    const purchasedAsset = new PurchasedAsset(
+      2,
+      33.17,
+      30,
+      "broker_valid",
+      new Date(),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL,
+      2,
+      1
+    );
 
     const apportionmentPercentage =
       purchasedAsset.calculateApportionmentPercentage(1065.39, 995.1);
@@ -104,7 +155,17 @@ describe("PurchasedAsset Domain", () => {
     expect(fee).toEqual(0);
   });
   test("Deve calcular a porcetagem de rateio de um ativo com total de ativos compradas válida", () => {
-    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
+    const purchasedAsset = new PurchasedAsset(
+      2,
+      33.17,
+      30,
+      "broker_valid",
+      new Date(),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL,
+      2,
+      1
+    );
 
     const apportionmentPercentage =
       purchasedAsset.calculateApportionmentPercentage(1065.39, 995.1);
@@ -112,7 +173,17 @@ describe("PurchasedAsset Domain", () => {
     expect(apportionmentPercentage).toEqual(93.4);
   });
   test("Deve calcular a porcetagem de rateio de um ativo com total de ativos compradas zerada", () => {
-    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
+    const purchasedAsset = new PurchasedAsset(
+      2,
+      33.17,
+      30,
+      "broker_valid",
+      new Date(),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL,
+      2,
+      1
+    );
 
     const apportionmentPercentage =
       purchasedAsset.calculateApportionmentPercentage(0, 1755.0);
@@ -122,21 +193,51 @@ describe("PurchasedAsset Domain", () => {
   test("Deve calcular o total de taxas com taxas informadas", () => {
     const { feeList } = makeSut();
 
-    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
+    const purchasedAsset = new PurchasedAsset(
+      2,
+      33.17,
+      30,
+      "broker_valid",
+      new Date(),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL,
+      2,
+      1
+    );
 
     const totalFees = purchasedAsset.calculateTotalFees(feeList);
 
     expect(totalFees).toEqual(0.31);
   });
   test("Deve calcular o total de taxas sem taxas informada", () => {
-    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
+    const purchasedAsset = new PurchasedAsset(
+      2,
+      33.17,
+      30,
+      "broker_valid",
+      new Date(),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL,
+      2,
+      1
+    );
 
     const totalFees = purchasedAsset.calculateTotalFees([]);
 
     expect(totalFees).toEqual(0);
   });
   test("Deve calcular preço médio", () => {
-    const purchasedAsset = new PurchasedAsset(2, 33.17, 30, new Date(), 2, 1);
+    const purchasedAsset = new PurchasedAsset(
+      2,
+      33.17,
+      30,
+      "broker_valid",
+      new Date(),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL,
+      2,
+      1
+    );
 
     const total = purchasedAsset.calculateAveragePrice(200, 10);
 
