@@ -104,6 +104,23 @@ describe("PurchasedAsset Domain", () => {
 
     expect(totalWithFees).toEqual(995.39);
   });
+  test("Deve calcular total com taxas sem lista de taxas informado", () => {
+    const purchasedAsset = new PurchasedAsset(
+      2,
+      33.17,
+      30,
+      "broker_valid",
+      new Date(),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL,
+      2,
+      1
+    );
+
+    const totalFees = purchasedAsset.calculateTotalFees([]);
+
+    expect(totalFees).toEqual(0);
+  });
   test("Deve calcular a taxa do ativo com rateio com total de taxas válida", () => {
     const { feeList } = makeSut();
 

@@ -92,6 +92,7 @@ model Wallet {
   id           Int          @id @default(autoincrement())
   name         String       @db.VarChar(150)
   total        Decimal      @default(0)
+  totalFees    Decimal      @default(0)
   currencyCode CurrencyCode
 
   purchasedAsset PurchasedAsset[]

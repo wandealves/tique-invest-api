@@ -1,31 +1,30 @@
 import _ from "lodash";
 
 import { PurchasedAsset } from "./purchased-asset";
-import { TypeAsset } from "./enums/type-asset";
+import { CurrencyCode } from "./enums";
 
-export class Investment {
-  private id: number;
-  private total: number;
-  private totalFees: number;
-  private type: TypeAsset;
-  private countryId: number;
-  private userId: number;
+export class Wallet {
+  private readonly _id: number;
+  private readonly _name: string;
+  private readonly _total: number;
+  private readonly _totalFees: number;
+  private readonly _currencyCode: CurrencyCode;
+  private readonly _userId: number;
 
-  constructor(id: number, type: TypeAsset, countryId: number, userId: number) {
-    this.id = id;
-    this.total = 0;
-    this.totalFees = 0;
-    this.type = type;
-    this.countryId = countryId;
-    this.userId = userId;
-  }
-
-  set setTotal(total: number) {
-    this.total = total;
-  }
-
-  set setTotalFees(totalFees: number) {
-    this.totalFees = totalFees;
+  constructor(
+    id: number,
+    name: string,
+    total: number,
+    totalFees: number,
+    currencyCode: CurrencyCode,
+    userId: number
+  ) {
+    this._id = id;
+    this._name = name;
+    this._total = total;
+    this._totalFees = totalFees;
+    this._currencyCode = currencyCode;
+    this._userId = userId;
   }
 
   /**
