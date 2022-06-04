@@ -1,6 +1,7 @@
-import { Country, ICountryRepository } from "../../../src/usecases/interfaces";
+import { ICountryRepository } from "../../../src/usecases/interfaces/repositories";
 import { CreateCountry } from "../../../src/usecases/Country/create/create-country";
 import { makeCountryRepositoryRepository } from "../../../src/usecases/helpers";
+import { Country } from "../../../src/domain/models";
 
 interface SutTypes {
   sut: CreateCountry;

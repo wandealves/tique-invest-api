@@ -1,6 +1,9 @@
-import { Country } from "../../models/country";
+import { Country } from "../../../domain/models";
 
-export interface IQueryCountry {
+export interface ICountryRepository {
+  create(country: Country): Promise<number>;
+  delete(id: number): Promise<void>;
+
   all: () => Promise<Country[] | null>;
   filter: (query: any) => Promise<Country[] | null>;
   findOne: (id: number) => Promise<Country | null>;

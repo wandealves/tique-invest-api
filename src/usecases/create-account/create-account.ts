@@ -1,10 +1,6 @@
-import {
-  CreateAccount,
-  CreateAccountModel,
-  AccountModel,
-  Encrypter,
-  CreateAccountRepository
-} from "../protocols/create-account-protocols";
+import { CreateAccount, CreateAccountModel, Encrypter } from "../interfaces";
+import { CreateAccountRepository } from "../interfaces/repositories";
+import { AccountModel } from "../../domain/models";
 
 export class AccountRepository implements CreateAccount {
   private readonly encrypter: Encrypter;

@@ -1,5 +1,5 @@
 import { Wallet } from "../../domain/models";
-import { IInvestmentRepository } from "../../domain/intefaces/repositories";
+import { IInvestmentRepository } from "../../usecases/interfaces/repositories";
 
 export class InvestmentRepository implements IInvestmentRepository {
   create(investment: Wallet): Promise<number> {

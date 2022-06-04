@@ -1,6 +1,7 @@
-import { Country, ICountryRepository } from "../../../src/usecases/interfaces";
+import { ICountryRepository } from "../../../src/usecases/interfaces/repositories";
 import { DeleteCountry } from "../../../src/usecases/Country/delete/delete-country";
 import { makeCountryRepositoryRepository } from "../../../src/usecases/helpers";
+import { Country } from "../../../src/domain/models";
 
 interface SutTypes {
   sut: DeleteCountry;

@@ -1,4 +1,5 @@
-import { Country, ICountryRepository } from "../../interfaces";
+import { ICountryRepository } from "../../interfaces/repositories";
+import { Country } from "../../../domain/models";
 
 export const makeCountryRepositoryRepository = (): ICountryRepository => {
   class CountryRepositoryStub implements ICountryRepository {

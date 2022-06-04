@@ -1,4 +1,6 @@
-import { IQueryCountry, ICountryRepository, Country } from "../../interfaces";
+import { IQueryCountry } from "../../interfaces";
+import { ICountryRepository } from "../../interfaces/repositories";
+import { Country } from "../../../domain/models";
 
 export class QueryCountry implements IQueryCountry {
   private readonly countryRepository: ICountryRepository;

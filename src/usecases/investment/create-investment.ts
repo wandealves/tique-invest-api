@@ -1,18 +1,16 @@
 import { inject, injectable } from "tsyringe";
 import _ from "lodash";
 
-import {
-  ICreateInvestment,
-  CreateInvestmentDto,
-  Investment,
-  PurchasedAsset
-} from "../protocols/investment-protocols";
-import {
-  stringToTypeAsset,
-  createPurchasedAssets
-} from "../../shared/mapper";
+//import {
+// CreateInvestmentDto,
+//Wallet,
+//PurchasedAsset
+//} from "../protocols/investment-protocols";
+import { ICreateInvestment } from "../interfaces";
+import { CreateInvestmentDto } from "../../shared/dtos";
+//import { stringToTypeAsset, createPurchasedAssets } from "../../shared/mapper";
 
-import { IInvestmentRepository } from "../../domain/intefaces/repositories";
+import { IInvestmentRepository } from "../interfaces/repositories";
 
 @injectable()
 export class CreateInvestment implements ICreateInvestment {
@@ -22,7 +20,7 @@ export class CreateInvestment implements ICreateInvestment {
   ) {}
 
   async create(dto: CreateInvestmentDto): Promise<number> {
-    const type = stringToTypeAsset(dto.type);
+    /*const type = stringToTypeAsset(dto.type);
     const totalFees = _.reduce(
       dto.fees,
       function (sum, fee) {
@@ -30,7 +28,7 @@ export class CreateInvestment implements ICreateInvestment {
       },
       0
     );
-    const investment = new Investment(0, type, dto.countryId, dto.userId);
+    const investment = new Wallet(0, type, dto.countryId, dto.userId);
 
     const purchasedAssets: PurchasedAsset[] = createPurchasedAssets(dto.assets);
 
@@ -43,7 +41,7 @@ export class CreateInvestment implements ICreateInvestment {
 
     investment.setTotal = totalWithoutFees;
     investment.setTotalFees = totalWithFees;
-    const investmentCreate = await this.investmentRepository.create(investment);
+    const investmentCreate = await this.investmentRepository.create(investment);*/
     return 0;
   }
 }
