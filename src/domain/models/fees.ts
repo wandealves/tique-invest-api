@@ -10,7 +10,4 @@ export class Fees {
   get tax(): number {
     return this._tax;
   }
-  // set setTax(tax: number) {
-  // this.tax = tax;
-  //}
 }
