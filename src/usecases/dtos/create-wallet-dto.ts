@@ -1,4 +1,5 @@
 import { CreatePurchasedAssetDto } from "./create-purchased-asset-dto";
+import { CreateFeesDto } from "./create-fees-dto";
 
 export interface CreateWalletDto {
   name: string;
@@ -6,4 +7,5 @@ export interface CreateWalletDto {
   userId: number;
 
   createPurchasedAssets: CreatePurchasedAssetDto[];
+  fees: CreateFeesDto[];
 }
