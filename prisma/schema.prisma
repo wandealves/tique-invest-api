@@ -68,17 +68,20 @@ model Asset {
 }
 
 model PurchasedAsset {
-  id              Int             @id @default(autoincrement())
-  price           Decimal         @default(0)
-  quantity        Float           @default(0)
-  total           Decimal         @default(0)
-  fees            Decimal         @default(0)
-  date            DateTime
-  month           Int
-  year            Int
-  brokerName      String          @db.VarChar(200)
-  transactionType TransactionType
-  currencyCode    CurrencyCode
+  id                          Int             @id @default(autoincrement())
+  price                       Decimal         @default(0)
+  averagePrice                Decimal         @default(0)
+  quantity                    Float           @default(0)
+  total                       Decimal         @default(0)
+  totalWithFees               Decimal         @default(0)
+  fees                        Decimal         @default(0)
+  percentageApportionmentFees Decimal         @default(0)
+  date                        DateTime
+  month                       Int
+  year                        Int
+  brokerName                  String          @db.VarChar(200)
+  transactionType             TransactionType
+  currencyCode                CurrencyCode
 
   assetId  Int
   Asset    Asset   @relation(fields: [assetId], references: [id])
