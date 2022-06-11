@@ -1,4 +1,4 @@
-import { TypeAsset } from "@prisma/client";
+import { TypeAsset, CurrencyCode as CurrencyCodePrisma } from "@prisma/client";
 
 import {
   CurrencyCode,
@@ -81,5 +81,38 @@ export function typeAssetPrismaToTypeAsset(value: TypeAsset) {
       return TypeAssetEntity.OPCOES;
     case TypeAsset.TESOURODIRETO:
       return TypeAssetEntity.TESOURODIRETO;
+  }
+}
+
+export function currencyCodeToString(value: CurrencyCode) {
+  switch (value) {
+    case CurrencyCode.BRL:
+      return "BRL";
+    case CurrencyCode.EUR:
+      return "EUR";
+    case CurrencyCode.USD:
+      return "USD";
+  }
+}
+
+export function currencyCodePrismaToCurrencyCode(value: CurrencyCode) {
+  switch (value) {
+    case CurrencyCode.BRL:
+      return CurrencyCodePrisma.BRL;
+    case CurrencyCode.EUR:
+      return CurrencyCodePrisma.EUR;
+    case CurrencyCode.USD:
+      return CurrencyCodePrisma.USD;
+  }
+}
+
+export function currencyCodeToCurrencyCodePrisma(value: CurrencyCodePrisma) {
+  switch (value) {
+    case CurrencyCodePrisma.BRL:
+      return CurrencyCode.BRL;
+    case CurrencyCodePrisma.EUR:
+      return CurrencyCode.EUR;
+    case CurrencyCodePrisma.USD:
+      return CurrencyCode.USD;
   }
 }
