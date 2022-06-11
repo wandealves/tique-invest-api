@@ -108,7 +108,7 @@ export class AssetRepository implements IAssetRepository {
             typeAssetPrismaToTypeAsset(asset.type)
           )
       );
-    } catch {
+    } catch (error) {
       return null;
     } finally {
       this.prisma.$disconnect();
