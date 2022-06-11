@@ -26,11 +26,11 @@ export class HandlePurchasedAsset implements IHandlePurchasedAsset {
     if (_.size(data.dtos) === 0)
       return left(new handlePurchasedAssetError("Informe ao menos um ativo"));
 
-    const assetIds = _.map(data.dtos, asset => asset.codeAsset);
+    const codes = _.map(data.dtos, asset => asset.codeAsset);
 
     const assets = await this.assetRepository.filter({
-      id: {
-        in: [...assetIds]
+      code: {
+        in: [...codes]
       }
     });
 

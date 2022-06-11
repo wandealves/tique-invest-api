@@ -1,3 +1,4 @@
+import { inject, injectable } from "tsyringe";
 import _ from "lodash";
 
 import { HandlePurchasedAsset } from "../purchased-asset/handle-purchased-asset";
@@ -11,14 +12,17 @@ import { Wallet, Fees } from "../../domain/models";
 import { makePurchasedAssets, makeFees } from "../../main/factories";
 import { CreateWalletError } from "../errors";
 import { Either, left, right } from "../../shared";
-import { stringToCurrencyCode } from "../../shared/utils";
+import { stringToCurrencyCode, currencyCodeToString } from "../../shared/utils";
 
+@injectable()
 export class CreateWallet implements ICreateWallet {
   private readonly walletRepository: IWalletRepository;
   private readonly assetRepository: IAssetRepository;
 
   constructor(
+    @inject("IWalletRepository")
     walletRepository: IWalletRepository,
+    @inject("IAssetRepository")
     assetRepository: IAssetRepository
   ) {
     this.walletRepository = walletRepository;
@@ -29,7 +33,6 @@ export class CreateWallet implements ICreateWallet {
     dto: CreateWalletDto
   ): Promise<Either<CreateWalletError, CreateWalletResponseDto>> {
     const createPurchasedAssets = _.get(dto, "createPurchasedAssets", []);
-
     if (_.size(createPurchasedAssets) === 0)
       return left(new CreateWalletError("Nenhum ativo encontrado"));
 
@@ -51,6 +54,7 @@ export class CreateWallet implements ICreateWallet {
     wallet.totalFees = totalFees;
 
     const handlePurchasedAsset = new HandlePurchasedAsset(this.assetRepository);
+
     const purchasedAssets = await handlePurchasedAsset.execute({
       walletId: 0,
       totalAssetsPurchased: total,
@@ -65,10 +69,10 @@ export class CreateWallet implements ICreateWallet {
     const result = await this.walletRepository.create(wallet);
 
     return right({
-      id: 0,
-      name: "",
-      currencyCode: "",
-      userId: 0
+      id: result,
+      name: wallet.name,
+      currencyCode: currencyCodeToString(wallet.currencyCode),
+      userId: wallet.userId
     });
   }
 }
