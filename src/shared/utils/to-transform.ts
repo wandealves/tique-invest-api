@@ -1,4 +1,8 @@
-import { TypeAsset, CurrencyCode as CurrencyCodePrisma } from "@prisma/client";
+import {
+  TypeAsset,
+  CurrencyCode as CurrencyCodePrisma,
+  TransactionType as TransactionTypePrisma
+} from "@prisma/client";
 
 import {
   CurrencyCode,
@@ -28,6 +32,15 @@ export function stringToTransactionType(value: string) {
   }
 
   return TransactionType.COMPRA;
+}
+
+export function transactionTypeToTransactionTypePrisma(value: TransactionType) {
+  switch (value) {
+    case TransactionType.COMPRA:
+      return TransactionTypePrisma.COMPRA;
+    case TransactionType.VENDA:
+      return TransactionTypePrisma.VENDA;
+  }
 }
 
 export function typeAssetToPrismaTypeAsset(value: TypeAssetEntity) {
@@ -95,18 +108,7 @@ export function currencyCodeToString(value: CurrencyCode) {
   }
 }
 
-export function currencyCodePrismaToCurrencyCode(value: CurrencyCode) {
-  switch (value) {
-    case CurrencyCode.BRL:
-      return CurrencyCodePrisma.BRL;
-    case CurrencyCode.EUR:
-      return CurrencyCodePrisma.EUR;
-    case CurrencyCode.USD:
-      return CurrencyCodePrisma.USD;
-  }
-}
-
-export function currencyCodeToCurrencyCodePrisma(value: CurrencyCodePrisma) {
+export function currencyCodePrismaToCurrencyCode(value: CurrencyCodePrisma) {
   switch (value) {
     case CurrencyCodePrisma.BRL:
       return CurrencyCode.BRL;
@@ -114,5 +116,16 @@ export function currencyCodeToCurrencyCodePrisma(value: CurrencyCodePrisma) {
       return CurrencyCode.EUR;
     case CurrencyCodePrisma.USD:
       return CurrencyCode.USD;
+  }
+}
+
+export function currencyCodeToCurrencyCodePrisma(value: CurrencyCode) {
+  switch (value) {
+    case CurrencyCode.BRL:
+      return CurrencyCodePrisma.BRL;
+    case CurrencyCode.EUR:
+      return CurrencyCodePrisma.EUR;
+    case CurrencyCode.USD:
+      return CurrencyCodePrisma.USD;
   }
 }

@@ -66,7 +66,10 @@ export class CreateWallet implements ICreateWallet {
     if (purchasedAssets.isLeft())
       return left(new CreateWalletError(purchasedAssets.value.message));
 
-    const result = await this.walletRepository.create(wallet);
+    const result = await this.walletRepository.create(
+      wallet,
+      purchasedAssets.value
+    );
 
     return right({
       id: result,

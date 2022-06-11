@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 
-import { Wallet } from "../../domain/models";
+import { Wallet, PurchasedAsset } from "../../domain/models";
 import { IWalletRepository } from "../../usecases/interfaces/repositories";
+import { makeCreatePurchasedAssets } from "../../main/factories";
 import {
   currencyCodePrismaToCurrencyCode,
   currencyCodeToCurrencyCodePrisma
@@ -15,20 +16,28 @@ export class WalletRepository implements IWalletRepository {
     this.prisma = new PrismaClient();
   }
 
-  async create(entity: Wallet): Promise<number> {
+  async create(
+    entity: Wallet,
+    purchasedAssets: PurchasedAsset[]
+  ): Promise<number> {
     try {
+      const assets = makeCreatePurchasedAssets(purchasedAssets);
+
       const created = await this.prisma.wallet.create({
         data: {
           name: entity.name,
           total: entity.total,
           totalFees: entity.totalFees,
-          currencyCode: currencyCodePrismaToCurrencyCode(entity.currencyCode),
-          userId: entity.userId
+          currencyCode: currencyCodeToCurrencyCodePrisma(entity.currencyCode),
+          userId: entity.userId,
+          purchasedAsset: {
+            create: assets
+          }
         }
       });
 
       return created.id;
-    } catch {
+    } catch (error) {
       return 0;
     } finally {
       this.prisma.$disconnect();
@@ -45,7 +54,7 @@ export class WalletRepository implements IWalletRepository {
           name: entity.name,
           total: entity.total,
           totalFees: entity.totalFees,
-          currencyCode: currencyCodePrismaToCurrencyCode(entity.currencyCode),
+          currencyCode: currencyCodeToCurrencyCodePrisma(entity.currencyCode),
           userId: entity.userId
         }
       });
@@ -81,7 +90,7 @@ export class WalletRepository implements IWalletRepository {
           new Wallet(
             wallet.id,
             wallet.name,
-            currencyCodeToCurrencyCodePrisma(wallet.currencyCode),
+            currencyCodePrismaToCurrencyCode(wallet.currencyCode),
             wallet.userId
           )
       );
@@ -104,7 +113,7 @@ export class WalletRepository implements IWalletRepository {
           new Wallet(
             wallet.id,
             wallet.name,
-            currencyCodeToCurrencyCodePrisma(wallet.currencyCode),
+            currencyCodePrismaToCurrencyCode(wallet.currencyCode),
             wallet.userId
           )
       );
@@ -127,7 +136,7 @@ export class WalletRepository implements IWalletRepository {
         return new Wallet(
           wallet.id,
           wallet.name,
-          currencyCodeToCurrencyCodePrisma(wallet.currencyCode),
+          currencyCodePrismaToCurrencyCode(wallet.currencyCode),
           wallet.userId
         );
       return null;
@@ -148,7 +157,7 @@ export class WalletRepository implements IWalletRepository {
         return new Wallet(
           wallet.id,
           wallet.name,
-          currencyCodeToCurrencyCodePrisma(wallet.currencyCode),
+          currencyCodePrismaToCurrencyCode(wallet.currencyCode),
           wallet.userId
         );
       return null;

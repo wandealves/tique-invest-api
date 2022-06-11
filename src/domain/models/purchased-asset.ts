@@ -52,6 +52,14 @@ export class PurchasedAsset {
     return this._totalWithFees;
   }
 
+  set fees(value: number) {
+    this._fees = value;
+  }
+
+  get fees(): number {
+    return this._fees;
+  }
+
   set percentageApportionmentFees(value: number) {
     this._percentageApportionmentFees = value;
   }
@@ -60,8 +68,64 @@ export class PurchasedAsset {
     return this._percentageApportionmentFees;
   }
 
+  set date(value: Date) {
+    this._date = value;
+  }
+
+  get date(): Date {
+    return this._date;
+  }
+
+  set month(value: number) {
+    this._month = value;
+  }
+
+  get month(): number {
+    return this._month;
+  }
+
+  set year(value: number) {
+    this._year = value;
+  }
+
+  get year(): number {
+    return this._year;
+  }
+
+  set brokerName(value: string) {
+    this._brokerName = value;
+  }
+
+  get brokerName(): string {
+    return this._brokerName;
+  }
+
+  set transactionType(value: TransactionType) {
+    this._transactionType = value;
+  }
+
+  get transactionType(): TransactionType {
+    return this._transactionType;
+  }
+
+  set currencyCode(value: CurrencyCode) {
+    this._currencyCode = value;
+  }
+
+  get currencyCode(): CurrencyCode {
+    return this._currencyCode;
+  }
+
+  get assetId(): number {
+    return this._assetId;
+  }
+
   set assetId(value: number) {
     this._assetId = value;
+  }
+
+  get walletId(): number {
+    return this._walletId;
   }
 
   set walletId(value: number) {

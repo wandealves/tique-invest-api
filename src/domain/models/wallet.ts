@@ -11,6 +11,7 @@ export class Wallet {
   private _totalFees: number;
   private _currencyCode: CurrencyCode;
   private _userId: number;
+  private _purchasedAsset: PurchasedAsset[];
 
   set name(value: string) {
     this._name = value;
@@ -52,6 +53,14 @@ export class Wallet {
     return this._userId;
   }
 
+  set purchasedAsset(value: PurchasedAsset[]) {
+    this._purchasedAsset = value;
+  }
+
+  get purchasedAsset() {
+    return this._purchasedAsset;
+  }
+
   constructor(
     id: number,
     name: string,
@@ -64,6 +73,7 @@ export class Wallet {
     this._totalFees = 0;
     this._currencyCode = currencyCode;
     this._userId = userId;
+    this._purchasedAsset = [];
   }
 
   /**
