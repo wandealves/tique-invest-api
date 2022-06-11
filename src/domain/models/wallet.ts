@@ -12,6 +12,14 @@ export class Wallet {
   private _currencyCode: CurrencyCode;
   private _userId: number;
 
+  set name(value: string) {
+    this._name = value;
+  }
+
+  get name() {
+    return this._name;
+  }
+
   set total(value: number) {
     this._total = value;
   }
@@ -26,6 +34,22 @@ export class Wallet {
 
   get totalFees() {
     return this._totalFees;
+  }
+
+  set currencyCode(value: CurrencyCode) {
+    this._currencyCode = value;
+  }
+
+  get currencyCode() {
+    return this._currencyCode;
+  }
+
+  set userId(value: number) {
+    this._userId = value;
+  }
+
+  get userId() {
+    return this._userId;
   }
 
   constructor(

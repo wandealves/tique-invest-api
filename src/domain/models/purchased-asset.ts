@@ -52,7 +52,6 @@ export class PurchasedAsset {
     return this._totalWithFees;
   }
 
-
   set percentageApportionmentFees(value: number) {
     this._percentageApportionmentFees = value;
   }
@@ -85,8 +84,8 @@ export class PurchasedAsset {
     this._brokerName = brokerName;
 
     this._date = date;
-    this._month = getMonth(this._date);
-    this._year = getYear(this._date);
+    this._month = getMonth(new Date(this._date)) + 1;
+    this._year = getYear(new Date(this._date));
 
     this._transactionType = transactionType;
     this._currencyCode = currencyCode;
