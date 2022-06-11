@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import { IHandlePurchasedAsset, HandlePurchasedAssetData } from "../interfaces";
-import { PurchasedAsset } from "../../domain/models";
+import { PurchasedAsset, Asset } from "../../domain/models";
 import { IAssetRepository } from "../interfaces/repositories";
 import { handlePurchasedAssetError } from "../errors";
 import { Either, left, right } from "../../shared";
@@ -37,6 +37,13 @@ export class HandlePurchasedAsset implements IHandlePurchasedAsset {
     if (_.size(assets) === 0)
       return left(new handlePurchasedAssetError("Nenhum ativo encontrado"));
 
+    return right(this.handleNewPurchasedAsset(data, assets));
+  }
+
+  handleNewPurchasedAsset(
+    data: HandlePurchasedAssetData,
+    assets: Asset[] | null
+  ) {
     const purchasedAssets: PurchasedAsset[] = [];
 
     for (const dto of data.dtos) {
@@ -80,6 +87,6 @@ export class HandlePurchasedAsset implements IHandlePurchasedAsset {
       }
     }
 
-    return right(purchasedAssets);
+    return purchasedAssets;
   }
 }
