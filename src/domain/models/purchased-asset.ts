@@ -40,6 +40,10 @@ export class PurchasedAsset {
     return this._quantity;
   }
 
+  set total(value: number) {
+    this._total = value;
+  }
+
   get total(): number {
     return this._total;
   }
@@ -175,7 +179,7 @@ export class PurchasedAsset {
   /**
    * Calcula total com taxas
    *
-   * @param totalAssetsPurchased: Total ativos comprados
+   * @param totalAssetsPurchased: Total de todos ativos comprados
    * @param totalFees: Total de taxas
    */
   public calculateTotalWithFees(
@@ -186,6 +190,7 @@ export class PurchasedAsset {
       totalAssetsPurchased,
       this.total
     );
+
     const calculatedRates = this.calculateRateWithApportionment(
       apportionmentPercentage,
       totalFees
@@ -262,6 +267,10 @@ export class PurchasedAsset {
     totalWithFees: number,
     totalAmount: number
   ): number {
-    return totalWithFees / totalAmount;
+    if (!totalAmount) return 0;
+
+    const result = totalWithFees / totalAmount;
+
+    return _.toNumber(result.toFixed(2));
   }
 }

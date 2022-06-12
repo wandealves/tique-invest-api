@@ -5,246 +5,255 @@ import { Fees } from "../../src/domain/models/fees";
 import { TransactionType, CurrencyCode } from "../../src/domain/models/enums";
 
 interface SutTypes {
-  purchasedsAsset: PurchasedAsset[];
+  purchasedsAssets: PurchasedAsset[];
   feeList: Fees[];
 }
 
 const makeSut = (): SutTypes => {
-  const purchasedAssetOne = new PurchasedAsset(
-    6.39,
-    2,
-    "broker_valid",
-    new Date(2021, 2, 4),
-    TransactionType.COMPRA,
-    CurrencyCode.BRL,
-    1,
-    1
-  );
-  const purchasedAssetTwo = new PurchasedAsset(
-    6.39,
-    9,
-    "broker_valid",
-    new Date(),
-    TransactionType.COMPRA,
-    CurrencyCode.BRL,
-    1,
-    1
-  );
-  const purchasedAssetThree = new PurchasedAsset(
-    33.17,
-    30,
-    "broker_valid",
-    new Date(),
-    TransactionType.COMPRA,
-    CurrencyCode.BRL,
-    2,
-    1
-  );
+  const purchasedsAssets: PurchasedAsset[] = [
+    new PurchasedAsset(
+      0,
+      114.55,
+      3,
+      "broker_valid",
+      new Date(2021, 1, 5),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL
+    ),
+    new PurchasedAsset(
+      0,
+      178.96,
+      5,
+      "broker_valid",
+      new Date(2021, 1, 5),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL
+    ),
+    new PurchasedAsset(
+      0,
+      10.45,
+      4,
+      "broker_valid",
+      new Date(2021, 1, 5),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL
+    ),
 
-  const purchasedsAsset: PurchasedAsset[] = [
-    purchasedAssetOne,
-    purchasedAssetTwo,
-    purchasedAssetThree
+    new PurchasedAsset(
+      0,
+      117.69,
+      2,
+      "broker_valid",
+      new Date(2021, 1, 5),
+      TransactionType.COMPRA,
+      CurrencyCode.BRL
+    )
   ];
 
-  const feesOne = new Fees("name_valid", 0.05);
-  const feestwo = new Fees("name_valid", 0.26);
-
-  const feeList = [feesOne, feestwo];
+  const feeList = [new Fees("name_valid", 0.04), new Fees("name_valid", 0.41)];
 
   return {
-    purchasedsAsset,
+    purchasedsAssets,
     feeList
   };
 };
 
 describe("PurchasedAsset Domain", () => {
   test("Deve calcular total do ativo comprado", () => {
-    const purchasedAsset = new PurchasedAsset(
-      33.17,
-      30,
-      "broker_valid",
-      new Date(),
-      TransactionType.COMPRA,
-      CurrencyCode.BRL,
-      2,
-      1
-    );
-    const total = purchasedAsset.calculateTotal();
+    const { purchasedsAssets } = makeSut();
 
-    expect(total).toEqual(995.1);
+    const purchasedAsset = purchasedsAssets[0];
+    purchasedAsset.total = purchasedAsset.calculateTotal();
+
+    expect(purchasedAsset.total).toEqual(343.65);
   });
-  test("Deve calcular total com taxas de um ativo", () => {
-    const { feeList } = makeSut();
+  test("Deve calcular total com taxas", () => {
+    const { feeList, purchasedsAssets } = makeSut();
 
-    const totalAssetsPurchased = 1065.39;
+    const purchasedAsset = purchasedsAssets[0];
 
-    const purchasedAsset = new PurchasedAsset(
-      33.17,
-      30,
-      "broker_valid",
-      new Date(),
-      TransactionType.COMPRA,
-      CurrencyCode.BRL,
-      2,
-      1
-    );
-
-    const totalFees = purchasedAsset.calculateTotalFees(feeList);
-
-    const totalWithFees = purchasedAsset.calculateTotalWithFees(
-      totalAssetsPurchased,
-      totalFees
-    );
-
-    expect(totalWithFees).toEqual(995.39);
-  });
-  test("Deve calcular total com taxas sem lista de taxas informado", () => {
-    const purchasedAsset = new PurchasedAsset(
-      33.17,
-      30,
-      "broker_valid",
-      new Date(),
-      TransactionType.COMPRA,
-      CurrencyCode.BRL,
-      2,
-      1
-    );
-
-    const totalFees = purchasedAsset.calculateTotalFees([]);
-
-    expect(totalFees).toEqual(0);
-  });
-  test("Deve calcular a taxa do ativo com rateio com total de taxas válida", () => {
-    const { feeList } = makeSut();
-
-    const purchasedAsset = new PurchasedAsset(
-      33.17,
-      30,
-      "broker_valid",
-      new Date(),
-      TransactionType.COMPRA,
-      CurrencyCode.BRL,
-      2,
-      1
-    );
-
-    const apportionmentPercentage =
-      purchasedAsset.calculateApportionmentPercentage(1065.39, 995.1);
-
-    const totalFees = purchasedAsset.calculateTotalFees(feeList);
-
-    const fee = purchasedAsset.calculateRateWithApportionment(
-      apportionmentPercentage,
-      totalFees
-    );
-
-    expect(fee).toEqual(0.29);
-  });
-  test("Deve calcular a taxa do ativo com rateio com total de taxa zerada", () => {
-    const purchasedAsset = new PurchasedAsset(
-      33.17,
-      30,
-      "broker_valid",
-      new Date(),
-      TransactionType.COMPRA,
-      CurrencyCode.BRL,
-      2,
-      1
-    );
-
-    const apportionmentPercentage =
-      purchasedAsset.calculateApportionmentPercentage(1065.39, 995.1);
-
-    const fee = purchasedAsset.calculateRateWithApportionment(
-      apportionmentPercentage,
+    const totalOfAllAssets = _.reduce(
+      purchasedsAssets,
+      function (sum, item) {
+        return sum + item.calculateTotal();
+      },
       0
     );
 
-    expect(fee).toEqual(0);
-  });
-  test("Deve calcular a porcetagem de rateio de um ativo com total de ativos compradas válida", () => {
-    const purchasedAsset = new PurchasedAsset(
-      33.17,
-      30,
-      "broker_valid",
-      new Date(),
-      TransactionType.COMPRA,
-      CurrencyCode.BRL,
-      2,
-      1
-    );
-
-    const apportionmentPercentage =
-      purchasedAsset.calculateApportionmentPercentage(1065.39, 995.1);
-
-    expect(apportionmentPercentage).toEqual(93.4);
-  });
-  test("Deve calcular a porcetagem de rateio de um ativo com total de ativos compradas zerada", () => {
-    const purchasedAsset = new PurchasedAsset(
-      33.17,
-      30,
-      "broker_valid",
-      new Date(),
-      TransactionType.COMPRA,
-      CurrencyCode.BRL,
-      2,
-      1
-    );
-
-    const apportionmentPercentage =
-      purchasedAsset.calculateApportionmentPercentage(0, 1755.0);
-
-    expect(apportionmentPercentage).toEqual(0);
-  });
-  test("Deve calcular o total de taxas com taxas informadas", () => {
-    const { feeList } = makeSut();
-
-    const purchasedAsset = new PurchasedAsset(
-      33.17,
-      30,
-      "broker_valid",
-      new Date(),
-      TransactionType.COMPRA,
-      CurrencyCode.BRL,
-      2,
-      1
-    );
-
     const totalFees = purchasedAsset.calculateTotalFees(feeList);
 
-    expect(totalFees).toEqual(0.31);
-  });
-  test("Deve calcular o total de taxas sem taxas informada", () => {
-    const purchasedAsset = new PurchasedAsset(
-      33.17,
-      30,
-      "broker_valid",
-      new Date(),
-      TransactionType.COMPRA,
-      CurrencyCode.BRL,
-      2,
-      1
+    purchasedAsset.totalWithFees = purchasedAsset.calculateTotalWithFees(
+      totalOfAllAssets,
+      totalFees
     );
 
+    expect(purchasedAsset.totalWithFees).toEqual(343.75);
+  });
+
+  test("Deve calcular total de taxas", () => {
+    const { feeList, purchasedsAssets } = makeSut();
+
+    const purchasedAsset = purchasedsAssets[0];
+    const totalFees = purchasedAsset.calculateTotalFees(feeList);
+
+    expect(totalFees).toEqual(0.45);
+  });
+  test("Deve calcular total de taxas com a lista de taxas vazia", () => {
+    const { purchasedsAssets } = makeSut();
+
+    const purchasedAsset = purchasedsAssets[0];
     const totalFees = purchasedAsset.calculateTotalFees([]);
 
     expect(totalFees).toEqual(0);
   });
-  test("Deve calcular preço médio", () => {
-    const purchasedAsset = new PurchasedAsset(
-      33.17,
-      30,
-      "broker_valid",
-      new Date(),
-      TransactionType.COMPRA,
-      CurrencyCode.BRL,
-      2,
-      1
+
+  test("Deve calcular rateio", () => {
+    const { feeList, purchasedsAssets } = makeSut();
+
+    const purchasedAsset = purchasedsAssets[0];
+
+    const totalOfAllAssets = _.reduce(
+      purchasedsAssets,
+      function (sum, item) {
+        return sum + item.calculateTotal();
+      },
+      0
+    );
+    purchasedAsset.total = purchasedAsset.calculateTotal();
+
+    purchasedAsset.percentageApportionmentFees =
+      purchasedAsset.calculateApportionmentPercentage(
+        totalOfAllAssets,
+        purchasedAsset.total
+      );
+
+    const totalFees = purchasedAsset.calculateTotalFees(feeList);
+
+    purchasedAsset.fees = purchasedAsset.calculateRateWithApportionment(
+      purchasedAsset.percentageApportionmentFees,
+      totalFees
     );
 
-    const total = purchasedAsset.calculateAveragePrice(200, 10);
+    expect(purchasedAsset.fees).toEqual(0.1);
+  });
+  test("Deve calcular rateio sem total de taxas", () => {
+    const { feeList, purchasedsAssets } = makeSut();
 
-    expect(total).toEqual(20);
+    const purchasedAsset = purchasedsAssets[0];
+
+    const totalOfAllAssets = _.reduce(
+      purchasedsAssets,
+      function (sum, item) {
+        return sum + item.calculateTotal();
+      },
+      0
+    );
+    purchasedAsset.total = purchasedAsset.calculateTotal();
+
+    purchasedAsset.percentageApportionmentFees =
+      purchasedAsset.calculateApportionmentPercentage(
+        totalOfAllAssets,
+        purchasedAsset.total
+      );
+
+    const totalFees = purchasedAsset.calculateTotalFees(feeList);
+
+    purchasedAsset.fees = purchasedAsset.calculateRateWithApportionment(
+      purchasedAsset.percentageApportionmentFees,
+      0
+    );
+
+    expect(purchasedAsset.fees).toEqual(0);
+  });
+
+  test("Deve calcular porcentagem", () => {
+    const { purchasedsAssets } = makeSut();
+
+    const purchasedAsset = purchasedsAssets[0];
+
+    const totalOfAllAssets = _.reduce(
+      purchasedsAssets,
+      function (sum, item) {
+        return sum + item.calculateTotal();
+      },
+      0
+    );
+    purchasedAsset.total = purchasedAsset.calculateTotal();
+
+    purchasedAsset.percentageApportionmentFees =
+      purchasedAsset.calculateApportionmentPercentage(
+        totalOfAllAssets,
+        purchasedAsset.total
+      );
+
+    expect(purchasedAsset.percentageApportionmentFees).toEqual(22.67);
+  });
+  test("Deve calcular porcentagem sem total de ativos", () => {
+    const { purchasedsAssets } = makeSut();
+
+    const purchasedAsset = purchasedsAssets[0];
+
+    purchasedAsset.total = purchasedAsset.calculateTotal();
+
+    purchasedAsset.percentageApportionmentFees =
+      purchasedAsset.calculateApportionmentPercentage(0, purchasedAsset.total);
+
+    expect(purchasedAsset.percentageApportionmentFees).toEqual(0);
+  });
+
+  test("Deve calcular preço médio", () => {
+    const { feeList, purchasedsAssets } = makeSut();
+
+    const purchasedAsset = purchasedsAssets[0];
+
+    const totalOfAllAssets = _.reduce(
+      purchasedsAssets,
+      function (sum, item) {
+        return sum + item.calculateTotal();
+      },
+      0
+    );
+
+    const totalFees = purchasedAsset.calculateTotalFees(feeList);
+
+    purchasedAsset.totalWithFees = purchasedAsset.calculateTotalWithFees(
+      totalOfAllAssets,
+      totalFees
+    );
+
+    purchasedAsset.averagePrice = purchasedAsset.calculateAveragePrice(
+      purchasedAsset.totalWithFees,
+      purchasedAsset.quantity
+    );
+
+    expect(purchasedAsset.averagePrice).toEqual(114.58);
+  });
+
+  test("Deve calcular preço médio com quantidade zerada", () => {
+    const { feeList, purchasedsAssets } = makeSut();
+
+    const purchasedAsset = purchasedsAssets[0];
+
+    const totalOfAllAssets = _.reduce(
+      purchasedsAssets,
+      function (sum, item) {
+        return sum + item.calculateTotal();
+      },
+      0
+    );
+
+    const totalFees = purchasedAsset.calculateTotalFees(feeList);
+
+    purchasedAsset.totalWithFees = purchasedAsset.calculateTotalWithFees(
+      totalOfAllAssets,
+      totalFees
+    );
+
+    purchasedAsset.averagePrice = purchasedAsset.calculateAveragePrice(
+      purchasedAsset.totalWithFees,
+      0
+    );
+
+    expect(purchasedAsset.averagePrice).toEqual(0);
   });
 });
