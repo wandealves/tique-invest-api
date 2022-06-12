@@ -25,6 +25,7 @@
     "start": "sucrase-node ./src/main/index.ts",
     "dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/main/index.ts",
     "migrate:dev": "npx prisma migrate dev",
+    "studio:db": "npx prisma studio",
     "seed": "npx prisma db seed",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand --no-cache",
     "test:verbose": "jest --passWithNoTests --runInBand",
