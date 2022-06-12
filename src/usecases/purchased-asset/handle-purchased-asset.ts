@@ -60,28 +60,29 @@ export class HandlePurchasedAsset implements IHandlePurchasedAsset {
           stringToCurrencyCode(dto.currencyCode)
         );
 
-        const totalWithFees = purchasedAsset.calculateTotalWithFees(
+        purchasedAsset.totalWithFees = purchasedAsset.calculateTotalWithFees(
           data.totalAssetsPurchased,
           data.totalFees
         );
-        const percentageApportionmentFees =
+
+        purchasedAsset.percentageApportionmentFees =
           purchasedAsset.calculateApportionmentPercentage(
             data.totalAssetsPurchased,
-            dto.price
+            purchasedAsset.total
           );
 
-        const averagePrice = purchasedAsset.calculateAveragePrice(
-          totalWithFees,
-          data.totalAmount
+        purchasedAsset.fees = purchasedAsset.calculateRateWithApportionment(
+          purchasedAsset.percentageApportionmentFees,
+          data.totalFees
+        );
+
+        purchasedAsset.averagePrice = purchasedAsset.calculateAveragePrice(
+          purchasedAsset.totalWithFees,
+          purchasedAsset.quantity
         );
 
         purchasedAsset.assetId = assetFind.id;
         purchasedAsset.walletId = data.walletId;
-
-        purchasedAsset.totalWithFees = totalWithFees;
-        purchasedAsset.percentageApportionmentFees =
-          percentageApportionmentFees;
-        purchasedAsset.averagePrice = averagePrice;
 
         purchasedAssets.push(purchasedAsset);
       }
