@@ -1,17 +1,17 @@
 import _ from "lodash";
 
-import { PurchasedAsset } from "../../src/domain/models/purchased-asset";
+import { TicketPurchased } from "./models/ticket-purchased";
 import { Fees } from "../../src/domain/models/fees";
 import { TransactionType, CurrencyCode } from "../../src/domain/models/enums";
 
 interface SutTypes {
-  purchasedsAssets: PurchasedAsset[];
+  purchasedsAssets: TicketPurchased[];
   feeList: Fees[];
 }
 
 const makeSut = (): SutTypes => {
-  const purchasedsAssets: PurchasedAsset[] = [
-    new PurchasedAsset(
+  const purchasedsAssets: TicketPurchased[] = [
+    new TicketPurchased(
       0,
       114.55,
       3,
@@ -20,7 +20,7 @@ const makeSut = (): SutTypes => {
       TransactionType.COMPRA,
       CurrencyCode.BRL
     ),
-    new PurchasedAsset(
+    new TicketPurchased(
       0,
       178.96,
       5,
@@ -29,7 +29,7 @@ const makeSut = (): SutTypes => {
       TransactionType.COMPRA,
       CurrencyCode.BRL
     ),
-    new PurchasedAsset(
+    new TicketPurchased(
       0,
       10.45,
       4,
@@ -39,7 +39,7 @@ const makeSut = (): SutTypes => {
       CurrencyCode.BRL
     ),
 
-    new PurchasedAsset(
+    new TicketPurchased(
       0,
       117.69,
       2,

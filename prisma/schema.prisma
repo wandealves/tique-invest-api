@@ -92,11 +92,13 @@ model TicketPurchased {
 }
 
 model WalletTicket {
-  id           Int          @id @default(autoincrement())
-  averagePrice Decimal      @default(0)
-  quantity     Float        @default(0)
-  brokerName   String       @db.VarChar(200)
-  currencyCode CurrencyCode
+  id              Int             @id @default(autoincrement())
+  averagePrice    Decimal         @default(0)
+  quantity        Float           @default(0)
+  total           Float           @default(0)
+  brokerName      String          @db.VarChar(200)
+  transactionType TransactionType
+  currencyCode    CurrencyCode
 
   ticketId Int
   ticket   Ticket @relation(fields: [ticketId], references: [id])

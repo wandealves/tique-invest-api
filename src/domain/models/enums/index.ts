@@ -1,3 +1,3 @@
 export * from "./currency-code";
 export * from "./transaction-type";
-export * from "./type-asset";
+export * from "./type-ticket";

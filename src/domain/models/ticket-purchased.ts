@@ -1,19 +1,17 @@
 import { getMonth, getYear } from "date-fns";
 import _ from "lodash";
 
-import { Asset } from "./asset";
 import { Fees } from "./fees";
 import { TransactionType, CurrencyCode } from "./enums";
 
-export class PurchasedAsset {
+export class TicketPurchased {
   private _id: number;
   private _price: number;
-  private _averagePrice: number;
   private _quantity: number;
   private _total: number;
   private _totalWithFees: number;
-  private _fees: number;
-  private _percentageApportionmentFees: number;
+  private _apportionmentValue: number;
+  private _apportionmentPercentage: number;
   private _date: Date;
   private _month: number;
   private _year: number;
@@ -21,19 +19,11 @@ export class PurchasedAsset {
   private _transactionType: TransactionType;
   private _currencyCode: CurrencyCode;
 
-  private _assetId: number;
+  private _ticketId: number;
   private _walletId: number;
 
   get price(): number {
     return this._price;
-  }
-
-  set averagePrice(value: number) {
-    this._averagePrice = value;
-  }
-
-  get averagePrice(): number {
-    return this._averagePrice;
   }
 
   get quantity(): number {
@@ -56,20 +46,20 @@ export class PurchasedAsset {
     return this._totalWithFees;
   }
 
-  set fees(value: number) {
-    this._fees = value;
+  set apportionmentValue(value: number) {
+    this._apportionmentValue = value;
   }
 
-  get fees(): number {
-    return this._fees;
+  get apportionmentValue(): number {
+    return this._apportionmentValue;
   }
 
-  set percentageApportionmentFees(value: number) {
-    this._percentageApportionmentFees = value;
+  set apportionmentPercentage(value: number) {
+    this._apportionmentPercentage = value;
   }
 
-  get percentageApportionmentFees(): number {
-    return this._percentageApportionmentFees;
+  get apportionmentPercentage(): number {
+    return this._apportionmentPercentage;
   }
 
   set date(value: Date) {
@@ -120,12 +110,12 @@ export class PurchasedAsset {
     return this._currencyCode;
   }
 
-  get assetId(): number {
-    return this._assetId;
+  get ticketId(): number {
+    return this._ticketId;
   }
 
-  set assetId(value: number) {
-    this._assetId = value;
+  set ticketId(value: number) {
+    this._ticketId = value;
   }
 
   get walletId(): number {
@@ -147,7 +137,6 @@ export class PurchasedAsset {
   ) {
     this._id = id;
     this._price = price;
-    this._averagePrice = 0;
     this._quantity = quantity;
     this._brokerName = brokerName;
 
@@ -158,13 +147,13 @@ export class PurchasedAsset {
     this._transactionType = transactionType;
     this._currencyCode = currencyCode;
 
-    this._assetId = 0;
+    this._ticketId = 0;
     this._walletId = 0;
 
     this._total = this.calculateTotal();
     this._totalWithFees = 0;
-    this._fees = 0;
-    this._percentageApportionmentFees = 0;
+    this._apportionmentValue = 0;
+    this._apportionmentPercentage = 0;
   }
 
   /**

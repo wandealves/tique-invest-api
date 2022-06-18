@@ -1,6 +1,7 @@
 import _ from "lodash";
 
-import { PurchasedAsset } from "./purchased-asset";
+import { TicketPurchased } from "./ticket-purchased";
+import {WalletTicket} from './wallet-ticket';
 import { Fees } from "./fees";
 import { CurrencyCode } from "./enums";
 
@@ -11,7 +12,8 @@ export class Wallet {
   private _totalFees: number;
   private _currencyCode: CurrencyCode;
   private _userId: number;
-  private _purchasedAsset: PurchasedAsset[];
+  private _ticketsPurchased: TicketPurchased[];
+  private _walletTickets: WalletTicket[];
 
   set name(value: string) {
     this._name = value;
@@ -53,12 +55,12 @@ export class Wallet {
     return this._userId;
   }
 
-  set purchasedAsset(value: PurchasedAsset[]) {
-    this._purchasedAsset = value;
+  set ticketsPurchased(value: TicketPurchased[]) {
+    this._ticketsPurchased = value;
   }
 
-  get purchasedAsset() {
-    return this._purchasedAsset;
+  get ticketsPurchased() {
+    return this._ticketsPurchased;
   }
 
   constructor(
@@ -73,7 +75,8 @@ export class Wallet {
     this._totalFees = 0;
     this._currencyCode = currencyCode;
     this._userId = userId;
-    this._purchasedAsset = [];
+    this._ticketsPurchased = [];
+    this._walletTickets = []
   }
 
   /**
@@ -81,9 +84,9 @@ export class Wallet {
    *
    * @returns
    */
-  public calculateTotal(purchasedAssets: PurchasedAsset[]): number {
+  public calculateTotal(ticketsPurchased: TicketPurchased[]): number {
     return _.reduce(
-      purchasedAssets,
+      ticketsPurchased,
       function (sum, item) {
         return sum + item.calculateTotal();
       },
@@ -96,9 +99,9 @@ export class Wallet {
    *
    * @returns
    */
-  public calculateTotalAmount(purchasedAssets: PurchasedAsset[]): number {
+  public calculateTotalAmount(ticketsPurchased: TicketPurchased[]): number {
     return _.reduce(
-      purchasedAssets,
+      ticketsPurchased,
       function (sum, item) {
         return sum + item.quantity;
       },

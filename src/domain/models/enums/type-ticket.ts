@@ -1,4 +1,4 @@
-export enum TypeAsset {
+export enum TypeTicket {
   ACAO,
   BDR,
   CDB,
