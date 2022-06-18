@@ -9,7 +9,7 @@ datasource db {
 
 //Models
 
-enum TypeAsset {
+enum TypeTicket {
   ACAO
   BDR
   CDB
@@ -54,41 +54,57 @@ model User {
   @@map("users")
 }
 
-model Asset {
-  id      Int       @id @default(autoincrement())
-  name    String    @db.VarChar(500)
-  code    String    @unique @db.VarChar(10)
-  iconUrl String?   @db.VarChar()
-  type    TypeAsset
+model Ticket {
+  id      Int        @id @default(autoincrement())
+  name    String     @db.VarChar(500)
+  code    String     @unique @db.VarChar(10)
+  iconUrl String?    @db.VarChar()
+  type    TypeTicket
 
-  purchasedAsset PurchasedAsset[]
+  ticketPurchased TicketPurchased[]
 
+  WalletTicket WalletTicket[]
   @@index([code])
-  @@map("assets")
+  @@map("tickets")
 }
 
-model PurchasedAsset {
-  id                          Int             @id @default(autoincrement())
-  price                       Decimal         @default(0)
-  averagePrice                Decimal         @default(0)
-  quantity                    Float           @default(0)
-  total                       Decimal         @default(0)
-  totalWithFees               Decimal         @default(0)
-  fees                        Decimal         @default(0)
-  percentageApportionmentFees Decimal         @default(0)
-  date                        DateTime
-  month                       Int
-  year                        Int
-  brokerName                  String          @db.VarChar(200)
-  transactionType             TransactionType
-  currencyCode                CurrencyCode
+model TicketPurchased {
+  id                      Int             @id @default(autoincrement())
+  price                   Decimal         @default(0)
+  quantity                Float           @default(0)
+  total                   Decimal         @default(0)
+  totalWithFees           Decimal         @default(0)
+  apportionmentValue      Decimal         @default(0)
+  apportionmentPercentage Float           @default(0)
+  date                    DateTime
+  month                   Int
+  year                    Int
+  brokerName              String          @db.VarChar(200)
+  transactionType         TransactionType
+  currencyCode            CurrencyCode
 
-  assetId  Int
-  Asset    Asset   @relation(fields: [assetId], references: [id])
+  ticketId Int
+  ticket   Ticket  @relation(fields: [ticketId], references: [id])
   walletId Int?
   wallet   Wallet? @relation(fields: [walletId], references: [id])
 
-  @@map("purchasedAssets")
+  @@map("ticketsPurchased")
+}
+
+model WalletTicket {
+  id           Int          @id @default(autoincrement())
+  averagePrice Decimal      @default(0)
+  quantity     Float        @default(0)
+  brokerName   String       @db.VarChar(200)
+  currencyCode CurrencyCode
+
+  ticketId Int
+  ticket   Ticket @relation(fields: [ticketId], references: [id])
+
+  walletId Int?
+  Wallet   Wallet? @relation(fields: [walletId], references: [id])
+
+  @@map("walletTickets")
 }
 
 model Wallet {
@@ -98,7 +114,8 @@ model Wallet {
   totalFees    Decimal      @default(0)
   currencyCode CurrencyCode
 
-  purchasedAsset PurchasedAsset[]
+  ticketsPurchased TicketPurchased[]
+  WalletTickets    WalletTicket[]
 
   userId Int
   user   User @relation(fields: [userId], references: [id])
