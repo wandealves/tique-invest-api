@@ -88,7 +88,7 @@ export class Wallet {
     return _.reduce(
       ticketsPurchased,
       function (sum, item) {
-        return sum + item.calculateTotal();
+        return sum + item.total;
       },
       0
     );

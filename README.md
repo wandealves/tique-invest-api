@@ -103,7 +103,7 @@ custo unitário de aquisição = MP;
 
 ## Cálculo de venda total de um ticket
 
-VL = (P \* Q) - TX
+VL = (P x Q) - TX
 
 onde:
 
