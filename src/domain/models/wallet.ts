@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { conformsTo } from "lodash";
 
 import { TicketPurchased } from "./ticket-purchased";
 import { WalletTicket } from "./wallet-ticket";
@@ -9,6 +9,7 @@ export class Wallet {
   private _id: number;
   private _name: string;
   private _total: number;
+  private _totalQuantities: number = 0;
   private _totalFees: number;
   private _currencyCode: CurrencyCode;
   private _userId: number;
@@ -86,8 +87,8 @@ export class Wallet {
    *
    * @returns number
    */
-  public calculateTotalTickets(ticketsPurchased: TicketPurchased[]): number {
-    const total = _.reduce(
+  public calculateTotalTickets(ticketsPurchased: TicketPurchased[]): Wallet {
+    this._total = _.reduce(
       ticketsPurchased,
       function (sum, item) {
         return sum + item.total;
@@ -95,7 +96,7 @@ export class Wallet {
       0
     );
 
-    return total;
+    return this;
   }
 
   /**
@@ -103,14 +104,16 @@ export class Wallet {
    *
    * @returns
    */
-  public calculateTotalAmount(ticketsPurchased: TicketPurchased[]): number {
-    return _.reduce(
+  public calculateTotalQuantities(ticketsPurchased: TicketPurchased[]): Wallet {
+    this._totalQuantities = _.reduce(
       ticketsPurchased,
       function (sum, item) {
         return sum + item.quantity;
       },
       0
     );
+
+    return this;
   }
 
   /**
@@ -120,7 +123,7 @@ export class Wallet {
    *
    * @returns number
    */
-  public calculateTotalFees(fees: Fees[]): number {
+  public calculateTotalFees(fees: Fees[]): Wallet {
     const total = _.reduce(
       fees,
       function (sum, item) {
@@ -129,6 +132,51 @@ export class Wallet {
       0
     );
 
-    return _.toNumber(total.toFixed(2));
+    this._totalFees = _.toNumber(total.toFixed(2));
+
+    return this;
+  }
+
+  public calculateAveragePrice(): number {
+    return this._totalQuantities > 0 ? this._total / this._totalQuantities : 0;
+  }
+
+  /**
+   * Unificar linahs do mesmo tickets
+   *
+   * @param ticketsPurchased: Lista de tickets
+   *
+   * @returns TicketPurchased[]
+   */
+  public unifyTickets(ticketsPurchased: TicketPurchased[]): TicketPurchased[] {
+    if (_.size(ticketsPurchased) === 0) return ticketsPurchased;
+
+    const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketId);
+
+    const tickets: TicketPurchased[] = [];
+
+    for (const key in groups) {
+      const items = groups[key];
+
+      const price = this.calculateTotalQuantities(items)
+        .calculateTotalTickets(items)
+        .calculateAveragePrice();
+
+      const item = items[0];
+
+      const ticketPurchased = new TicketPurchased(
+        0,
+        price,
+        this._totalQuantities,
+        item.brokerName,
+        item.date,
+        item.transactionType,
+        item.currencyCode
+      );
+
+      tickets.push(ticketPurchased);
+    }
+
+    return tickets;
   }
 }

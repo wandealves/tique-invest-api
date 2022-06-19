@@ -72,10 +72,10 @@ describe("PurchasedAsset Domain", () => {
   test("Deve calcular a porcetagem em relação ao total geral de todos tickets", () => {
     const { ticketsPurchased, wallet } = makeSut();
 
-    const totalAllTickets = wallet.calculateTotalTickets(ticketsPurchased);
+    wallet.calculateTotalTickets(ticketsPurchased);
 
     const ticketPurchased = ticketsPurchased[0];
-    ticketPurchased.calculatePercentage(totalAllTickets);
+    ticketPurchased.calculatePercentage(wallet.total);
 
     expect(ticketPurchased.apportionmentPercentage).toEqual(0.2267);
   });
@@ -83,13 +83,12 @@ describe("PurchasedAsset Domain", () => {
   test("Deve calcular o valor do rateio", () => {
     const { ticketsPurchased, wallet, feeList } = makeSut();
 
-    const totalAllTickets = wallet.calculateTotalTickets(ticketsPurchased);
-    const totalFees = wallet.calculateTotalFees(feeList);
+    wallet.calculateTotalTickets(ticketsPurchased).calculateTotalFees(feeList);
 
     const ticketPurchased = ticketsPurchased[0];
     ticketPurchased
-      .calculatePercentage(totalAllTickets)
-      .calculateApportionmentValue(totalFees);
+      .calculatePercentage(wallet.total)
+      .calculateApportionmentValue(wallet.totalFees);
 
     expect(ticketPurchased.apportionmentValue).toEqual(0.1);
   });
