@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import { TicketPurchased } from "./ticket-purchased";
-import {WalletTicket} from './wallet-ticket';
+import { WalletTicket } from "./wallet-ticket";
 import { Fees } from "./fees";
 import { CurrencyCode } from "./enums";
 
@@ -76,26 +76,30 @@ export class Wallet {
     this._currencyCode = currencyCode;
     this._userId = userId;
     this._ticketsPurchased = [];
-    this._walletTickets = []
+    this._walletTickets = [];
   }
 
   /**
-   * Calcular o total comprado
+   * Calcular o total de tickets comprados
    *
-   * @returns
+   * @param ticketsPurchased: Lista de tickets
+   *
+   * @returns number
    */
-  public calculateTotal(ticketsPurchased: TicketPurchased[]): number {
-    return _.reduce(
+  public calculateTotalTickets(ticketsPurchased: TicketPurchased[]): number {
+    const total = _.reduce(
       ticketsPurchased,
       function (sum, item) {
         return sum + item.total;
       },
       0
     );
+
+    return total;
   }
 
   /**
-   * Calcular o qunatidade comprada
+   * Calcular o quantidades dos tickets
    *
    * @returns
    */
@@ -110,17 +114,21 @@ export class Wallet {
   }
 
   /**
-   * Calcular taxas
+   * Calcular o total de taxas
    *
-   * @returns
+   * @param ticketsPurchased: Lista de taxas
+   *
+   * @returns number
    */
   public calculateTotalFees(fees: Fees[]): number {
-    return _.reduce(
+    const total = _.reduce(
       fees,
       function (sum, item) {
         return sum + item.tax;
       },
       0
     );
+
+    return _.toNumber(total.toFixed(2));
   }
 }

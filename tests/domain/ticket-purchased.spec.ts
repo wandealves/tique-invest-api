@@ -1,19 +1,17 @@
 import _ from "lodash";
 
-import {
-  TicketPurchased,
-  Fees,
-  WalletCalculations
-} from "../../src/domain/models";
+import { TicketPurchased, Fees, Wallet } from "../../src/domain/models";
 import { TransactionType, CurrencyCode } from "../../src/domain/models/enums";
 
 interface SutTypes {
   ticketsPurchased: TicketPurchased[];
   feeList: Fees[];
-  walletCalculations: WalletCalculations;
+  wallet: Wallet;
 }
 
 const makeSut = (): SutTypes => {
+  const wallet = new Wallet(0, "wallet_valid", CurrencyCode.BRL, 1);
+
   const ticketsPurchased: TicketPurchased[] = [
     new TicketPurchased(
       0,
@@ -59,7 +57,7 @@ const makeSut = (): SutTypes => {
   return {
     ticketsPurchased,
     feeList,
-    walletCalculations: new WalletCalculations()
+    wallet
   };
 };
 
@@ -72,9 +70,9 @@ describe("PurchasedAsset Domain", () => {
   });
 
   test("Deve calcular a porcetagem em relação ao total geral de todos tickets", () => {
-    const { ticketsPurchased, walletCalculations } = makeSut();
-    const totalAllTickets =
-      walletCalculations.calculateTotalTickets(ticketsPurchased);
+    const { ticketsPurchased, wallet } = makeSut();
+
+    const totalAllTickets = wallet.calculateTotalTickets(ticketsPurchased);
 
     const ticketPurchased = ticketsPurchased[0];
     ticketPurchased.calculatePercentage(totalAllTickets);
@@ -83,10 +81,10 @@ describe("PurchasedAsset Domain", () => {
   });
 
   test("Deve calcular o valor do rateio", () => {
-    const { ticketsPurchased, walletCalculations, feeList } = makeSut();
-    const totalAllTickets =
-      walletCalculations.calculateTotalTickets(ticketsPurchased);
-    const totalFees = walletCalculations.calculateTotalFees(feeList);
+    const { ticketsPurchased, wallet, feeList } = makeSut();
+
+    const totalAllTickets = wallet.calculateTotalTickets(ticketsPurchased);
+    const totalFees = wallet.calculateTotalFees(feeList);
 
     const ticketPurchased = ticketsPurchased[0];
     ticketPurchased
