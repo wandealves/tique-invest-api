@@ -1,3 +1,3 @@
-export * from "./purchased-assets";
-export * from "./fees";
+export * from "./make-tickets-purchased";
+export * from "./make-fees";
 export * from "./create-purchased-assets";

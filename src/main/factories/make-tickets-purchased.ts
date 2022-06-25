@@ -1,14 +1,14 @@
 import _ from "lodash";
 
 import { TicketPurchased } from "../../domain/models";
-import { CreatePurchasedAssetDto } from "../../usecases/dtos";
+import { CreateTicketPurchasedDto } from "../../usecases/dtos";
 import {
   stringToCurrencyCode,
   stringToTransactionType
 } from "../../shared/utils";
 
-export const makePurchasedAssets = (
-  dtos: CreatePurchasedAssetDto[]
+export const makeTicketsPurchased = (
+  dtos: CreateTicketPurchasedDto[]
 ): TicketPurchased[] => {
   return _.map(
     dtos,
@@ -17,7 +17,7 @@ export const makePurchasedAssets = (
         0,
         dto.price,
         dto.quantity,
-        1,
+        dto.ticketCode,
         dto.brokerName,
         dto.date,
         stringToTransactionType(dto.transactionType),

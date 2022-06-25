@@ -1,5 +1,5 @@
-export interface CreatePurchasedAssetDto {
-  codeAsset: string;
+export interface CreateTicketPurchasedDto {
+  ticketCode: string;
   price: number;
   quantity: number;
   date: Date;

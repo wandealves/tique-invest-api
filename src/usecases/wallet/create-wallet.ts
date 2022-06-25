@@ -9,7 +9,7 @@ import {
 } from "../interfaces/repositories";
 import { CreateWalletDto, CreateWalletResponseDto } from "../dtos";
 import { Wallet, Fees } from "../../domain/models";
-import { makePurchasedAssets, makeFees } from "../../main/factories";
+import { makeTicketsPurchased, makeFees } from "../../main/factories";
 import { CreateWalletError } from "../errors";
 import { Either, left, right } from "../../shared";
 import { stringToCurrencyCode, currencyCodeToString } from "../../shared/utils";
@@ -32,7 +32,23 @@ export class CreateWallet implements ICreateWallet {
   async execute(
     dto: CreateWalletDto
   ): Promise<Either<CreateWalletError, CreateWalletResponseDto>> {
-   /* const createPurchasedAssets = _.get(dto, "createPurchasedAssets", []);
+    const tickets = _.get(dto, "tickets", []);
+    if (_.size(tickets) === 0)
+      return left(new CreateWalletError("Nenhum ticket encontrado"));
+
+    const fees: Fees[] = makeFees(dto.fees);
+    const ticketsPurchased = makeTicketsPurchased(dto.tickets);
+
+    const wallet = new Wallet(
+      0,
+      dto.name,
+      stringToCurrencyCode(dto.currencyCode),
+      dto.userId
+    );
+
+    const unifyTickets = wallet.unifyTickets(ticketsPurchased);
+
+    /* const createPurchasedAssets = _.get(dto, "createPurchasedAssets", []);
     if (_.size(createPurchasedAssets) === 0)
       return left(new CreateWalletError("Nenhum ativo encontrado"));
 
@@ -79,9 +95,9 @@ export class CreateWallet implements ICreateWallet {
     });*/
     return right({
       id: 1,
-      name: '',
-      currencyCode: '',
+      name: "",
+      currencyCode: "",
       userId: 0
-    })
+    });
   }
 }
