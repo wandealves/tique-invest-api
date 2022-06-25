@@ -28,6 +28,10 @@ export class Wallet {
     this._total = value;
   }
 
+  get totalQuantities() {
+    return this._totalQuantities;
+  }
+
   get total() {
     return this._total;
   }
@@ -142,7 +146,7 @@ export class Wallet {
   }
 
   /**
-   * Unificar linahs do mesmo tickets
+   * Unificar linhas do mesmo tickets
    *
    * @param ticketsPurchased: Lista de tickets
    *
@@ -168,6 +172,7 @@ export class Wallet {
         0,
         price,
         this._totalQuantities,
+        item.ticketId,
         item.brokerName,
         item.date,
         item.transactionType,

@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { PurchasedAsset } from "../../domain/models";
+import { TicketPurchased } from "../../domain/models";
 import { CreatePurchasedAssetDto } from "../../usecases/dtos";
 import {
   stringToCurrencyCode,
@@ -9,11 +9,11 @@ import {
 
 export const makePurchasedAssets = (
   dtos: CreatePurchasedAssetDto[]
-): PurchasedAsset[] => {
+): TicketPurchased[] => {
   return _.map(
     dtos,
     dto =>
-      new PurchasedAsset(
+      new TicketPurchased(
         0,
         dto.price,
         dto.quantity,

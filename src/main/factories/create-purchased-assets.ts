@@ -1,22 +1,22 @@
 import _ from "lodash";
 
-import { PurchasedAsset } from "../../domain/models";
+import { TicketPurchased } from "../../domain/models";
 import {
   transactionTypeToTransactionTypePrisma,
   currencyCodeToCurrencyCodePrisma
 } from "../../shared/utils";
 
 export const makeCreatePurchasedAssets = (
-  purchasedAssets: PurchasedAsset[]
+  purchasedAssets: TicketPurchased[]
 ) => {
   return _.map(purchasedAssets, asset => ({
     price: asset.price,
-    averagePrice: asset.averagePrice,
+   // averagePrice: asset.averagePrice,
     quantity: asset.quantity,
     total: asset.total,
     totalWithFees: asset.totalWithFees,
-    fees: asset.fees,
-    percentageApportionmentFees: asset.percentageApportionmentFees,
+   // fees: asset.fees,
+    //percentageApportionmentFees: asset.percentageApportionmentFees,
     date: new Date(asset.date),
     month: asset.month,
     year: asset.year,
@@ -25,6 +25,6 @@ export const makeCreatePurchasedAssets = (
       asset.transactionType
     ),
     currencyCode: currencyCodeToCurrencyCodePrisma(asset.currencyCode),
-    assetId: asset.assetId
+    //assetId: asset.assetId
   }));
 };

@@ -119,3 +119,15 @@ onde:
 CT = Custo total após venda;
 VL = Venda liquida;
 CU = Custo unitário;
+
+## Venda ticket
+
+venda 10 unidades a 10 reais = 100 reais => taxas: 5 => 95 reais venda liquida; 95/10 = cada uma foi vendida 9.50 reais;
+
+Olhar para carteira tem 8 reais a unidade pelo cálculo, então 9.50 - 8 = ganyhou 1.50 por unidade, como foi vendida 10 unidade então teve um lucro de 15 reais;
+
+Se teve resultado positivo guarda esse valor e faz o mesmo para todas as vendas do mês, agrupar o resultados por tipos de ativos
+
+Tipos ativos: Ações, BDRs, ETF, Opções, FIIS
+
+Tem que atualizar a carteiar diminuindo a quantidade

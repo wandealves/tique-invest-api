@@ -17,6 +17,7 @@ const makeSut = (): SutTypes => {
       0,
       114.55,
       3,
+      1,
       "broker_valid",
       new Date(2021, 1, 5),
       TransactionType.COMPRA,
@@ -26,6 +27,7 @@ const makeSut = (): SutTypes => {
       0,
       178.96,
       5,
+      2,
       "broker_valid",
       new Date(2021, 1, 5),
       TransactionType.COMPRA,
@@ -35,6 +37,7 @@ const makeSut = (): SutTypes => {
       0,
       10.45,
       4,
+      3,
       "broker_valid",
       new Date(2021, 1, 5),
       TransactionType.COMPRA,
@@ -45,6 +48,7 @@ const makeSut = (): SutTypes => {
       0,
       117.69,
       2,
+      4,
       "broker_valid",
       new Date(2021, 1, 5),
       TransactionType.COMPRA,
@@ -61,7 +65,7 @@ const makeSut = (): SutTypes => {
   };
 };
 
-describe("PurchasedAsset Domain", () => {
+describe("Dominio -> Tickets", () => {
   test("Deve calcular total do ticket", () => {
     const { ticketsPurchased } = makeSut();
     const ticketPurchased = ticketsPurchased[0];

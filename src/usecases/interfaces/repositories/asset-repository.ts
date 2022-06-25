@@ -1,13 +1,13 @@
-import { Asset } from "../../../domain/models";
+import { Ticket } from "../../../domain/models";
 
 export interface IAssetRepository {
-  create(entity: Asset): Promise<number>;
-  update(id: number, entity: Asset): Promise<number>;
+  create(entity: Ticket): Promise<number>;
+  update(id: number, entity: Ticket): Promise<number>;
   delete(id: number): Promise<void>;
 
-  all: () => Promise<Asset[] | null>;
-  filter: (query: any) => Promise<Asset[] | null>;
-  findOne: (id: number) => Promise<Asset | null>;
-  findCode: (code: string) => Promise<Asset | null>;
-  find: (query: any) => Promise<Asset | null>;
+  all: () => Promise<Ticket[] | null>;
+  filter: (query: any) => Promise<Ticket[] | null>;
+  findOne: (id: number) => Promise<Ticket | null>;
+  findCode: (code: string) => Promise<Ticket | null>;
+  find: (query: any) => Promise<Ticket | null>;
 }

@@ -129,6 +129,7 @@ export class TicketPurchased {
     id: number,
     price: number,
     quantity: number,
+    ticketId: number,
     brokerName: string,
     date: Date,
     transactionType: TransactionType,
@@ -146,7 +147,7 @@ export class TicketPurchased {
     this._transactionType = transactionType;
     this._currencyCode = currencyCode;
 
-    this._ticketId = 0;
+    this._ticketId = ticketId;
     this._walletId = 0;
 
     this._totalWithFees = 0;
@@ -157,7 +158,7 @@ export class TicketPurchased {
   }
 
   /**
-   * Calcula o total comprado
+   * Cálcular o total comprado
    *
    * @returns this
    */
@@ -168,7 +169,7 @@ export class TicketPurchased {
   }
 
   /***
-   * Calcular a procetagem em relação ao total geral de todos tickets
+   * Cálcular a porcetagem em relação ao total geral de todos tickets
    *
    * @param totalAllTickets: Total de todos tickets
    *
@@ -185,7 +186,7 @@ export class TicketPurchased {
   }
 
   /***
-   * Calcular o valor do rateio
+   * Cálcular o valor do rateio
    *
    * @param totalAllTickets: Total das taxas
    *

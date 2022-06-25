@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 
-import { Wallet, PurchasedAsset } from "../../domain/models";
+import { Wallet, TicketPurchased } from "../../domain/models";
 import { IWalletRepository } from "../../usecases/interfaces/repositories";
 import { makeCreatePurchasedAssets } from "../../main/factories";
 import {
@@ -18,7 +18,7 @@ export class WalletRepository implements IWalletRepository {
 
   async create(
     entity: Wallet,
-    purchasedAssets: PurchasedAsset[]
+    purchasedAssets: TicketPurchased[]
   ): Promise<number> {
     try {
       const assets = makeCreatePurchasedAssets(purchasedAssets);
@@ -30,9 +30,9 @@ export class WalletRepository implements IWalletRepository {
           totalFees: entity.totalFees,
           currencyCode: currencyCodeToCurrencyCodePrisma(entity.currencyCode),
           userId: entity.userId,
-          purchasedAsset: {
-            create: assets
-          }
+         // purchasedAsset: {
+           // create: assets
+          //}
         }
       });
 

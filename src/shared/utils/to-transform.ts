@@ -1,5 +1,5 @@
 import {
-  TypeAsset,
+  TypeTicket,
   CurrencyCode as CurrencyCodePrisma,
   TransactionType as TransactionTypePrisma
 } from "@prisma/client";
@@ -7,7 +7,7 @@ import {
 import {
   CurrencyCode,
   TransactionType,
-  TypeAsset as TypeAssetEntity
+  TypeTicket as TypeAssetEntity
 } from "../../domain/models/enums";
 
 export function stringToCurrencyCode(value: string) {
@@ -46,53 +46,53 @@ export function transactionTypeToTransactionTypePrisma(value: TransactionType) {
 export function typeAssetToPrismaTypeAsset(value: TypeAssetEntity) {
   switch (value) {
     case TypeAssetEntity.ACAO:
-      return TypeAsset.ACAO;
+      return TypeTicket.ACAO;
     case TypeAssetEntity.BDR:
-      return TypeAsset.BDR;
+      return TypeTicket.BDR;
     case TypeAssetEntity.CDB:
-      return TypeAsset.CDB;
+      return TypeTicket.CDB;
     case TypeAssetEntity.COE:
-      return TypeAsset.COE;
+      return TypeTicket.COE;
     case TypeAssetEntity.FIIS:
-      return TypeAsset.FIIS;
+      return TypeTicket.FIIS;
     case TypeAssetEntity.LC:
-      return TypeAsset.LC;
+      return TypeTicket.LC;
     case TypeAssetEntity.LCA:
-      return TypeAsset.LCA;
+      return TypeTicket.LCA;
     case TypeAssetEntity.LCI:
-      return TypeAsset.LCI;
+      return TypeTicket.LCI;
     case TypeAssetEntity.MULTIMERCADO:
-      return TypeAsset.MULTIMERCADO;
+      return TypeTicket.MULTIMERCADO;
     case TypeAssetEntity.OPCOES:
-      return TypeAsset.OPCOES;
+      return TypeTicket.OPCOES;
     case TypeAssetEntity.TESOURODIRETO:
-      return TypeAsset.TESOURODIRETO;
+      return TypeTicket.TESOURODIRETO;
   }
 }
 
-export function typeAssetPrismaToTypeAsset(value: TypeAsset) {
+export function typeAssetPrismaToTypeAsset(value: TypeTicket) {
   switch (value) {
-    case TypeAsset.ACAO:
+    case TypeTicket.ACAO:
       return TypeAssetEntity.ACAO;
-    case TypeAsset.BDR:
+    case TypeTicket.BDR:
       return TypeAssetEntity.BDR;
-    case TypeAsset.CDB:
+    case TypeTicket.CDB:
       return TypeAssetEntity.CDB;
-    case TypeAsset.COE:
+    case TypeTicket.COE:
       return TypeAssetEntity.COE;
-    case TypeAsset.FIIS:
+    case TypeTicket.FIIS:
       return TypeAssetEntity.FIIS;
-    case TypeAsset.LC:
+    case TypeTicket.LC:
       return TypeAssetEntity.LC;
-    case TypeAsset.LCA:
+    case TypeTicket.LCA:
       return TypeAssetEntity.LCA;
-    case TypeAsset.LCI:
+    case TypeTicket.LCI:
       return TypeAssetEntity.LCI;
-    case TypeAsset.MULTIMERCADO:
+    case TypeTicket.MULTIMERCADO:
       return TypeAssetEntity.MULTIMERCADO;
-    case TypeAsset.OPCOES:
+    case TypeTicket.OPCOES:
       return TypeAssetEntity.OPCOES;
-    case TypeAsset.TESOURODIRETO:
+    case TypeTicket.TESOURODIRETO:
       return TypeAssetEntity.TESOURODIRETO;
   }
 }
