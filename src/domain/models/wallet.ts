@@ -155,7 +155,7 @@ export class Wallet {
   public unifyTickets(ticketsPurchased: TicketPurchased[]): TicketPurchased[] {
     if (_.size(ticketsPurchased) === 0) return ticketsPurchased;
 
-    const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketId);
+    const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketCode);
 
     const tickets: TicketPurchased[] = [];
 
@@ -172,7 +172,7 @@ export class Wallet {
         0,
         price,
         this._totalQuantities,
-        item.ticketId,
+        item.ticketCode,
         item.brokerName,
         item.date,
         item.transactionType,

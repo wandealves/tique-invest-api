@@ -18,6 +18,7 @@ export class TicketPurchased {
   private _transactionType: TransactionType;
   private _currencyCode: CurrencyCode;
 
+  private _ticketCode: string;
   private _ticketId: number;
   private _walletId: number;
 
@@ -109,6 +110,14 @@ export class TicketPurchased {
     return this._currencyCode;
   }
 
+  get ticketCode(): string {
+    return this._ticketCode;
+  }
+
+  set ticketCode(value: string) {
+    this._ticketCode = value;
+  }
+
   get ticketId(): number {
     return this._ticketId;
   }
@@ -129,7 +138,7 @@ export class TicketPurchased {
     id: number,
     price: number,
     quantity: number,
-    ticketId: number,
+    ticketCode: string,
     brokerName: string,
     date: Date,
     transactionType: TransactionType,
@@ -147,7 +156,8 @@ export class TicketPurchased {
     this._transactionType = transactionType;
     this._currencyCode = currencyCode;
 
-    this._ticketId = ticketId;
+    this._ticketCode = ticketCode;
+    this._ticketId = 0;
     this._walletId = 0;
 
     this._totalWithFees = 0;

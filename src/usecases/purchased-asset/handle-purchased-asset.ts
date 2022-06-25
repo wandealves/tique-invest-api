@@ -1,7 +1,7 @@
 import _ from "lodash";
 
 import { IHandlePurchasedAsset, HandlePurchasedAssetData } from "../interfaces";
-import { PurchasedAsset, Asset } from "../../domain/models";
+import { TicketPurchased } from "../../domain/models";
 import { IAssetRepository } from "../interfaces/repositories";
 import { handlePurchasedAssetError } from "../errors";
 import { Either, left, right } from "../../shared";
@@ -19,8 +19,8 @@ export class HandlePurchasedAsset implements IHandlePurchasedAsset {
 
   async execute(
     data: HandlePurchasedAssetData
-  ): Promise<Either<handlePurchasedAssetError, PurchasedAsset[]>> {
-    if (!data)
+  ): Promise<Either<handlePurchasedAssetError, TicketPurchased[]>> {
+    /*if (!data)
       return left(new handlePurchasedAssetError("Dados informado inválidos"));
 
     if (_.size(data.dtos) === 0)
@@ -37,10 +37,12 @@ export class HandlePurchasedAsset implements IHandlePurchasedAsset {
     if (_.size(assets) === 0)
       return left(new handlePurchasedAssetError("Nenhum ativo encontrado"));
 
-    return right(this.handleNewPurchasedAsset(data, assets));
+    return right(this.handleNewPurchasedAsset(data, assets));*/
+
+    return left(new handlePurchasedAssetError("Dados informado inválidos"));
   }
 
-  handleNewPurchasedAsset(
+ /* handleNewPurchasedAsset(
     data: HandlePurchasedAssetData,
     assets: Asset[] | null
   ) {
@@ -89,5 +91,5 @@ export class HandlePurchasedAsset implements IHandlePurchasedAsset {
     }
 
     return purchasedAssets;
-  }
+  }*/
 }

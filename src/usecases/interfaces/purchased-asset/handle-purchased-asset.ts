@@ -1,4 +1,4 @@
-import { PurchasedAsset } from "../../../domain/models";
+import { TicketPurchased } from "../../../domain/models";
 import { CreatePurchasedAssetDto } from "../../dtos";
 import { CreateWalletError } from "../../errors";
 import { Either, left } from "../../../shared";
@@ -14,5 +14,5 @@ export interface HandlePurchasedAssetData {
 export interface IHandlePurchasedAsset {
   execute: (
     data: HandlePurchasedAssetData
-  ) => Promise<Either<CreateWalletError, PurchasedAsset[]>>;
+  ) => Promise<Either<CreateWalletError, TicketPurchased[]>>;
 }

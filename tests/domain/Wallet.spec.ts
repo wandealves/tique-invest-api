@@ -53,7 +53,7 @@ describe("Dominio -> Cateriras", () => {
     const results = wallet.unifyTickets(unifyTickets);
     const resultFind = _.find(
       results,
-      result => _.get(result, "ticketId") === 1
+      result => _.get(result, "ticketCode") === 'ATV01'
     );
 
     expect(_.get(resultFind, "price")).toEqual(9.95);

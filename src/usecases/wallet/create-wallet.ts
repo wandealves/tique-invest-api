@@ -32,7 +32,7 @@ export class CreateWallet implements ICreateWallet {
   async execute(
     dto: CreateWalletDto
   ): Promise<Either<CreateWalletError, CreateWalletResponseDto>> {
-    const createPurchasedAssets = _.get(dto, "createPurchasedAssets", []);
+   /* const createPurchasedAssets = _.get(dto, "createPurchasedAssets", []);
     if (_.size(createPurchasedAssets) === 0)
       return left(new CreateWalletError("Nenhum ativo encontrado"));
 
@@ -76,6 +76,12 @@ export class CreateWallet implements ICreateWallet {
       name: wallet.name,
       currencyCode: currencyCodeToString(wallet.currencyCode),
       userId: wallet.userId
-    });
+    });*/
+    return right({
+      id: 1,
+      name: '',
+      currencyCode: '',
+      userId: 0
+    })
   }
 }
