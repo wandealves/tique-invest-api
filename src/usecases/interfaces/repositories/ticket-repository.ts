@@ -1,6 +1,6 @@
 import { Ticket } from "../../../domain/models";
 
-export interface IAssetRepository {
+export interface ITicketRepository {
   create(entity: Ticket): Promise<number>;
   update(id: number, entity: Ticket): Promise<number>;
   delete(id: number): Promise<void>;

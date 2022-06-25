@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
 import _ from "lodash";
 
-import { HandlePurchasedAsset } from "../purchased-asset/handle-purchased-asset";
+import { TransformTickets } from "../transform-tickets/transform-tickets";
 import { ICreateWallet } from "../interfaces";
 import {
   IWalletRepository,
-  IAssetRepository
+  ITicketRepository
 } from "../interfaces/repositories";
 import { CreateWalletDto, CreateWalletResponseDto } from "../dtos";
 import { Wallet, Fees } from "../../domain/models";
@@ -17,16 +17,16 @@ import { stringToCurrencyCode, currencyCodeToString } from "../../shared/utils";
 @injectable()
 export class CreateWallet implements ICreateWallet {
   private readonly walletRepository: IWalletRepository;
-  private readonly assetRepository: IAssetRepository;
+  private readonly ticketRepository: ITicketRepository;
 
   constructor(
     @inject("IWalletRepository")
     walletRepository: IWalletRepository,
     @inject("IAssetRepository")
-    assetRepository: IAssetRepository
+    ticketRepository: ITicketRepository
   ) {
     this.walletRepository = walletRepository;
-    this.assetRepository = assetRepository;
+    this.ticketRepository = ticketRepository;
   }
 
   async execute(
@@ -46,7 +46,33 @@ export class CreateWallet implements ICreateWallet {
       dto.userId
     );
 
-    const unifyTickets = wallet.unifyTickets(ticketsPurchased);
+    wallet
+      .calculateTotalTickets(ticketsPurchased)
+      .calculateTotalQuantities(ticketsPurchased)
+      .calculateTotalFees(fees);
+
+    const unifyTickets = wallet.unifyTickets(
+      ticketsPurchased,
+      wallet.total,
+      wallet.totalFees
+    );
+
+    const transformTickets = new TransformTickets(this.ticketRepository);
+    const transformTicketsResult = await transformTickets.execute(unifyTickets);
+    if (transformTicketsResult.isLeft())
+      return left(new CreateWalletError(transformTicketsResult.value.message));
+
+    const result = await this.walletRepository.create(
+      wallet,
+      transformTicketsResult.value
+    );
+
+    return right({
+      id: result,
+      name: wallet.name,
+      currencyCode: currencyCodeToString(wallet.currencyCode),
+      userId: wallet.userId
+    });
 
     /* const createPurchasedAssets = _.get(dto, "createPurchasedAssets", []);
     if (_.size(createPurchasedAssets) === 0)
@@ -93,11 +119,5 @@ export class CreateWallet implements ICreateWallet {
       currencyCode: currencyCodeToString(wallet.currencyCode),
       userId: wallet.userId
     });*/
-    return right({
-      id: 1,
-      name: "",
-      currencyCode: "",
-      userId: 0
-    });
   }
 }

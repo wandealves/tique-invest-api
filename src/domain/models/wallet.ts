@@ -152,7 +152,11 @@ export class Wallet {
    *
    * @returns TicketPurchased[]
    */
-  public unifyTickets(ticketsPurchased: TicketPurchased[]): TicketPurchased[] {
+  public unifyTickets(
+    ticketsPurchased: TicketPurchased[],
+    totalAllTickets: number,
+    totalFees: number
+  ): TicketPurchased[] {
     if (_.size(ticketsPurchased) === 0) return ticketsPurchased;
 
     const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketCode);
@@ -178,6 +182,12 @@ export class Wallet {
         item.transactionType,
         item.currencyCode
       );
+
+      item
+        .calculateTotal()
+        .calculatePercentage(totalAllTickets)
+        .calculateApportionmentValue(totalFees)
+        .calculateTotalWithFees(totalAllTickets, totalFees);
 
       tickets.push(ticketPurchased);
     }
