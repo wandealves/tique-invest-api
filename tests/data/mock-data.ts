@@ -1,3 +1,6 @@
+import { TicketPurchased } from "../../src/domain/models";
+import { TransactionType, CurrencyCode } from "../../src/domain/models/enums";
+
 export const createWalletDto = {
   name: "Carteira 01",
   currencyCode: "BRL",
@@ -51,3 +54,91 @@ export const createWalletDto = {
     }
   ]
 };
+
+export const tickets: TicketPurchased[] = [
+  new TicketPurchased(
+    0,
+    114.55,
+    3,
+    1,
+    "broker_valid",
+    new Date(2021, 1, 5),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL
+  ),
+  new TicketPurchased(
+    0,
+    178.96,
+    5,
+    2,
+    "broker_valid",
+    new Date(2021, 1, 5),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL
+  ),
+  new TicketPurchased(
+    0,
+    10.45,
+    4,
+    3,
+    "broker_valid",
+    new Date(2021, 1, 5),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL
+  ),
+
+  new TicketPurchased(
+    0,
+    117.69,
+    2,
+    4,
+    "broker_valid",
+    new Date(2021, 1, 5),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL
+  )
+];
+
+export const unifyTickets: TicketPurchased[] = [
+  new TicketPurchased(
+    0,
+    10.2,
+    3,
+    1,
+    "broker_valid",
+    new Date(2021, 1, 5),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL
+  ),
+  new TicketPurchased(
+    0,
+    9.8,
+    5,
+    1,
+    "broker_valid",
+    new Date(2021, 1, 5),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL
+  ),
+  new TicketPurchased(
+    0,
+    10.45,
+    4,
+    2,
+    "broker_valid",
+    new Date(2021, 1, 5),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL
+  ),
+
+  new TicketPurchased(
+    0,
+    117.69,
+    2,
+    3,
+    "broker_valid",
+    new Date(2021, 1, 5),
+    TransactionType.COMPRA,
+    CurrencyCode.BRL
+  )
+];
