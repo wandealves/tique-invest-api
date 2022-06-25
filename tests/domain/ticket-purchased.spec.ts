@@ -1,9 +1,9 @@
 import _ from "lodash";
 
 import { TicketPurchased, Fees, Wallet } from "../../src/domain/models";
-import { TransactionType, CurrencyCode } from "../../src/domain/models/enums";
+import { CurrencyCode } from "../../src/domain/models/enums";
 
-import { tickets, unifyTickets } from "../data/mock-data";
+import { tickets } from "../data/mock-data";
 
 interface SutTypes {
   tickets: TicketPurchased[];
