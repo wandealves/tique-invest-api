@@ -141,10 +141,6 @@ export class Wallet {
     return this;
   }
 
-  public calculateAveragePrice(): number {
-    return this._totalQuantities > 0 ? this._total / this._totalQuantities : 0;
-  }
-
   /**
    * Unificar linhas do mesmo tickets
    *
@@ -152,11 +148,7 @@ export class Wallet {
    *
    * @returns TicketPurchased[]
    */
-  public unifyTickets(
-    ticketsPurchased: TicketPurchased[],
-    totalAllTickets: number,
-    totalFees: number
-  ): TicketPurchased[] {
+  public unifyTickets(ticketsPurchased: TicketPurchased[]): TicketPurchased[] {
     if (_.size(ticketsPurchased) === 0) return ticketsPurchased;
 
     const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketCode);
@@ -166,28 +158,25 @@ export class Wallet {
     for (const key in groups) {
       const items = groups[key];
 
-      const price = this.calculateTotalQuantities(items)
-        .calculateTotalTickets(items)
-        .calculateAveragePrice();
+      this.calculateTotalTickets(items).calculateTotalQuantities(items);
 
       const item = items[0];
+      item.calculateAveragePrice(this.totalQuantities, this.total);
 
       const ticketPurchased = new TicketPurchased(
         0,
-        price,
+        item.price,
         this._totalQuantities,
         item.ticketCode,
         item.brokerName,
         item.date,
         item.transactionType,
         item.currencyCode
-      );
-
-      item
+      )
         .calculateTotal()
-        .calculatePercentage(totalAllTickets)
-        .calculateApportionmentValue(totalFees)
-        .calculateTotalWithFees(totalAllTickets, totalFees);
+        .calculatePercentage(this.total)
+        .calculateApportionmentValue(this.totalFees)
+        .calculateTotalWithFees(this.total, this.totalFees);
 
       tickets.push(ticketPurchased);
     }

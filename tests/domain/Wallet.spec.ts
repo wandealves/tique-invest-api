@@ -48,12 +48,17 @@ describe("Dominio -> Cateriras", () => {
   });
 
   test("Deve unificar linhas do mesmo tickets", () => {
-    const { wallet } = makeSut();
+    const { wallet, tickets, feeList } = makeSut();
 
-    const results = wallet.unifyTickets(unifyTickets);
+    const results = wallet
+      .calculateTotalTickets(tickets)
+      .calculateTotalQuantities(tickets)
+      .calculateTotalFees(feeList)
+      .unifyTickets(unifyTickets);
+
     const resultFind = _.find(
       results,
-      result => _.get(result, "ticketCode") === 'ATV01'
+      result => _.get(result, "ticketCode") === "ATV01"
     );
 
     expect(_.get(resultFind, "price")).toEqual(9.95);

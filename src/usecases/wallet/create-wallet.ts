@@ -46,16 +46,7 @@ export class CreateWallet implements ICreateWallet {
       dto.userId
     );
 
-    wallet
-      .calculateTotalTickets(ticketsPurchased)
-      .calculateTotalQuantities(ticketsPurchased)
-      .calculateTotalFees(fees);
-
-    const unifyTickets = wallet.unifyTickets(
-      ticketsPurchased,
-      wallet.total,
-      wallet.totalFees
-    );
+    const unifyTickets = wallet.unifyTickets(ticketsPurchased);
 
     const transformTickets = new TransformTickets(this.ticketRepository);
     const transformTicketsResult = await transformTickets.execute(unifyTickets);
@@ -73,51 +64,5 @@ export class CreateWallet implements ICreateWallet {
       currencyCode: currencyCodeToString(wallet.currencyCode),
       userId: wallet.userId
     });
-
-    /* const createPurchasedAssets = _.get(dto, "createPurchasedAssets", []);
-    if (_.size(createPurchasedAssets) === 0)
-      return left(new CreateWalletError("Nenhum ativo encontrado"));
-
-    const fees: Fees[] = makeFees(dto.fees);
-    const newPurchasedAssets = makePurchasedAssets(dto.createPurchasedAssets);
-
-    const wallet = new Wallet(
-      0,
-      dto.name,
-      stringToCurrencyCode(dto.currencyCode),
-      dto.userId
-    );
-
-    const total = wallet.calculateTotal(newPurchasedAssets);
-    const totalFees = wallet.calculateTotalFees(fees);
-    const totalAmount = wallet.calculateTotalAmount(newPurchasedAssets);
-
-    wallet.total = total;
-    wallet.totalFees = totalFees;
-
-    const handlePurchasedAsset = new HandlePurchasedAsset(this.assetRepository);
-
-    const purchasedAssets = await handlePurchasedAsset.execute({
-      walletId: 0,
-      totalAssetsPurchased: total,
-      totalAmount: totalAmount,
-      totalFees: totalFees,
-      dtos: createPurchasedAssets
-    });
-
-    if (purchasedAssets.isLeft())
-      return left(new CreateWalletError(purchasedAssets.value.message));
-
-    const result = await this.walletRepository.create(
-      wallet,
-      purchasedAssets.value
-    );
-
-    return right({
-      id: result,
-      name: wallet.name,
-      currencyCode: currencyCodeToString(wallet.currencyCode),
-      userId: wallet.userId
-    });*/
   }
 }

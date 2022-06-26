@@ -211,6 +211,23 @@ export class TicketPurchased {
   }
 
   /***
+   * Cálcular preço média
+   *
+   * @param totalQuantities: Quantidade total do ticket
+   * @param total: Total do ticket
+   *
+   * @returns this
+   */
+  public calculateAveragePrice(
+    totalQuantities: number,
+    total: number
+  ): TicketPurchased {
+    this._price = totalQuantities > 0 ? total / totalQuantities : 0;
+
+    return this;
+  }
+
+  /***
    * Calcular o valor do rateio
    *
    * @param totalAllTickets: Total de todos tickets
