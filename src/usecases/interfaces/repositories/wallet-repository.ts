@@ -1,7 +1,7 @@
-import { Wallet, PurchasedAsset } from "../../../domain/models";
+import { Wallet, TicketPurchased } from "../../../domain/models";
 
 export interface IWalletRepository {
-  create(entity: Wallet, purchasedAssets: PurchasedAsset[]): Promise<number>;
+  create(entity: Wallet, purchasedAssets: TicketPurchased[]): Promise<number>;
   update(id: number, entity: Wallet): Promise<number>;
   delete(id: number): Promise<void>;
 
