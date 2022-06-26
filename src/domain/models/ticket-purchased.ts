@@ -164,50 +164,54 @@ export class TicketPurchased {
     this._apportionmentValue = 0;
     this._apportionmentPercentage = 0;
 
-    this.calculateTotal();
+    this._total = this.calculateTotal();
   }
 
   /**
    * Cálcular o total comprado
    *
-   * @returns this
+   * @returns number
    */
-  public calculateTotal(): TicketPurchased {
-    this._total = this.price * this.quantity;
+  public calculateTotal(): number {
+    const total = this.price * this.quantity;
 
-    return this;
+    return _.toNumber(total.toFixed(2));
   }
 
   /***
    * Cálcular a porcetagem em relação ao total geral de todos tickets
    *
    * @param totalAllTickets: Total de todos tickets
+   * @param ticketTotal: Total do ticket
    *
-   * @returns this
+   * @returns number
    */
-  public calculatePercentage(totalAllTickets: number): TicketPurchased {
-    if (!totalAllTickets) return this;
+  public calculatePercentage(
+    totalAllTickets: number,
+    ticketTotal: number
+  ): number {
+    if (!totalAllTickets) return 0;
 
-    const percentage = this.total / totalAllTickets;
+    const percentage = ticketTotal / totalAllTickets;
 
-    this._apportionmentPercentage = _.toNumber(percentage.toFixed(4));
-
-    return this;
+    return _.toNumber(percentage.toFixed(4));
   }
 
   /***
    * Cálcular o valor do rateio
    *
    * @param totalAllTickets: Total das taxas
+   * @param apportionmentPercentage: porcentagem do rateio do ticket
    *
-   * @returns this
+   * @returns number
    */
-  public calculateApportionmentValue(totalFees: number): TicketPurchased {
-    const apportionmentValue = totalFees * this._apportionmentPercentage;
+  public calculateApportionmentValue(
+    totalFees: number,
+    apportionmentPercentage: number
+  ): number {
+    const apportionmentValue = totalFees * apportionmentPercentage;
 
-    this._apportionmentValue = _.toNumber(apportionmentValue.toFixed(2));
-
-    return this;
+    return _.toNumber(apportionmentValue.toFixed(2));
   }
 
   /***
@@ -216,15 +220,12 @@ export class TicketPurchased {
    * @param totalQuantities: Quantidade total do ticket
    * @param total: Total do ticket
    *
-   * @returns this
+   * @returns number
    */
-  public calculateAveragePrice(
-    totalQuantities: number,
-    total: number
-  ): TicketPurchased {
-    this._price = totalQuantities > 0 ? total / totalQuantities : 0;
+  public calculateAveragePrice(totalQuantities: number, total: number): number {
+    const price = totalQuantities > 0 ? total / totalQuantities : 0;
 
-    return this;
+    return _.toNumber(price.toFixed(2));
   }
 
   /***
@@ -232,21 +233,20 @@ export class TicketPurchased {
    *
    * @param totalAllTickets: Total de todos tickets
    * @param totalFees: Total das taxas
+   * @param ticketTotal: Total o ticket do calculo
+   * @param apportionmentValue: Valor o rateio do ticket
    *
-   * @returns this
+   * @returns number
    */
   public calculateTotalWithFees(
     totalAllTickets: number,
-    totalFees: number
-  ): TicketPurchased {
-    this.calculateTotal();
-    this.calculatePercentage(totalAllTickets);
-    this.calculateApportionmentValue(totalFees);
-
-    if (this._transactionType === TransactionType.COMPRA)
-      this._totalWithFees = this._total + this._apportionmentValue;
-    else this._totalWithFees = this._total - this._apportionmentValue;
-
-    return this;
+    totalFees: number,
+    ticketTotal: number,
+    apportionmentValue: number,
+    transactionType: TransactionType
+  ): number {
+    if (transactionType === TransactionType.COMPRA)
+      return ticketTotal + apportionmentValue;
+    return (this._totalWithFees = ticketTotal - apportionmentValue);
   }
 }

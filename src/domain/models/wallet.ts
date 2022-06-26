@@ -4,6 +4,7 @@ import { TicketPurchased } from "./ticket-purchased";
 import { WalletTicket } from "./wallet-ticket";
 import { Fees } from "./fees";
 import { CurrencyCode } from "./enums";
+import { Total, Item } from "../value-objects";
 
 export class Wallet {
   private _id: number;
@@ -24,12 +25,16 @@ export class Wallet {
     return this._name;
   }
 
-  set total(value: number) {
-    this._total = value;
+  set totalQuantities(value: number) {
+    this._totalQuantities = value;
   }
 
   get totalQuantities() {
     return this._totalQuantities;
+  }
+
+  set total(value: number) {
+    this._total = value;
   }
 
   get total() {
@@ -91,8 +96,8 @@ export class Wallet {
    *
    * @returns number
    */
-  public calculateTotalTickets(ticketsPurchased: TicketPurchased[]): Wallet {
-    this._total = _.reduce(
+  public calculateTotalTickets(ticketsPurchased: TicketPurchased[]): number {
+    const total = _.reduce(
       ticketsPurchased,
       function (sum, item) {
         return sum + item.total;
@@ -100,7 +105,53 @@ export class Wallet {
       0
     );
 
-    return this;
+    return _.toNumber(total.toFixed(2));
+  }
+
+  /**
+   * Retorna o quantidades, totais do tickets
+   *
+   * @returns
+   */
+  public calculateTotalsByGroups(ticketsPurchased: TicketPurchased[]): Total {
+    const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketCode);
+
+    const items: Item[] = [];
+
+    for (const key in groups) {
+      const tickets = groups[key];
+
+      const totalTicket = this.calculateTotalTickets(tickets);
+      const quantitiesTicket = this.calculateTotalQuantities(tickets);
+
+      items.push({
+        code: key,
+        total: totalTicket,
+        quantity: quantitiesTicket
+      });
+    }
+
+    const total = _.reduce(
+      items,
+      function (sum, item) {
+        return sum + item.total;
+      },
+      0
+    );
+
+    const quantity = _.reduce(
+      items,
+      function (sum, item) {
+        return sum + item.quantity;
+      },
+      0
+    );
+
+    return Total.create({
+      total: _.toNumber(total.toFixed(2)),
+      quantity,
+      items
+    });
   }
 
   /**
@@ -108,8 +159,8 @@ export class Wallet {
    *
    * @returns
    */
-  public calculateTotalQuantities(ticketsPurchased: TicketPurchased[]): Wallet {
-    this._totalQuantities = _.reduce(
+  public calculateTotalQuantities(ticketsPurchased: TicketPurchased[]): number {
+    const total = _.reduce(
       ticketsPurchased,
       function (sum, item) {
         return sum + item.quantity;
@@ -117,7 +168,7 @@ export class Wallet {
       0
     );
 
-    return this;
+    return _.toNumber(total.toFixed(2));
   }
 
   /**
@@ -127,7 +178,7 @@ export class Wallet {
    *
    * @returns number
    */
-  public calculateTotalFees(fees: Fees[]): Wallet {
+  public calculateTotalFees(fees: Fees[]): number {
     const total = _.reduce(
       fees,
       function (sum, item) {
@@ -136,9 +187,7 @@ export class Wallet {
       0
     );
 
-    this._totalFees = _.toNumber(total.toFixed(2));
-
-    return this;
+    return _.toNumber(total.toFixed(2));
   }
 
   /**
@@ -148,8 +197,18 @@ export class Wallet {
    *
    * @returns TicketPurchased[]
    */
-  public unifyTickets(ticketsPurchased: TicketPurchased[]): TicketPurchased[] {
+  public unifyTickets(
+    ticketsPurchased: TicketPurchased[],
+    fees: Fees[]
+  ): TicketPurchased[] {
     if (_.size(ticketsPurchased) === 0) return ticketsPurchased;
+
+    const totalsByGroups = this.calculateTotalsByGroups(ticketsPurchased);
+    const totalTicketsGroups = _.get(totalsByGroups, "items", []);
+
+    this.total = _.get(totalsByGroups, "total", 0);
+    this.totalQuantities = _.get(totalsByGroups, "quantity", 0);
+    this._totalFees = this.calculateTotalFees(fees);
 
     const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketCode);
 
@@ -158,25 +217,43 @@ export class Wallet {
     for (const key in groups) {
       const items = groups[key];
 
-      this.calculateTotalTickets(items).calculateTotalQuantities(items);
-
       const item = items[0];
-      item.calculateAveragePrice(this.totalQuantities, this.total);
+
+      const totalTicketGroupFind = _.find(
+        totalTicketsGroups,
+        group => _.get(group, "code") === key
+      );
+      const price = item.calculateAveragePrice(
+        _.get(totalTicketGroupFind, "quantity"),
+        _.get(totalTicketGroupFind, "total", 0)
+      );
 
       const ticketPurchased = new TicketPurchased(
         0,
-        item.price,
-        this._totalQuantities,
+        price,
+        _.get(totalTicketGroupFind, "quantity"),
         item.ticketCode,
         item.brokerName,
         item.date,
         item.transactionType,
         item.currencyCode
-      )
-        .calculateTotal()
-        .calculatePercentage(this.total)
-        .calculateApportionmentValue(this.totalFees)
-        .calculateTotalWithFees(this.total, this.totalFees);
+      );
+
+      ticketPurchased.total = ticketPurchased.calculateTotal();
+      ticketPurchased.apportionmentPercentage =
+        ticketPurchased.calculatePercentage(this.total, ticketPurchased.total);
+      ticketPurchased.apportionmentValue =
+        ticketPurchased.calculateApportionmentValue(
+          this.totalFees,
+          ticketPurchased.apportionmentPercentage
+        );
+      ticketPurchased.totalWithFees = ticketPurchased.calculateTotalWithFees(
+        this.total,
+        this.totalFees,
+        ticketPurchased.total,
+        ticketPurchased.apportionmentValue,
+        item.transactionType
+      );
 
       tickets.push(ticketPurchased);
     }

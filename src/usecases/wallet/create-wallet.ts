@@ -46,7 +46,7 @@ export class CreateWallet implements ICreateWallet {
       dto.userId
     );
 
-    const unifyTickets = wallet.unifyTickets(ticketsPurchased);
+    const unifyTickets = wallet.unifyTickets(ticketsPurchased, fees);
 
     const transformTickets = new TransformTickets(this.ticketRepository);
     const transformTicketsResult = await transformTickets.execute(unifyTickets);

@@ -38,7 +38,6 @@ export class WalletRepository implements IWalletRepository {
 
       return created.id;
     } catch (error) {
-      console.log('error',error)
       return 0;
     } finally {
       this.prisma.$disconnect();
