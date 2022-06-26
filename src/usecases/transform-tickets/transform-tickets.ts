@@ -42,7 +42,7 @@ export class TransformTickets implements ITransformTickets {
       );
 
       if (ticketFind) {
-        ticket.ticketId = _.get(ticket, "id", 0);
+        ticket.ticketId = ticketFind.id;
         items.push(ticket);
       }
     }

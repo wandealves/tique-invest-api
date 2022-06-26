@@ -22,7 +22,7 @@ export class CreateWallet implements ICreateWallet {
   constructor(
     @inject("IWalletRepository")
     walletRepository: IWalletRepository,
-    @inject("IAssetRepository")
+    @inject("ITicketRepository")
     ticketRepository: ITicketRepository
   ) {
     this.walletRepository = walletRepository;
