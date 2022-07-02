@@ -73,7 +73,7 @@ model PurchasedAsset {
   price                   Decimal         @default(0)
   quantity                Float           @default(0)
   total                   Decimal         @default(0)
-  totalWithFees           Decimal         @default(0)
+  totalFees               Decimal         @default(0)
   apportionmentValue      Decimal         @default(0)
   apportionmentPercentage Float           @default(0)
   date                    DateTime
@@ -113,7 +113,6 @@ model Wallet {
   id           Int          @id @default(autoincrement())
   name         String       @db.VarChar(150)
   total        Decimal      @default(0)
-  totalFees    Decimal      @default(0)
   currencyCode CurrencyCode
 
   purchasedAssets  PurchasedAsset[]

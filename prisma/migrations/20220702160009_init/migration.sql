@@ -43,7 +43,7 @@ CREATE TABLE "purchasedAssets" (
     "price" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "quantity" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "total" DECIMAL(65,30) NOT NULL DEFAULT 0,
-    "totalWithFees" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "totalFees" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "apportionmentValue" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "apportionmentPercentage" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "date" TIMESTAMP(3) NOT NULL,
@@ -78,7 +78,6 @@ CREATE TABLE "wallets" (
     "id" SERIAL NOT NULL,
     "name" VARCHAR(150) NOT NULL,
     "total" DECIMAL(65,30) NOT NULL DEFAULT 0,
-    "totalFees" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "currencyCode" "CurrencyCode" NOT NULL,
     "userId" INTEGER NOT NULL,
 
