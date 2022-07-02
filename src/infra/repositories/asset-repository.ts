@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 
-import { Ticket } from "../../domain/models";
+import { Asset } from "../../domain/models";
 import { ITicketRepository } from "../../usecases/interfaces/repositories";
 import {
   typeAssetToPrismaTypeAsset,
@@ -15,14 +15,14 @@ export class TicketRepository implements ITicketRepository {
     this.prisma = new PrismaClient();
   }
 
-  async create(entity: Ticket): Promise<number> {
+  async create(entity: Asset): Promise<number> {
     try {
-      const create = await this.prisma.ticket.create({
+      const create = await this.prisma.asset.create({
         data: {
           name: entity.name,
           code: entity.code,
           iconUrl: entity.iconUrl,
-          type: typeAssetToPrismaTypeAsset(entity.typeAsset)
+          type: typeAssetToPrismaTypeAsset(entity.assetType)
         }
       });
 
@@ -34,9 +34,9 @@ export class TicketRepository implements ITicketRepository {
     }
   }
 
-  async update(id: number, entity: Ticket): Promise<number> {
+  async update(id: number, entity: Asset): Promise<number> {
     try {
-      const update = await this.prisma.ticket.update({
+      const update = await this.prisma.asset.update({
         where: {
           id
         },
@@ -44,7 +44,7 @@ export class TicketRepository implements ITicketRepository {
           name: entity.name,
           code: entity.code,
           iconUrl: entity.iconUrl,
-          type: typeAssetToPrismaTypeAsset(entity.typeAsset)
+          type: typeAssetToPrismaTypeAsset(entity.assetType)
         }
       });
 
@@ -58,7 +58,7 @@ export class TicketRepository implements ITicketRepository {
 
   async delete(id: number): Promise<void> {
     try {
-      await this.prisma.ticket.delete({
+      await this.prisma.asset.delete({
         where: {
           id
         }
@@ -69,14 +69,14 @@ export class TicketRepository implements ITicketRepository {
     }
   }
 
-  async all(): Promise<Ticket[] | null> {
+  async all(): Promise<Asset[] | null> {
     try {
-      const assets = await this.prisma.ticket.findMany();
+      const assets = await this.prisma.asset.findMany();
 
       return _.map(
         assets,
         asset =>
-          new Ticket(
+          new Asset(
             asset.id,
             asset.name,
             asset.code,
@@ -91,16 +91,16 @@ export class TicketRepository implements ITicketRepository {
     }
   }
 
-  async filter(query: any): Promise<Ticket[] | null> {
+  async filter(query: any): Promise<Asset[] | null> {
     try {
-      const assets = await this.prisma.ticket.findMany({
+      const assets = await this.prisma.asset.findMany({
         where: query
       });
 
       return _.map(
         assets,
         asset =>
-          new Ticket(
+          new Asset(
             asset.id,
             asset.name,
             asset.code,
@@ -115,16 +115,16 @@ export class TicketRepository implements ITicketRepository {
     }
   }
 
-  async findOne(id: number): Promise<Ticket | null> {
+  async findOne(id: number): Promise<Asset | null> {
     try {
-      const asset = await this.prisma.ticket.findUnique({
+      const asset = await this.prisma.asset.findUnique({
         where: {
           id
         }
       });
 
       if (asset)
-        return new Ticket(
+        return new Asset(
           asset.id,
           asset.name,
           asset.code,
@@ -139,16 +139,16 @@ export class TicketRepository implements ITicketRepository {
     }
   }
 
-  async findCode(code: string): Promise<Ticket | null> {
+  async findCode(code: string): Promise<Asset | null> {
     try {
-      const asset = await this.prisma.ticket.findUnique({
+      const asset = await this.prisma.asset.findUnique({
         where: {
           code
         }
       });
 
       if (asset)
-        return new Ticket(
+        return new Asset(
           asset.id,
           asset.name,
           asset.code,
@@ -163,14 +163,14 @@ export class TicketRepository implements ITicketRepository {
     }
   }
 
-  async find(query: any): Promise<Ticket | null> {
+  async find(query: any): Promise<Asset | null> {
     try {
-      const asset = await this.prisma.ticket.findUnique({
+      const asset = await this.prisma.asset.findUnique({
         where: query
       });
 
       if (asset)
-        return new Ticket(
+        return new Asset(
           asset.id,
           asset.name,
           asset.code,
