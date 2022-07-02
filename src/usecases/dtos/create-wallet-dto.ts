@@ -1,4 +1,4 @@
-import { CreateTicketPurchasedDto } from "./create-ticket-purchased-dto";
+import { CreatePurchasedAssetDto } from "./create-purchased-asset-dto";
 import { CreateFeesDto } from "./create-fees-dto";
 
 export interface CreateWalletDto {
@@ -6,6 +6,6 @@ export interface CreateWalletDto {
   currencyCode: string;
   userId: number;
 
-  tickets: CreateTicketPurchasedDto[];
+  assets: CreatePurchasedAssetDto[];
   fees: CreateFeesDto[];
 }
