@@ -137,3 +137,4 @@ Tem que atualizar a carteiar diminuindo a quantidade
 1 - Transformar o DTO para entidades de dominios;
 2 - Calcular total de taxas;
 3 - Calcular valor total geral comprado;
+4 - Unificar ativos;

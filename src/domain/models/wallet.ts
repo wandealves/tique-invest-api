@@ -10,7 +10,7 @@ export class Wallet {
   private _id: number;
   private _name: string;
   private _total: number;
-  private _totalQuantities: number = 0;
+  //private _totalQuantities: number = 0;
   private _totalFees: number;
   private _currencyCode: CurrencyCode;
   private _userId: number;
@@ -25,13 +25,13 @@ export class Wallet {
     return this._name;
   }
 
-  set totalQuantities(value: number) {
-    this._totalQuantities = value;
-  }
+  //// set totalQuantities(value: number) {
+  // this._totalQuantities = value;
+  // }
 
-  get totalQuantities() {
-    return this._totalQuantities;
-  }
+  //get totalQuantities() {
+  //  return this._totalQuantities;
+  //}
 
   set total(value: number) {
     this._total = value;
@@ -97,6 +97,8 @@ export class Wallet {
    * @returns number
    */
   public calculateTotalAssets(purchasedAssets: PurchasedAsset[]): number {
+    if (_.size(purchasedAssets) === 0) return 0;
+
     const total = _.reduce(
       purchasedAssets,
       function (sum, item) {
@@ -113,21 +115,21 @@ export class Wallet {
    *
    * @returns
    */
-  public calculateTotalsByGroups(ticketsPurchased: PurchasedAsset[]): Total {
-    const groups = _.groupBy(ticketsPurchased, ticket => ticket.assetCode);
+  public totalsByGroups(purchasedAssets: PurchasedAsset[]): Total {
+    const groups = _.groupBy(purchasedAssets, item => item.assetCode);
 
     const items: Item[] = [];
 
     for (const key in groups) {
-      const tickets = groups[key];
+      const assets = groups[key];
 
-      const totalTicket = this.calculateTotalAssets(tickets);
-      const quantitiesTicket = this.calculateTotalQuantities(tickets);
+      const totalasset = this.calculateTotalAssets(assets);
+      const quantitiesAsset = this.calculateTotalQuantities(assets);
 
       items.push({
         code: key,
-        total: totalTicket,
-        quantity: quantitiesTicket
+        total: totalasset,
+        quantity: quantitiesAsset
       });
     }
 
@@ -191,73 +193,51 @@ export class Wallet {
   }
 
   /**
-   * Unificar linhas do mesmo tickets
+   * Unificar linhas do mesmo ativo
    *
-   * @param ticketsPurchased: Lista de tickets
+   * @param ticketsPurchased: Lista de ativos
    *
    * @returns TicketPurchased[]
    */
-  public unifyTickets(
-    ticketsPurchased: PurchasedAsset[],
-    fees: Fees[]
-  ): PurchasedAsset[] {
-    if (_.size(ticketsPurchased) === 0) return ticketsPurchased;
+  public unifyAssets(purchasedAssets: PurchasedAsset[]): PurchasedAsset[] {
+    if (_.size(purchasedAssets) === 0) return [];
 
-    const totalsByGroups = this.calculateTotalsByGroups(ticketsPurchased);
-    const totalTicketsGroups = _.get(totalsByGroups, "items", []);
+    const totalsByGroups = this.totalsByGroups(purchasedAssets);
+    const items = _.get(totalsByGroups, "items", []);
+    const groupCodes = _.groupBy(items, item => item.code);
 
-    this.total = _.get(totalsByGroups, "total", 0);
-    this.totalQuantities = _.get(totalsByGroups, "quantity", 0);
-    this._totalFees = this.calculateTotalFees(fees);
+    const assets: PurchasedAsset[] = [];
 
-    const groups = _.groupBy(ticketsPurchased, ticket => ticket.assetCode);
+    for (const key in groupCodes) {
+      const values = groupCodes[key];
 
-    const tickets: PurchasedAsset[] = [];
+      const item = values[0];
 
-    for (const key in groups) {
-      const items = groups[key];
-
-      const item = items[0];
-
-      const totalTicketGroupFind = _.find(
-        totalTicketsGroups,
-        group => _.get(group, "code") === key
-      );
-      const price = item.calculateAveragePrice(
-        _.get(totalTicketGroupFind, "quantity"),
-        _.get(totalTicketGroupFind, "total", 0)
+      const asset = _.find(
+        purchasedAssets,
+        asset => asset.assetCode === item.code
       );
 
-      const ticketPurchased = new PurchasedAsset(
-        0,
-        price,
-        _.get(totalTicketGroupFind, "quantity"),
-        item.assetCode,
-        item.brokerName,
-        item.date,
-        item.transactionType,
-        item.currencyCode
-      );
-
-      ticketPurchased.total = ticketPurchased.calculateTotal();
-      ticketPurchased.apportionmentPercentage =
-        ticketPurchased.calculatePercentage(this.total, ticketPurchased.total);
-      ticketPurchased.apportionmentValue =
-        ticketPurchased.calculateApportionmentValue(
-          this.totalFees,
-          ticketPurchased.apportionmentPercentage
+      if (asset) {
+        const price = asset.calculateAveragePrice(
+          _.get(item, "quantity"),
+          _.get(item, "total", 0)
         );
-      /* ticketPurchased.totalWithFees = ticketPurchased.calculateTotalWithFees(
-        this.total,
-        this.totalFees,
-        ticketPurchased.total,
-        ticketPurchased.apportionmentValue,
-        item.transactionType
-      );*/
+        const purchasedAsset = new PurchasedAsset(
+          0,
+          price,
+          _.get(item, "quantity"),
+          asset.assetCode,
+          asset.brokerName,
+          asset.date,
+          asset.transactionType,
+          asset.currencyCode
+        );
 
-      tickets.push(ticketPurchased);
+        assets.push(purchasedAsset);
+      }
     }
 
-    return tickets;
+    return assets;
   }
 }

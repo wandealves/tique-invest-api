@@ -17,7 +17,7 @@ export const makePurchasedAssets = (
         0,
         dto.price,
         dto.quantity,
-        dto.code,
+        dto.assetCode,
         dto.brokerName,
         dto.date,
         stringToTransactionType(dto.transactionType),

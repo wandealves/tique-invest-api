@@ -49,6 +49,7 @@ export class CreateWallet implements ICreateWallet {
 
     wallet.totalFees = wallet.calculateTotalFees(fees);
     wallet.total = wallet.calculateTotalAssets(purchasedAssets);
+    const unifyTickets = wallet.unifyAssets(purchasedAssets);
 
     const result = await this.walletRepository.create(wallet, []);
 

@@ -1,5 +1,5 @@
 export interface CreatePurchasedAssetDto {
-  code: string;
+  assetCode: string;
   price: number;
   quantity: number;
   date: Date;
