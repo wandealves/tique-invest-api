@@ -1,19 +1,19 @@
 import { PrismaClient } from "@prisma/client";
 
-import { tickets } from "./seeds/tickets";
+import { assets } from "./seeds/assets";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  for (const ticket of tickets) {
-    const exist = await prisma.ticket.findUnique({
+  for (const ticket of assets) {
+    const exist = await prisma.asset.findUnique({
       where: {
         code: ticket.code
       }
     });
 
     if (!exist)
-      await prisma.ticket.create({
+      await prisma.asset.create({
         data: ticket
       });
   }

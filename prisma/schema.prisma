@@ -9,7 +9,7 @@ datasource db {
 
 //Models
 
-enum TypeTicket {
+enum AssetType {
   ACAO
   BDR
   CDB
@@ -54,21 +54,21 @@ model User {
   @@map("users")
 }
 
-model Ticket {
-  id      Int        @id @default(autoincrement())
-  name    String     @db.VarChar(500)
-  code    String     @unique @db.VarChar(10)
-  iconUrl String?    @db.VarChar()
-  type    TypeTicket
+model Asset {
+  id      Int       @id @default(autoincrement())
+  name    String    @db.VarChar(500)
+  code    String    @unique @db.VarChar(10)
+  iconUrl String?   @db.VarChar()
+  type    AssetType
 
-  ticketPurchased TicketPurchased[]
+  purchasedAssets  PurchasedAsset[]
+  calculatedAssets CalculatedAsset[]
 
-  WalletTicket WalletTicket[]
   @@index([code])
-  @@map("tickets")
+  @@map("assets")
 }
 
-model TicketPurchased {
+model PurchasedAsset {
   id                      Int             @id @default(autoincrement())
   price                   Decimal         @default(0)
   quantity                Float           @default(0)
@@ -83,15 +83,15 @@ model TicketPurchased {
   transactionType         TransactionType
   currencyCode            CurrencyCode
 
-  ticketId Int
-  ticket   Ticket  @relation(fields: [ticketId], references: [id])
+  assetId  Int
+  ticket   Asset   @relation(fields: [assetId], references: [id])
   walletId Int?
   wallet   Wallet? @relation(fields: [walletId], references: [id])
 
-  @@map("ticketsPurchased")
+  @@map("purchasedAssets")
 }
 
-model WalletTicket {
+model CalculatedAsset {
   id              Int             @id @default(autoincrement())
   averagePrice    Decimal         @default(0)
   quantity        Float           @default(0)
@@ -100,13 +100,13 @@ model WalletTicket {
   transactionType TransactionType
   currencyCode    CurrencyCode
 
-  ticketId Int
-  ticket   Ticket @relation(fields: [ticketId], references: [id])
+  assetId Int
+  ticket  Asset @relation(fields: [assetId], references: [id])
 
   walletId Int?
   Wallet   Wallet? @relation(fields: [walletId], references: [id])
 
-  @@map("walletTickets")
+  @@map("calculatedAssets")
 }
 
 model Wallet {
@@ -116,8 +116,8 @@ model Wallet {
   totalFees    Decimal      @default(0)
   currencyCode CurrencyCode
 
-  ticketsPurchased TicketPurchased[]
-  WalletTickets    WalletTicket[]
+  purchasedAssets  PurchasedAsset[]
+  calculatedAssets CalculatedAsset[]
 
   userId Int
   user   User @relation(fields: [userId], references: [id])
