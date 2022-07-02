@@ -101,7 +101,7 @@ model CalculatedAsset {
   currencyCode    CurrencyCode
 
   assetId Int
-  ticket  Asset @relation(fields: [assetId], references: [id])
+  asset   Asset @relation(fields: [assetId], references: [id])
 
   walletId Int?
   Wallet   Wallet? @relation(fields: [walletId], references: [id])

@@ -4,7 +4,7 @@ import _ from "lodash";
 import { Fees } from "./fees";
 import { TransactionType, CurrencyCode } from "./enums";
 
-export class WalletTicket {
+export class CalculatedAsset {
   private _id: number;
   private _averagePrice: number;
   private _quantity: number;
@@ -13,10 +13,10 @@ export class WalletTicket {
   private _transactionType: TransactionType;
   private _currencyCode: CurrencyCode;
 
-  private _ticketId: number;
+  private _assetId: number;
   private _walletId: number;
 
-  set averagePrice(value:number) {
+  set averagePrice(value: number) {
     this._averagePrice = value;
   }
 
@@ -56,12 +56,12 @@ export class WalletTicket {
     return this._currencyCode;
   }
 
-  get ticketId(): number {
-    return this._ticketId;
+  get assetId(): number {
+    return this._assetId;
   }
 
-  set ticketId(value: number) {
-    this._ticketId = value;
+  set assetId(value: number) {
+    this._assetId = value;
   }
 
   get walletId(): number {
@@ -88,7 +88,7 @@ export class WalletTicket {
     this._transactionType = transactionType;
     this._currencyCode = currencyCode;
 
-    this._ticketId = 0;
+    this._assetId = 0;
     this._walletId = 0;
 
     this._total = 0;

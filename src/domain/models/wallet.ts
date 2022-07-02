@@ -1,7 +1,7 @@
 import _, { conformsTo } from "lodash";
 
-import { TicketPurchased } from "./ticket-purchased";
-import { WalletTicket } from "./wallet-ticket";
+import { PurchasedAsset } from "./purchased-asset";
+import { CalculatedAsset } from "./calculated-asset";
 import { Fees } from "./fees";
 import { CurrencyCode } from "./enums";
 import { Total, Item } from "../value-objects";
@@ -14,8 +14,8 @@ export class Wallet {
   private _totalFees: number;
   private _currencyCode: CurrencyCode;
   private _userId: number;
-  private _ticketsPurchased: TicketPurchased[];
-  private _walletTickets: WalletTicket[];
+  private _purchasedAssets: PurchasedAsset[];
+  private _calculatedAssets: CalculatedAsset[];
 
   set name(value: string) {
     this._name = value;
@@ -65,12 +65,12 @@ export class Wallet {
     return this._userId;
   }
 
-  set ticketsPurchased(value: TicketPurchased[]) {
-    this._ticketsPurchased = value;
+  set purchasedAssets(value: PurchasedAsset[]) {
+    this._purchasedAssets = value;
   }
 
-  get ticketsPurchased() {
-    return this._ticketsPurchased;
+  get purchasedAssets() {
+    return this._purchasedAssets;
   }
 
   constructor(
@@ -85,8 +85,8 @@ export class Wallet {
     this._totalFees = 0;
     this._currencyCode = currencyCode;
     this._userId = userId;
-    this._ticketsPurchased = [];
-    this._walletTickets = [];
+    this._purchasedAssets = [];
+    this._calculatedAssets = [];
   }
 
   /**
@@ -96,7 +96,7 @@ export class Wallet {
    *
    * @returns number
    */
-  public calculateTotalTickets(ticketsPurchased: TicketPurchased[]): number {
+  public calculateTotalTickets(ticketsPurchased: PurchasedAsset[]): number {
     const total = _.reduce(
       ticketsPurchased,
       function (sum, item) {
@@ -113,7 +113,7 @@ export class Wallet {
    *
    * @returns
    */
-  public calculateTotalsByGroups(ticketsPurchased: TicketPurchased[]): Total {
+  public calculateTotalsByGroups(ticketsPurchased: PurchasedAsset[]): Total {
     const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketCode);
 
     const items: Item[] = [];
@@ -159,7 +159,7 @@ export class Wallet {
    *
    * @returns
    */
-  public calculateTotalQuantities(ticketsPurchased: TicketPurchased[]): number {
+  public calculateTotalQuantities(ticketsPurchased: PurchasedAsset[]): number {
     const total = _.reduce(
       ticketsPurchased,
       function (sum, item) {
@@ -198,9 +198,9 @@ export class Wallet {
    * @returns TicketPurchased[]
    */
   public unifyTickets(
-    ticketsPurchased: TicketPurchased[],
+    ticketsPurchased: PurchasedAsset[],
     fees: Fees[]
-  ): TicketPurchased[] {
+  ): PurchasedAsset[] {
     if (_.size(ticketsPurchased) === 0) return ticketsPurchased;
 
     const totalsByGroups = this.calculateTotalsByGroups(ticketsPurchased);
@@ -212,7 +212,7 @@ export class Wallet {
 
     const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketCode);
 
-    const tickets: TicketPurchased[] = [];
+    const tickets: PurchasedAsset[] = [];
 
     for (const key in groups) {
       const items = groups[key];
@@ -228,7 +228,7 @@ export class Wallet {
         _.get(totalTicketGroupFind, "total", 0)
       );
 
-      const ticketPurchased = new TicketPurchased(
+      const ticketPurchased = new PurchasedAsset(
         0,
         price,
         _.get(totalTicketGroupFind, "quantity"),
@@ -247,13 +247,13 @@ export class Wallet {
           this.totalFees,
           ticketPurchased.apportionmentPercentage
         );
-      ticketPurchased.totalWithFees = ticketPurchased.calculateTotalWithFees(
+      /* ticketPurchased.totalWithFees = ticketPurchased.calculateTotalWithFees(
         this.total,
         this.totalFees,
         ticketPurchased.total,
         ticketPurchased.apportionmentValue,
         item.transactionType
-      );
+      );*/
 
       tickets.push(ticketPurchased);
     }

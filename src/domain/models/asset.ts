@@ -1,11 +1,11 @@
-import { TypeTicket } from "./enums";
+import { AssetType } from "./enums";
 
-export class Ticket {
+export class Asset {
   private readonly _id: number;
   private readonly _name: string;
   private readonly _code: string;
   private readonly _iconUrl: string;
-  private readonly _typeTicket: TypeTicket;
+  private readonly _assetType: AssetType;
 
   get id(): number {
     return this._id;
@@ -23,8 +23,8 @@ export class Ticket {
     return this._iconUrl;
   }
 
-  get typeAsset(): TypeTicket {
-    return this._typeTicket;
+  get assetType(): AssetType {
+    return this._assetType;
   }
 
   constructor(
@@ -32,12 +32,12 @@ export class Ticket {
     name: string,
     code: string,
     iconUrl: string,
-    typeAsset: TypeTicket
+    assetType: AssetType
   ) {
     this._id = id;
     this._name = name;
     this._code = code;
     this._iconUrl = iconUrl;
-    this._typeTicket = typeAsset;
+    this._assetType = assetType;
   }
 }

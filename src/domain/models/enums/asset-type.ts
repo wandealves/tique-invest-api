@@ -1,4 +1,4 @@
-export enum TypeTicket {
+export enum AssetType {
   ACAO,
   BDR,
   CDB,
@@ -9,5 +9,5 @@ export enum TypeTicket {
   LC,
   MULTIMERCADO,
   TESOURODIRETO,
-  OPCOES,
+  OPCOES
 }

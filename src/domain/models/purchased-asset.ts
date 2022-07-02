@@ -3,12 +3,12 @@ import _ from "lodash";
 
 import { TransactionType, CurrencyCode } from "./enums";
 
-export class TicketPurchased {
+export class PurchasedAsset {
   private _id: number;
   private _price: number;
   private _quantity: number;
   private _total: number = 0;
-  private _totalWithFees: number;
+  private _totalFees: number;
   private _apportionmentValue: number;
   private _apportionmentPercentage: number;
   private _date: Date;
@@ -38,12 +38,12 @@ export class TicketPurchased {
     return this._total;
   }
 
-  set totalWithFees(value: number) {
-    this._totalWithFees = value;
+  set totalFees(value: number) {
+    this._totalFees = value;
   }
 
-  get totalWithFees(): number {
-    return this._totalWithFees;
+  get totalFees(): number {
+    return this._totalFees;
   }
 
   set apportionmentValue(value: number) {
@@ -160,7 +160,7 @@ export class TicketPurchased {
     this._ticketId = 0;
     this._walletId = 0;
 
-    this._totalWithFees = 0;
+    this._totalFees = 0;
     this._apportionmentValue = 0;
     this._apportionmentPercentage = 0;
 
@@ -247,6 +247,6 @@ export class TicketPurchased {
   ): number {
     if (transactionType === TransactionType.COMPRA)
       return ticketTotal + apportionmentValue;
-    return (this._totalWithFees = ticketTotal - apportionmentValue);
+    return 0; //(this._totalWithFees = ticketTotal - apportionmentValue);
   }
 }
