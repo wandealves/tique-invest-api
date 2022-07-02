@@ -1,19 +1,19 @@
 import _ from "lodash";
 
-import { TicketPurchased } from "../../domain/models";
+import { PurchasedAsset } from "../../domain/models";
 import {
   transactionTypeToTransactionTypePrisma,
   currencyCodeToCurrencyCodePrisma
 } from "../../shared/utils";
 
 export const makeCreateTicketsPurchased = (
-  ticketsPurchased: TicketPurchased[]
+  ticketsPurchased: PurchasedAsset[]
 ) => {
   return _.map(ticketsPurchased, ticket => ({
     price: ticket.price,
     quantity: ticket.quantity,
     total: ticket.total,
-    totalWithFees: ticket.totalWithFees,
+    totalFees: ticket.totalFees,
     apportionmentValue: ticket.apportionmentValue,
     apportionmentPercentage: ticket.apportionmentPercentage,
     date: new Date(ticket.date),

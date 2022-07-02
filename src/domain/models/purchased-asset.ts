@@ -18,7 +18,7 @@ export class PurchasedAsset {
   private _transactionType: TransactionType;
   private _currencyCode: CurrencyCode;
 
-  private _ticketCode: string;
+  private _assetCode: string;
   private _ticketId: number;
   private _walletId: number;
 
@@ -110,12 +110,12 @@ export class PurchasedAsset {
     return this._currencyCode;
   }
 
-  get ticketCode(): string {
-    return this._ticketCode;
+  get assetCode(): string {
+    return this._assetCode;
   }
 
-  set ticketCode(value: string) {
-    this._ticketCode = value;
+  set assetCode(value: string) {
+    this._assetCode = value;
   }
 
   get ticketId(): number {
@@ -138,7 +138,7 @@ export class PurchasedAsset {
     id: number,
     price: number,
     quantity: number,
-    ticketCode: string,
+    assetCode: string,
     brokerName: string,
     date: Date,
     transactionType: TransactionType,
@@ -156,7 +156,7 @@ export class PurchasedAsset {
     this._transactionType = transactionType;
     this._currencyCode = currencyCode;
 
-    this._ticketCode = ticketCode;
+    this._assetCode = assetCode;
     this._ticketId = 0;
     this._walletId = 0;
 

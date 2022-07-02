@@ -96,9 +96,9 @@ export class Wallet {
    *
    * @returns number
    */
-  public calculateTotalTickets(ticketsPurchased: PurchasedAsset[]): number {
+  public calculateTotalAssets(purchasedAssets: PurchasedAsset[]): number {
     const total = _.reduce(
-      ticketsPurchased,
+      purchasedAssets,
       function (sum, item) {
         return sum + item.total;
       },
@@ -114,14 +114,14 @@ export class Wallet {
    * @returns
    */
   public calculateTotalsByGroups(ticketsPurchased: PurchasedAsset[]): Total {
-    const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketCode);
+    const groups = _.groupBy(ticketsPurchased, ticket => ticket.assetCode);
 
     const items: Item[] = [];
 
     for (const key in groups) {
       const tickets = groups[key];
 
-      const totalTicket = this.calculateTotalTickets(tickets);
+      const totalTicket = this.calculateTotalAssets(tickets);
       const quantitiesTicket = this.calculateTotalQuantities(tickets);
 
       items.push({
@@ -210,7 +210,7 @@ export class Wallet {
     this.totalQuantities = _.get(totalsByGroups, "quantity", 0);
     this._totalFees = this.calculateTotalFees(fees);
 
-    const groups = _.groupBy(ticketsPurchased, ticket => ticket.ticketCode);
+    const groups = _.groupBy(ticketsPurchased, ticket => ticket.assetCode);
 
     const tickets: PurchasedAsset[] = [];
 
@@ -232,7 +232,7 @@ export class Wallet {
         0,
         price,
         _.get(totalTicketGroupFind, "quantity"),
-        item.ticketCode,
+        item.assetCode,
         item.brokerName,
         item.date,
         item.transactionType,

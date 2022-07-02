@@ -131,3 +131,9 @@ Se teve resultado positivo guarda esse valor e faz o mesmo para todas as vendas 
 Tipos ativos: Ações, BDRs, ETF, Opções, FIIS
 
 Tem que atualizar a carteiar diminuindo a quantidade
+
+## Fluxo criar carteira com ativos
+
+1 - Transformar o DTO para entidades de dominios;
+2 - Calcular total de taxas;
+3 - Calcular valor total geral comprado;
