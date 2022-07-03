@@ -6,24 +6,24 @@ import {
   currencyCodeToCurrencyCodePrisma
 } from "../../shared/utils";
 
-export const makeCreateTicketsPurchased = (
-  ticketsPurchased: PurchasedAsset[]
+export const makeCreatePurchasedAssetRepository = (
+  purchasedAssets: PurchasedAsset[]
 ) => {
-  return _.map(ticketsPurchased, ticket => ({
-    price: ticket.price,
-    quantity: ticket.quantity,
-    total: ticket.total,
-    totalFees: ticket.totalFees,
-    apportionmentValue: ticket.apportionmentValue,
-    apportionmentPercentage: ticket.apportionmentPercentage,
-    date: new Date(ticket.date),
-    month: ticket.month,
-    year: ticket.year,
-    brokerName: ticket.brokerName,
+  return _.map(purchasedAssets, asset => ({
+    price: asset.price,
+    quantity: asset.quantity,
+    total: asset.total,
+    totalFees: asset.totalFees,
+    apportionmentValue: asset.apportionmentValue,
+    apportionmentPercentage: asset.apportionmentPercentage,
+    date: new Date(asset.date),
+    month: asset.month,
+    year: asset.year,
+    brokerName: asset.brokerName,
     transactionType: transactionTypeToTransactionTypePrisma(
-      ticket.transactionType
+      asset.transactionType
     ),
-    currencyCode: currencyCodeToCurrencyCodePrisma(ticket.currencyCode),
-    ticketId: ticket.ticketId
+    currencyCode: currencyCodeToCurrencyCodePrisma(asset.currencyCode),
+    assetId: asset.assetId
   }));
 };

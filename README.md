@@ -138,3 +138,4 @@ Tem que atualizar a carteiar diminuindo a quantidade
 2 - Calcular total de taxas;
 3 - Calcular valor total geral comprado;
 4 - Unificar ativos;
+5 - Calcular valor do rateio, porcetagem do rateio,

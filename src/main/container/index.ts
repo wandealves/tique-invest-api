@@ -3,12 +3,12 @@ import { container } from "tsyringe";
 import {
   IInvestmentRepository,
   IWalletRepository,
-  ITicketRepository
+  IAssetRepository
 } from "../../usecases/interfaces/repositories";
 import {
   InvestmentRepository,
   WalletRepository,
-  TicketRepository
+  AssetRepository
 } from "../../infra/repositories";
 
 container.register<IInvestmentRepository>(
@@ -18,4 +18,4 @@ container.register<IInvestmentRepository>(
 
 container.register<IWalletRepository>("IWalletRepository", WalletRepository);
 
-container.register<ITicketRepository>("ITicketRepository", TicketRepository);
+container.register<IAssetRepository>("IAssetRepository", AssetRepository);

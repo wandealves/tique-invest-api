@@ -19,7 +19,7 @@ export class PurchasedAsset {
   private _currencyCode: CurrencyCode;
 
   private _assetCode: string;
-  private _ticketId: number;
+  private _assetId: number;
   private _walletId: number;
 
   get price(): number {
@@ -118,12 +118,12 @@ export class PurchasedAsset {
     this._assetCode = value;
   }
 
-  get ticketId(): number {
-    return this._ticketId;
+  get assetId(): number {
+    return this._assetId;
   }
 
-  set ticketId(value: number) {
-    this._ticketId = value;
+  set assetId(value: number) {
+    this._assetId = value;
   }
 
   get walletId(): number {
@@ -157,7 +157,7 @@ export class PurchasedAsset {
     this._currencyCode = currencyCode;
 
     this._assetCode = assetCode;
-    this._ticketId = 0;
+    this._assetId = 0;
     this._walletId = 0;
 
     this._totalFees = 0;
@@ -179,20 +179,20 @@ export class PurchasedAsset {
   }
 
   /***
-   * Cálcular a porcetagem em relação ao total geral de todos tickets
+   * Cálcular a porcetagem em relação ao total geral de todos ativos
    *
-   * @param totalAllTickets: Total de todos tickets
-   * @param ticketTotal: Total do ticket
+   * @param totalAllAssets: Total de todos ativos
+   * @param assetTotal: Total do ticket
    *
    * @returns number
    */
-  public calculatePercentage(
-    totalAllTickets: number,
-    ticketTotal: number
+  public calculateApportionmentPercentage(
+    totalAllAssets: number,
+    assetTotal: number
   ): number {
-    if (!totalAllTickets) return 0;
+    if (!totalAllAssets) return 0;
 
-    const percentage = ticketTotal / totalAllTickets;
+    const percentage = assetTotal / totalAllAssets;
 
     return _.toNumber(percentage.toFixed(4));
   }
@@ -201,7 +201,7 @@ export class PurchasedAsset {
    * Cálcular o valor do rateio
    *
    * @param totalAllTickets: Total das taxas
-   * @param apportionmentPercentage: porcentagem do rateio do ticket
+   * @param apportionmentPercentage: porcentagem do rateio do ativo
    *
    * @returns number
    */
@@ -231,22 +231,18 @@ export class PurchasedAsset {
   /***
    * Calcular o valor do rateio
    *
-   * @param totalAllTickets: Total de todos tickets
-   * @param totalFees: Total das taxas
-   * @param ticketTotal: Total o ticket do calculo
-   * @param apportionmentValue: Valor o rateio do ticket
+   * @param assetTotal: Total o ativo do calculo
+   * @param apportionmentValue: Valor o rateio do ativo
    *
    * @returns number
    */
   public calculateTotalWithFees(
-    totalAllTickets: number,
-    totalFees: number,
-    ticketTotal: number,
+    assetTotal: number,
     apportionmentValue: number,
     transactionType: TransactionType
   ): number {
     if (transactionType === TransactionType.COMPRA)
-      return ticketTotal + apportionmentValue;
-    return 0; //(this._totalWithFees = ticketTotal - apportionmentValue);
+      return assetTotal + apportionmentValue;
+    return assetTotal - apportionmentValue;
   }
 }

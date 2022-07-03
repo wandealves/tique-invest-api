@@ -90,7 +90,7 @@ export class Wallet {
   }
 
   /**
-   * Calcular o total de tickets comprados
+   * Calcular o total de ativos comprados
    *
    * @param ticketsPurchased: Lista de tickets
    *
@@ -111,7 +111,7 @@ export class Wallet {
   }
 
   /**
-   * Retorna o quantidades, totais do tickets
+   * Retorna o quantidades, total dos ativos agrupados por código
    *
    * @returns
    */
@@ -157,7 +157,7 @@ export class Wallet {
   }
 
   /**
-   * Calcular o quantidades dos tickets
+   * Calcular o quantidades dos ativos
    *
    * @returns
    */
@@ -239,5 +239,47 @@ export class Wallet {
     }
 
     return assets;
+  }
+
+  /**
+   * Unificar linhas do mesmo ativo
+   *
+   * @param ticketsPurchased: Lista de ativos
+   *
+   * @returns TicketPurchased[]
+   */
+  public calculatePurchasedAsset(
+    purchasedAssets: PurchasedAsset[],
+    totalAllAssets: number,
+    totalFees: number
+  ): PurchasedAsset[] {
+    if (_.size(purchasedAssets) === 0) return purchasedAssets;
+
+    const list = [];
+    for (const asset of purchasedAssets) {
+      const apportionmentPercentage = asset.calculateApportionmentPercentage(
+        totalAllAssets,
+        asset.total
+      );
+
+      const apportionmentValue = asset.calculateApportionmentValue(
+        totalFees,
+        apportionmentPercentage
+      );
+
+      const totalWithFees = asset.calculateTotalWithFees(
+        asset.total,
+        apportionmentValue,
+        asset.transactionType
+      );
+
+      asset.apportionmentPercentage = apportionmentPercentage;
+      asset.apportionmentValue = apportionmentValue;
+      asset.totalFees = totalFees;
+
+      list.push(asset);
+    }
+
+    return list;
   }
 }

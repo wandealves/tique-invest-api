@@ -2,13 +2,13 @@ import { PrismaClient } from "@prisma/client";
 import _ from "lodash";
 
 import { Asset } from "../../domain/models";
-import { ITicketRepository } from "../../usecases/interfaces/repositories";
+import { IAssetRepository } from "../../usecases/interfaces/repositories";
 import {
   typeAssetToPrismaTypeAsset,
   typeAssetPrismaToTypeAsset
 } from "../../shared/utils";
 
-export class TicketRepository implements ITicketRepository {
+export class AssetRepository implements IAssetRepository {
   private readonly prisma: PrismaClient;
 
   constructor() {
