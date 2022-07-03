@@ -13,6 +13,7 @@ export const makeCreatePurchasedAssetRepository = (
     price: asset.price,
     quantity: asset.quantity,
     total: asset.total,
+    totalWithFees: asset.totalWithFees,
     totalFees: asset.totalFees,
     apportionmentValue: asset.apportionmentValue,
     apportionmentPercentage: asset.apportionmentPercentage,

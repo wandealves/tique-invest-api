@@ -43,6 +43,7 @@ CREATE TABLE "purchasedAssets" (
     "price" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "quantity" DOUBLE PRECISION NOT NULL DEFAULT 0,
     "total" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "totalWithFees" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "totalFees" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "apportionmentValue" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "apportionmentPercentage" DOUBLE PRECISION NOT NULL DEFAULT 0,

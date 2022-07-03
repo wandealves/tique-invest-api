@@ -1,29 +1,30 @@
-import { Error } from "../errors";
 import { HttpResponse } from "../protocols";
 
-export const badRequest = (error: Error): HttpResponse => ({
-  statusCode: 400,
-  body: { error: error, isError: true }
-});
+export const badRequest = (errors: string[]): HttpResponse => {
+  return {
+    statusCode: 400,
+    body: { message: errors }
+  };
+};
 
-export const unauthorized = (error: Error): HttpResponse => ({
+export const unauthorized = (errors: string[]): HttpResponse => ({
   statusCode: 401,
-  body: { error: error, isError: true }
+  body: { message: errors }
 });
 
-export const forbidden = (error: Error): HttpResponse => ({
+export const forbidden = (errors: string[]): HttpResponse => ({
   statusCode: 403,
-  body: { error: error, isError: true }
+  body: { message: errors }
 });
 
-export const notFound = (error: Error): HttpResponse => ({
+export const notFound = (errors: string[]): HttpResponse => ({
   statusCode: 404,
-  body: { error: error, isError: true }
+  body: { message: errors }
 });
 
-export const serverError = (error: Error): HttpResponse => ({
+export const serverError = (errors: string[]): HttpResponse => ({
   statusCode: 500,
-  body: { error: error, isError: true }
+  body: { message: errors }
 });
 
 export const ok = (data: any): HttpResponse => ({

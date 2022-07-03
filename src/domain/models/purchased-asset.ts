@@ -7,7 +7,8 @@ export class PurchasedAsset {
   private _id: number;
   private _price: number;
   private _quantity: number;
-  private _total: number = 0;
+  private _total: number;
+  private _totalWithFees: number;
   private _totalFees: number;
   private _apportionmentValue: number;
   private _apportionmentPercentage: number;
@@ -36,6 +37,14 @@ export class PurchasedAsset {
 
   get total(): number {
     return this._total;
+  }
+
+  set totalWithFees(value: number) {
+    this._totalWithFees = value;
+  }
+
+  get totalWithFees(): number {
+    return this._totalWithFees;
   }
 
   set totalFees(value: number) {
@@ -161,6 +170,7 @@ export class PurchasedAsset {
     this._walletId = 0;
 
     this._totalFees = 0;
+    this._totalWithFees = 0;
     this._apportionmentValue = 0;
     this._apportionmentPercentage = 0;
 

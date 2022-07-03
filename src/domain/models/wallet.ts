@@ -276,6 +276,7 @@ export class Wallet {
       asset.apportionmentPercentage = apportionmentPercentage;
       asset.apportionmentValue = apportionmentValue;
       asset.totalFees = totalFees;
+      asset.totalWithFees = totalWithFees;
 
       list.push(asset);
     }

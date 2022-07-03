@@ -4,7 +4,6 @@ import { CreateWalletDto } from "../../usecases/dtos";
 import { CreateWallet } from "../../usecases";
 
 import { ok, badRequest } from "../helpers";
-import { Error } from "../errors";
 import { HttpResponse } from "../protocols";
 
 export class WalletController {
@@ -13,8 +12,9 @@ export class WalletController {
   public async post(request: CreateWalletDto): Promise<HttpResponse> {
     const createWallet = container.resolve(CreateWallet);
     const result = await createWallet.execute(request);
-    if (result.isLeft())
-      return badRequest(new Error(result.value.message, 400));
+    if (result.isLeft()) {
+      return badRequest([result.value.message]);
+    }
 
     return ok(result);
   }

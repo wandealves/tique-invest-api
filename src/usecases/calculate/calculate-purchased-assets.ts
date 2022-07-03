@@ -48,6 +48,7 @@ export class CalculatePurchasedAssets implements ICalculatePurchasedAssets {
       asset.apportionmentPercentage = apportionmentPercentage;
       asset.apportionmentValue = apportionmentValue;
       asset.totalFees = totalFees;
+      asset.totalWithFees = totalWithFees;
 
       const assetFind = _.find(assets, item => item.code === asset.assetCode);
 

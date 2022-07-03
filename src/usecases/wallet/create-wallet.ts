@@ -50,7 +50,7 @@ export class CreateWallet implements ICreateWallet {
     wallet.totalFees = wallet.calculateTotalFees(fees);
     wallet.total = wallet.calculateTotalAssets(purchasedAssets);
     const unifyTickets = wallet.unifyAssets(purchasedAssets);
-    
+
     const calculatePurchasedAssets = new CalculatePurchasedAssets(
       this.assetRepository
     );
@@ -67,6 +67,9 @@ export class CreateWallet implements ICreateWallet {
         ? calculatePurchasedAssetsResult.value
         : []
     );
+
+    if (!result)
+      return left(new CreateWalletError("Não foi possível criar carteira"));
 
     return right({
       id: result,
