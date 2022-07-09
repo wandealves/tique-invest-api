@@ -19,7 +19,6 @@ export class UserRepository implements IUserRepository {
 
       const created = await this.prisma.user.create({
         data: {
-          id: 0,
           name: entity.name,
           email: entity.email,
           cpf: entity.cpf,
