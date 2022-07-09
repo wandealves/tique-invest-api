@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
 
-import { Encrypter } from "../../usecases/interfaces/encrypter";
+import { IEncrypter } from "../../usecases/interfaces/encrypter";
 
-export class BcryptAdapter implements Encrypter {
+export class BcryptAdapter implements IEncrypter {
   private readonly salt: number;
 
   constructor(salt: number) {
@@ -10,7 +10,13 @@ export class BcryptAdapter implements Encrypter {
   }
 
   async encrypt(value: string): Promise<string> {
-    const hash = await bcrypt.hash(value, this.salt);
-    return hash;
+    return await bcrypt.hash(value, this.salt);
+  }
+
+  async comparePassword(
+    plaintextPassword: string,
+    hash: string
+  ): Promise<boolean> {
+    return await bcrypt.compare(plaintextPassword, hash);
   }
 }
