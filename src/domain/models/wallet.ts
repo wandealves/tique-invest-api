@@ -83,7 +83,7 @@ export class Wallet {
   /**
    * Calcular o total de ativos comprados
    *
-   * @param ticketsPurchased: Lista de tickets
+   * @param purchasedAssets: Lista de ativos
    *
    * @returns number
    */
@@ -104,7 +104,9 @@ export class Wallet {
   /**
    * Retorna o quantidades, total dos ativos agrupados por código
    *
-   * @returns
+   * @param purchasedAssets: Lista de ativos
+   *
+   * @returns Total
    */
   public totalsByGroups(purchasedAssets: PurchasedAsset[]): Total {
     const groups = _.groupBy(purchasedAssets, item => item.assetCode);
@@ -150,11 +152,13 @@ export class Wallet {
   /**
    * Calcular o quantidades dos ativos
    *
-   * @returns
+   * @param purchasedAssets: Lista de ativos
+   *
+   * @returns number
    */
-  public calculateTotalQuantities(ticketsPurchased: PurchasedAsset[]): number {
+  public calculateTotalQuantities(purchasedAssets: PurchasedAsset[]): number {
     const total = _.reduce(
-      ticketsPurchased,
+      purchasedAssets,
       function (sum, item) {
         return sum + item.quantity;
       },
@@ -167,7 +171,7 @@ export class Wallet {
   /**
    * Calcular o total de taxas
    *
-   * @param ticketsPurchased: Lista de taxas
+   * @param fees: Lista de taxas
    *
    * @returns number
    */
@@ -186,7 +190,7 @@ export class Wallet {
   /**
    * Unificar linhas do mesmo ativo
    *
-   * @param ticketsPurchased: Lista de ativos
+   * @param purchasedAssets: Lista de ativos
    *
    * @returns TicketPurchased[]
    */
@@ -233,9 +237,11 @@ export class Wallet {
   }
 
   /**
-   * Unificar linhas do mesmo ativo
+   * Calcular rateio, porcetageme totais
    *
-   * @param ticketsPurchased: Lista de ativos
+   * @param purchasedAssets: Lista de ativos
+   * @param totalAllAssets: Total dos ativos
+   * @param totalFees: Total de taxas
    *
    * @returns TicketPurchased[]
    */
