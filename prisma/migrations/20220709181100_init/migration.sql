@@ -21,6 +21,7 @@ CREATE TABLE "users" (
     "name" VARCHAR(300) NOT NULL,
     "email" VARCHAR(500) NOT NULL,
     "cpf" VARCHAR(20) NOT NULL,
+    "password" VARCHAR(2500) NOT NULL,
     "avatarUrl" VARCHAR,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
