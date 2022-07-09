@@ -1,4 +1,4 @@
-import { TicketPurchased } from "../../src/domain/models";
+import { PurchasedAsset } from "../../src/domain/models";
 import { TransactionType, CurrencyCode } from "../../src/domain/models/enums";
 
 export const createWalletDto = {
@@ -55,43 +55,43 @@ export const createWalletDto = {
   ]
 };
 
-export const tickets: TicketPurchased[] = [
-  new TicketPurchased(
+export const assets: PurchasedAsset[] = [
+  new PurchasedAsset(
     0,
     114.55,
     3,
-    'ATV01',
+    "ATV01",
     "broker_valid",
     new Date(2021, 1, 5),
     TransactionType.COMPRA,
     CurrencyCode.BRL
   ),
-  new TicketPurchased(
+  new PurchasedAsset(
     0,
     178.96,
     5,
-    'ATV02',
+    "ATV02",
     "broker_valid",
     new Date(2021, 1, 5),
     TransactionType.COMPRA,
     CurrencyCode.BRL
   ),
-  new TicketPurchased(
+  new PurchasedAsset(
     0,
     10.45,
     4,
-    'ATV03',
+    "ATV03",
     "broker_valid",
     new Date(2021, 1, 5),
     TransactionType.COMPRA,
     CurrencyCode.BRL
   ),
 
-  new TicketPurchased(
+  new PurchasedAsset(
     0,
     117.69,
     2,
-    'ATV04',
+    "ATV04",
     "broker_valid",
     new Date(2021, 1, 5),
     TransactionType.COMPRA,
@@ -99,43 +99,43 @@ export const tickets: TicketPurchased[] = [
   )
 ];
 
-export const unifyTickets: TicketPurchased[] = [
-  new TicketPurchased(
+export const unifyAssets: PurchasedAsset[] = [
+  new PurchasedAsset(
     0,
     10.2,
     3,
-    'ATV01',
+    "ATV01",
     "broker_valid",
     new Date(2021, 1, 5),
     TransactionType.COMPRA,
     CurrencyCode.BRL
   ),
-  new TicketPurchased(
+  new PurchasedAsset(
     0,
     9.8,
     5,
-    'ATV01',
+    "ATV01",
     "broker_valid",
     new Date(2021, 1, 5),
     TransactionType.COMPRA,
     CurrencyCode.BRL
   ),
-  new TicketPurchased(
+  new PurchasedAsset(
     0,
     10.45,
     4,
-    'ATV02',
+    "ATV02",
     "broker_valid",
     new Date(2021, 1, 5),
     TransactionType.COMPRA,
     CurrencyCode.BRL
   ),
 
-  new TicketPurchased(
+  new PurchasedAsset(
     0,
     117.69,
     2,
-    'ATV02',
+    "ATV02",
     "broker_valid",
     new Date(2021, 1, 5),
     TransactionType.COMPRA,

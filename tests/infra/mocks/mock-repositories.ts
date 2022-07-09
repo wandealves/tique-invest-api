@@ -1,12 +1,12 @@
-import { Ticket, Wallet, TicketPurchased } from "../../../src/domain/models";
-import { TypeTicket } from "../../../src/domain/models/enums";
+import { Asset, Wallet, PurchasedAsset } from "../../../src/domain/models";
+import { AssetType } from "../../../src/domain/models/enums";
 import {
   IWalletRepository,
-  ITicketRepository
+  IAssetRepository
 } from "../../usecases/interfaces/repositories";
 
 export class WalletRepositorySpy implements IWalletRepository {
-  create(entity: Wallet, purchasedAssets: TicketPurchased[]): Promise<number> {
+  create(entity: Wallet, purchasedAssets: PurchasedAsset[]): Promise<number> {
     return Promise.resolve(1);
   }
   update(id: number, entity: Wallet): Promise<number> {
@@ -29,34 +29,34 @@ export class WalletRepositorySpy implements IWalletRepository {
   }
 }
 
-export class AssetRepositorySpy implements ITicketRepository {
-  create(entity: Ticket): Promise<number> {
+export class AssetRepositorySpy implements IAssetRepository {
+  create(entity: Asset): Promise<number> {
     throw new Error("Method not implemented.");
   }
-  update(id: number, entity: Ticket): Promise<number> {
+  update(id: number, entity: Asset): Promise<number> {
     throw new Error("Method not implemented.");
   }
   delete(id: number): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  all(): Promise<Ticket[] | null> {
+  all(): Promise<Asset[] | null> {
     throw new Error("Method not implemented.");
   }
-  filter(query: any): Promise<Ticket[] | null> {
+  filter(query: any): Promise<Asset[] | null> {
     return Promise.resolve([
-      new Ticket(1, "AALR3", "AALR3", "", TypeTicket.ACAO),
-      new Ticket(2, "ABEV3", "ABEV3", "", TypeTicket.ACAO),
-      new Ticket(3, "AGRO3", "AGRO3", "", TypeTicket.ACAO),
-      new Ticket(4, "ALUP11", "ALUP11", "", TypeTicket.ACAO)
+      new Asset(1, "AALR3", "AALR3", "", AssetType.ACAO),
+      new Asset(2, "ABEV3", "ABEV3", "", AssetType.ACAO),
+      new Asset(3, "AGRO3", "AGRO3", "", AssetType.ACAO),
+      new Asset(4, "ALUP11", "ALUP11", "", AssetType.ACAO)
     ]);
   }
-  findOne(id: number): Promise<Ticket | null> {
+  findOne(id: number): Promise<Asset | null> {
     throw new Error("Method not implemented.");
   }
-  findCode(code: string): Promise<Ticket | null> {
+  findCode(code: string): Promise<Asset | null> {
     throw new Error("Method not implemented.");
   }
-  find(query: any): Promise<Ticket | null> {
+  find(query: any): Promise<Asset | null> {
     throw new Error("Method not implemented.");
   }
 }

@@ -239,10 +239,11 @@ export class PurchasedAsset {
   }
 
   /***
-   * Calcular o valor do rateio
+   * Calcular total com taxas
    *
-   * @param assetTotal: Total o ativo do calculo
+   * @param assetTotal: Total do ativo do calculo
    * @param apportionmentValue: Valor o rateio do ativo
+   * @param transactionType: Tipo de transação
    *
    * @returns number
    */

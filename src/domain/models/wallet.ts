@@ -1,4 +1,4 @@
-import _, { conformsTo } from "lodash";
+import _ from "lodash";
 
 import { PurchasedAsset } from "./purchased-asset";
 import { CalculatedAsset } from "./calculated-asset";
@@ -10,7 +10,6 @@ export class Wallet {
   private _id: number;
   private _name: string;
   private _total: number;
-  //private _totalQuantities: number = 0;
   private _totalFees: number;
   private _currencyCode: CurrencyCode;
   private _userId: number;
@@ -24,14 +23,6 @@ export class Wallet {
   get name() {
     return this._name;
   }
-
-  //// set totalQuantities(value: number) {
-  // this._totalQuantities = value;
-  // }
-
-  //get totalQuantities() {
-  //  return this._totalQuantities;
-  //}
 
   set total(value: number) {
     this._total = value;

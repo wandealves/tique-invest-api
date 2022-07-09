@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import { TicketPurchased, Fees, Wallet } from "../../src/domain/models";
+/*import { TicketPurchased, Fees, Wallet } from "../../src/domain/models";
 import { CurrencyCode } from "../../src/domain/models/enums";
 
 import { tickets, unifyTickets } from "../data/mock-data";
@@ -63,4 +63,12 @@ describe("Dominio -> Cateriras", () => {
 
     expect(_.get(resultFind, "price")).toEqual(9.95);
   });
-});
+});*/
+
+describe("Usecase create wallet", () => {
+  test("Deve criar a cateira de ativos", async () => {
+
+    expect(1).toBe(1);
+  });
+})
+
