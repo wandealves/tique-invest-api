@@ -9,3 +9,5 @@ export * from "./encrypter";
 export * from "./auth/login";
 export * from "./user/create-user";
 export * from "./repositories";
+export * from "./encrypter";
+export * from "./jwt";

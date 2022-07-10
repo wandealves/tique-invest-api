@@ -5,8 +5,8 @@ import { IEncrypter } from "../../usecases/interfaces/encrypter";
 export class BcryptAdapter implements IEncrypter {
   private readonly salt: number;
 
-  constructor(salt: number) {
-    this.salt = salt;
+  constructor() {
+    this.salt = Number(process.env.AUTH_SALT);
   }
 
   async encrypt(value: string): Promise<string> {

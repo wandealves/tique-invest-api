@@ -43,7 +43,7 @@ export class UserRepository implements IUserRepository {
 
   async create(entity: User): Promise<number> {
     try {
-      const bcryptAdapter = new BcryptAdapter(16);
+      const bcryptAdapter = new BcryptAdapter();
       entity.password = await bcryptAdapter.encrypt(entity.password);
 
       const created = await this.prisma.user.create({
@@ -66,7 +66,7 @@ export class UserRepository implements IUserRepository {
 
   async update(id: number, entity: User): Promise<number> {
     try {
-      const bcryptAdapter = new BcryptAdapter(20);
+      const bcryptAdapter = new BcryptAdapter();
       entity.password = await bcryptAdapter.encrypt(entity.password);
 
       const update = await this.prisma.user.update({
@@ -115,7 +115,7 @@ export class UserRepository implements IUserRepository {
             user.name,
             user.email,
             user.cpf,
-            "",
+            user.password,
             user.avatarUrl ? user.avatarUrl : ""
           )
       );
@@ -140,7 +140,7 @@ export class UserRepository implements IUserRepository {
             user.name,
             user.email,
             user.cpf,
-            "",
+            user.password,
             user.avatarUrl ? user.avatarUrl : ""
           )
       );
@@ -165,7 +165,7 @@ export class UserRepository implements IUserRepository {
           user.name,
           user.email,
           user.cpf,
-          "",
+          user.password,
           user.avatarUrl ? user.avatarUrl : ""
         );
       return null;
@@ -178,7 +178,7 @@ export class UserRepository implements IUserRepository {
 
   async find(query: any): Promise<User | null> {
     try {
-      const user = await this.prisma.user.findUnique({
+      const user = await this.prisma.user.findFirst({
         where: query
       });
 
@@ -188,11 +188,11 @@ export class UserRepository implements IUserRepository {
           user.name,
           user.email,
           user.cpf,
-          "",
+          user.password,
           user.avatarUrl ? user.avatarUrl : ""
         );
       return null;
-    } catch {
+    } catch (error) {
       return null;
     } finally {
       this.prisma.$disconnect();

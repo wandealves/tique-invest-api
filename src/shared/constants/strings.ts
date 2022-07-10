@@ -29,6 +29,16 @@ export const strings = {
     label: "User",
     message: "Usuário já cadastrado, informe CPF ou email diferentes."
   },
+  MSS07: {
+    code: "MSS07",
+    label: "Login",
+    message: "Usuário não encontrado."
+  },
+  MSS08: {
+    code: "MSS08",
+    label: "Login",
+    message: "Senha inválida."
+  },
   ERR01: {
     code: "500",
     label: "Error Interno",
