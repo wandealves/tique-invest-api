@@ -10,13 +10,13 @@ export class BcryptAdapter implements IEncrypter {
   }
 
   async encrypt(value: string): Promise<string> {
-    return await bcrypt.hash(value, this.salt);
+    return await bcrypt.hashSync(value, this.salt);
   }
 
   async comparePassword(
     plaintextPassword: string,
     hash: string
   ): Promise<boolean> {
-    return await bcrypt.compare(plaintextPassword, hash);
+    return await bcrypt.compareSync(plaintextPassword, hash);
   }
 }

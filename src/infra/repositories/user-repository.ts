@@ -9,12 +9,41 @@ export class UserRepository implements IUserRepository {
   private readonly prisma: PrismaClient;
 
   constructor() {
-    this.prisma = new PrismaClient();
+    this.prisma = new PrismaClient({
+      /*log: [
+        {
+          emit: "event",
+          level: "query"
+        },
+        {
+          emit: "stdout",
+          level: "error"
+        },
+        {
+          emit: "stdout",
+          level: "info"
+        },
+        {
+          emit: "stdout",
+          level: "warn"
+        }
+      ]*/
+    });
+
+    /* this.prisma.$use(async (params, next) => {
+      const before = Date.now();
+      const result = await next(params);
+      const after = Date.now();
+      console.log(
+        `Query ${params.model}.${params.action} took ${after - before}ms`
+      );
+      return result;
+    });*/
   }
 
   async create(entity: User): Promise<number> {
     try {
-      const bcryptAdapter = new BcryptAdapter(20);
+      const bcryptAdapter = new BcryptAdapter(16);
       entity.password = await bcryptAdapter.encrypt(entity.password);
 
       const created = await this.prisma.user.create({
