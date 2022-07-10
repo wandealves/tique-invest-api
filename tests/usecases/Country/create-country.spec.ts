@@ -1,5 +1,5 @@
 import { ICountryRepository } from "../../../src/usecases/interfaces/repositories";
-import { CreateCountry } from "../../../src/usecases/Country/create/create-country";
+import { CreateCountry } from "../core/Country/create/create-country";
 import { makeCountryRepositoryRepository } from "../../../src/usecases/helpers";
 import { Country } from "../../../src/domain/models";
 

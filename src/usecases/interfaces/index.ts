@@ -8,3 +8,4 @@ export * from "./calculate/calculate-purchased-assets";
 export * from "./encrypter";
 export * from "./auth/login";
 export * from "./user/create-user";
+export * from "./repositories";

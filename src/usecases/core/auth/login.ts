@@ -1,14 +1,14 @@
 import { inject, injectable } from "tsyringe";
 import _ from "lodash";
 
-import { ILogin } from "../interfaces";
+import { ILogin } from "../../interfaces";
 import {
   IWalletRepository,
   IAssetRepository
-} from "../interfaces/repositories";
-import { AuthDto, AuthResponseDto } from "../dtos";
-import { CreateWalletError } from "../errors";
-import { Either, left, right } from "../../shared";
+} from "../../interfaces/repositories";
+import { AuthDto, AuthResponseDto } from "../../dtos";
+import { CreateWalletError } from "../../errors";
+import { Either, left, right } from "../../../shared";
 
 @injectable()
 export class Login implements ILogin {

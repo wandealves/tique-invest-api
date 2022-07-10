@@ -1,10 +1,10 @@
 import _ from "lodash";
 
-import { ICalculatePurchasedAssets } from "../interfaces";
-import { PurchasedAsset } from "../../domain/models";
-import { IAssetRepository } from "../interfaces/repositories";
-import { handlePurchasedAssetError } from "../errors";
-import { Either, left, right } from "../../shared";
+import { ICalculatePurchasedAssets } from "../../interfaces";
+import { PurchasedAsset } from "../../../domain/models";
+import { IAssetRepository } from "../../interfaces/repositories";
+import { handlePurchasedAssetError } from "../../errors";
+import { Either, left, right } from "../../../shared";
 
 export class CalculatePurchasedAssets implements ICalculatePurchasedAssets {
   private readonly assetRepository: IAssetRepository;

@@ -169,4 +169,18 @@ export class UserRepository implements IUserRepository {
       this.prisma.$disconnect();
     }
   }
+
+  async exists(query: any): Promise<boolean> {
+    try {
+      const count = await this.prisma.user.count({
+        where: query
+      });
+
+      return count > 0;
+    } catch {
+      return false;
+    } finally {
+      this.prisma.$disconnect();
+    }
+  }
 }

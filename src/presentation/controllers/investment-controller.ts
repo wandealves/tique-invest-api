@@ -1,7 +1,7 @@
 import { container } from "tsyringe";
 
 import { CreateInvestmentDto } from "../../shared/dtos";
-import { CreateInvestment } from "../../usecases/investment/create-investment";
+import { CreateInvestment } from "../../usecases/core/investment/create-investment";
 //import { createInvestmentDtoToInvestmentModel } from "../../shared/mapper";
 
 import { ok } from "../helpers";

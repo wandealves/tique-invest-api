@@ -13,7 +13,7 @@ export class UserController {
     const usecase = container.resolve(CreateUser);
     const result = await usecase.execute(request);
     if (result.isLeft()) {
-      return badRequest([result.value.message]);
+      return badRequest(result.value);
     }
 
     return ok(result);

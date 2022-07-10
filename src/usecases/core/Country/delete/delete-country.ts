@@ -1,5 +1,5 @@
-import { IDeleteCountry } from "../../interfaces";
-import { ICountryRepository } from "../../interfaces/repositories";
+import { IDeleteCountry } from "../../../interfaces";
+import { ICountryRepository } from "../../../interfaces/repositories";
 
 export class DeleteCountry implements IDeleteCountry {
   private readonly countryRepository: ICountryRepository;

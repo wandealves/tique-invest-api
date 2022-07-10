@@ -1,15 +1,22 @@
-import { AccountRepository } from "../../../src/usecases/create-account/create-account";
+import { AccountRepository } from "../core/create-account/create-account";
 import {
-  Encrypter,
+  IEncrypter,
   CreateAccountModel
 } from "../../../src/usecases/interfaces";
 import { CreateAccountRepository } from "../../../src/usecases/interfaces/repositories";
 import { AccountModel } from "../../../src/domain/models";
 
-const makeEncrypter = (): Encrypter => {
-  class EncrypterStub implements Encrypter {
+const makeEncrypter = (): IEncrypter => {
+  class EncrypterStub implements IEncrypter {
     async encrypt(value: string): Promise<string> {
       return new Promise(resolver => resolver("hashed_password"));
+    }
+
+    async comparePassword(
+      plaintextPassword: string,
+      hash: string
+    ): Promise<boolean> {
+      return new Promise(resolver => resolver(true));
     }
   }
 
@@ -34,7 +41,7 @@ const makeCreateAccountRepository = (): CreateAccountRepository => {
 
 interface SutTypes {
   sut: AccountRepository;
-  encrypterStub: Encrypter;
+  encrypterStub: IEncrypter;
   createAccountRepositoryStub: CreateAccountRepository;
 }
 

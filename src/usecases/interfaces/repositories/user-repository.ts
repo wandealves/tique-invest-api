@@ -9,4 +9,5 @@ export interface IUserRepository {
   filter(query: any): Promise<User[] | null>;
   findOne(id: number): Promise<User | null>;
   find(query: any): Promise<User | null>;
+  exists(query: any): Promise<boolean>;
 }

@@ -6,11 +6,11 @@ import _ from "lodash";
 //Wallet,
 //PurchasedAsset
 //} from "../protocols/investment-protocols";
-import { ICreateInvestment } from "../interfaces";
-import { CreateInvestmentDto } from "../../shared/dtos";
+import { ICreateInvestment } from "../../interfaces";
+import { CreateInvestmentDto } from "../../../shared/dtos";
 //import { stringToTypeAsset, createPurchasedAssets } from "../../shared/mapper";
 
-import { IInvestmentRepository } from "../interfaces/repositories";
+import { IInvestmentRepository } from "../../interfaces/repositories";
 
 @injectable()
 export class CreateInvestment implements ICreateInvestment {

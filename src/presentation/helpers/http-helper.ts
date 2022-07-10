@@ -1,9 +1,10 @@
 import { HttpResponse } from "../protocols";
+import { BaseError } from "../../main/errors";
 
-export const badRequest = (errors: string[]): HttpResponse => {
+export const badRequest = (error: BaseError): HttpResponse => {
   return {
-    statusCode: 400,
-    body: { message: errors }
+    statusCode: error.status,
+    body: { message: error }
   };
 };
 

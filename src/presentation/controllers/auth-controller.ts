@@ -13,7 +13,7 @@ export class AuthController {
     const login = container.resolve(Login);
     const result = await login.execute(request);
     if (result.isLeft()) {
-      return badRequest([result.value.message]);
+     // return badRequest(result.value);
     }
 
     return ok(result);

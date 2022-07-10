@@ -2,17 +2,17 @@ import { inject, injectable } from "tsyringe";
 import _ from "lodash";
 
 import { CalculatePurchasedAssets } from "../calculate/calculate-purchased-assets";
-import { ICreateWallet } from "../interfaces";
+import { ICreateWallet } from "../../interfaces";
 import {
   IWalletRepository,
   IAssetRepository
-} from "../interfaces/repositories";
-import { CreateWalletDto, CreateWalletResponseDto } from "../dtos";
-import { Wallet, Fees, PurchasedAsset } from "../../domain/models";
-import { makePurchasedAssets, makeFees } from "../../main/factories";
-import { CreateWalletError } from "../errors";
-import { Either, left, right } from "../../shared";
-import { stringToCurrencyCode, currencyCodeToString } from "../../shared/utils";
+} from "../../interfaces/repositories";
+import { CreateWalletDto, CreateWalletResponseDto } from "../../dtos";
+import { Wallet, Fees, PurchasedAsset } from "../../../domain/models";
+import { makePurchasedAssets, makeFees } from "../../../main/factories";
+import { CreateWalletError } from "../../errors";
+import { Either, left, right } from "../../../shared";
+import { stringToCurrencyCode, currencyCodeToString } from "../../../shared/utils";
 
 @injectable()
 export class CreateWallet implements ICreateWallet {

@@ -13,7 +13,7 @@ export class WalletController {
     const createWallet = container.resolve(CreateWallet);
     const result = await createWallet.execute(request);
     if (result.isLeft()) {
-      return badRequest([result.value.message]);
+      //return badRequest([result.value.message]);
     }
 
     return ok(result);
