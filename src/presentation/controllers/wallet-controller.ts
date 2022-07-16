@@ -20,10 +20,6 @@ export class WalletController {
     return ok(result);
   }
 
-  public async getAll(): Promise<HttpResponse> {
-    return ok({ id: 9, name: "OPA0889" });
-  }
-
   public async get(params: ParamsDto): Promise<HttpResponse> {
     const showWallet = container.resolve(ShowWallet);
     const result = await showWallet.execute(_.toNumber(params.id));
