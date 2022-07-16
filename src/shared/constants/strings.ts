@@ -69,6 +69,16 @@ export const strings = {
     label: "",
     message: "Não foi possível criar carteira."
   },
+  MSS15: {
+    code: "MSS15",
+    label: "currencyCode",
+    message: "Código da moeda é obrigatória."
+  },
+  MSS16: {
+    code: "MSS16",
+    label: "user",
+    message: "Usuário é obrigatório."
+  },
   ERR01: {
     code: "500",
     label: "Error Interno",

@@ -1,5 +1,5 @@
 export interface ValidationProps {
-  messages: string[];
+  messages: any[];
   name: string;
   status: number;
   hasError: boolean;

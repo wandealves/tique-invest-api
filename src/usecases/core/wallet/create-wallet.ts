@@ -5,7 +5,8 @@ import { CalculatePurchasedAssets } from "../calculate/calculate-purchased-asset
 import { ICreateWallet } from "../../interfaces";
 import {
   IWalletRepository,
-  IAssetRepository
+  IAssetRepository,
+  IUserRepository
 } from "../../interfaces/repositories";
 import { CreateWalletDto, CreateWalletResponseDto } from "../../dtos";
 import { Wallet, Fees } from "../../../domain/models";
@@ -17,29 +18,37 @@ import {
   stringToCurrencyCode,
   currencyCodeToString
 } from "../../../shared/utils";
+import { CreateWalletValidation } from "../../validations";
 
 @injectable()
 export class CreateWallet implements ICreateWallet {
   private readonly walletRepository: IWalletRepository;
   private readonly assetRepository: IAssetRepository;
+  private readonly _userRepository: IUserRepository;
 
   constructor(
     @inject("IWalletRepository")
     walletRepository: IWalletRepository,
     @inject("IAssetRepository")
-    assetRepository: IAssetRepository
+    assetRepository: IAssetRepository,
+    @inject("IUserRepository")
+    userRepository: IUserRepository
   ) {
     this.walletRepository = walletRepository;
     this.assetRepository = assetRepository;
+    this._userRepository = userRepository;
   }
 
   async execute(
     dto: CreateWalletDto
   ): Promise<Either<HandleError, CreateWalletResponseDto>> {
-    const assetsDto = _.get(dto, "assets", []);
-
-    if (_.size(assetsDto) === 0)
-      new HandleError("CreateWallet", [strings.MSS13], 400);
+    const validation = await new CreateWalletValidation(
+      this._userRepository
+    ).execute(dto);
+    if (validation.hasError)
+      return left(
+        new HandleError(validation.name, validation.messages, validation.status)
+      );
 
     const fees: Fees[] = makeFees(_.get(dto, "fees", []));
     const purchasedAssets = makePurchasedAssets(dto.assets);
