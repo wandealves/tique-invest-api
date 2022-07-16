@@ -10,6 +10,8 @@ import {
   AssetType as TypeAssetEntity
 } from "../../domain/models/enums";
 
+import { strings } from "../constants/strings";
+
 export function stringToCurrencyCode(value: string) {
   switch (value) {
     case "BRL":
@@ -127,5 +129,20 @@ export function currencyCodeToCurrencyCodePrisma(value: CurrencyCode) {
       return CurrencyCodePrisma.EUR;
     case CurrencyCode.USD:
       return CurrencyCodePrisma.USD;
+  }
+}
+
+export function tokenError(message: string) {
+  switch (message) {
+    case "jwt malformed":
+      return strings.MSS09;
+    case "jwt signature is required":
+      return strings.MSS10;
+    case "invalid signature":
+      return strings.MSS11;
+    case "jwt expired":
+      return strings.MSS12;
+    default:
+      return strings.ERR01;
   }
 }

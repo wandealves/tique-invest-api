@@ -6,3 +6,4 @@ export * from "./create-user-dto";
 export * from "./auth-response-dto";
 export * from "./create-wallet-response-dto";
 export * from "./create-user-response-dto";
+export * from "./user-dto";

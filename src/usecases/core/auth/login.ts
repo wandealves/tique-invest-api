@@ -46,7 +46,7 @@ export class Login implements ILogin {
     if (!comparePassword)
       return left(new HandleError("Login", [strings["MSS08"].message], 400));
 
-    const token = await new JwtAdapter().jwt({
+    const token = await new JwtAdapter().sign({
       id: user.id,
       email: user.email
     });

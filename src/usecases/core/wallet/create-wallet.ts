@@ -8,11 +8,15 @@ import {
   IAssetRepository
 } from "../../interfaces/repositories";
 import { CreateWalletDto, CreateWalletResponseDto } from "../../dtos";
-import { Wallet, Fees, PurchasedAsset } from "../../../domain/models";
+import { Wallet, Fees } from "../../../domain/models";
 import { makePurchasedAssets, makeFees } from "../../../main/factories";
-import { CreateWalletError } from "../../errors";
+import { HandleError } from "../../../main/errors";
 import { Either, left, right } from "../../../shared";
-import { stringToCurrencyCode, currencyCodeToString } from "../../../shared/utils";
+import { strings } from "../../../shared/constants/strings";
+import {
+  stringToCurrencyCode,
+  currencyCodeToString
+} from "../../../shared/utils";
 
 @injectable()
 export class CreateWallet implements ICreateWallet {
@@ -31,11 +35,11 @@ export class CreateWallet implements ICreateWallet {
 
   async execute(
     dto: CreateWalletDto
-  ): Promise<Either<CreateWalletError, CreateWalletResponseDto>> {
+  ): Promise<Either<HandleError, CreateWalletResponseDto>> {
     const assetsDto = _.get(dto, "assets", []);
 
     if (_.size(assetsDto) === 0)
-      return left(new CreateWalletError("Nenhum ativo encontrado"));
+      new HandleError("CreateWallet", [strings.MSS13], 400);
 
     const fees: Fees[] = makeFees(_.get(dto, "fees", []));
     const purchasedAssets = makePurchasedAssets(dto.assets);
@@ -44,7 +48,7 @@ export class CreateWallet implements ICreateWallet {
       0,
       dto.name,
       stringToCurrencyCode(dto.currencyCode),
-      dto.userId
+      dto.user.id
     );
 
     wallet.totalFees = wallet.calculateTotalFees(fees);
@@ -68,8 +72,7 @@ export class CreateWallet implements ICreateWallet {
         : []
     );
 
-    if (!result)
-      return left(new CreateWalletError("Não foi possível criar carteira"));
+    if (!result) new HandleError("CreateWallet", [strings.MSS14], 400);
 
     return right({
       id: result,

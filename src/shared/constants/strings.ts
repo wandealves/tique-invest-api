@@ -39,6 +39,36 @@ export const strings = {
     label: "Login",
     message: "Senha inválida."
   },
+  MSS09: {
+    code: "MSS09",
+    label: "jwt malformed",
+    message: "Token malformado."
+  },
+  MSS10: {
+    code: "MSS10",
+    label: "jwt signature is required",
+    message: "Token obrigatório."
+  },
+  MSS11: {
+    code: "MSS11",
+    label: "invalid signature",
+    message: "Token inválido."
+  },
+  MSS12: {
+    code: "MSS12",
+    label: "jwt expired",
+    message: "Token expirado."
+  },
+  MSS13: {
+    code: "MSS13",
+    label: "",
+    message: "Nenhum ativo encontrado."
+  },
+  MSS14: {
+    code: "MSS14",
+    label: "",
+    message: "Não foi possível criar carteira."
+  },
   ERR01: {
     code: "500",
     label: "Error Interno",
