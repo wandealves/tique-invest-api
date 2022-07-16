@@ -3,7 +3,10 @@ import _ from "lodash";
 
 import { Wallet, PurchasedAsset } from "../../domain/models";
 import { IWalletRepository } from "../../usecases/interfaces/repositories";
-import { makeCreatePurchasedAssetRepository } from "../../main/factories";
+import {
+  makeCreatePurchasedAssetRepository,
+  makeWallet
+} from "../../main/factories";
 import {
   currencyCodePrismaToCurrencyCode,
   currencyCodeToCurrencyCodePrisma,
@@ -132,31 +135,7 @@ export class WalletRepository implements IWalletRepository {
       });
 
       if (wallet) {
-        const walletReturn = new Wallet(
-          wallet.id,
-          wallet.name,
-          currencyCodePrismaToCurrencyCode(wallet.currencyCode),
-          wallet.userId
-        );
-
-        walletReturn.purchasedAssets = _.map(
-          wallet.purchasedAssets,
-          purchasedAsset =>
-            new PurchasedAsset(
-              purchasedAsset.id,
-              _.toNumber(purchasedAsset.price),
-              purchasedAsset.quantity,
-              purchasedAsset.assetCode ?? "",
-              purchasedAsset.brokerName,
-              purchasedAsset.date,
-              transactionTypePrismaToTransactionType(
-                purchasedAsset.transactionType
-              ),
-              currencyCodePrismaToCurrencyCode(purchasedAsset.currencyCode)
-            )
-        );
-
-        return walletReturn;
+        return makeWallet(wallet, wallet.purchasedAssets);
       }
       return null;
     } catch {
