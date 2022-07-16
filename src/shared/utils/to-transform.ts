@@ -36,12 +36,32 @@ export function stringToTransactionType(value: string) {
   return TransactionType.COMPRA;
 }
 
+export function transactionTypeToString(value: TransactionType) {
+  switch (value) {
+    case TransactionType.COMPRA:
+      return "COMPRA";
+    case TransactionType.VENDA:
+      return "VENDA";
+  }
+}
+
 export function transactionTypeToTransactionTypePrisma(value: TransactionType) {
   switch (value) {
     case TransactionType.COMPRA:
       return TransactionTypePrisma.COMPRA;
     case TransactionType.VENDA:
       return TransactionTypePrisma.VENDA;
+  }
+}
+
+export function transactionTypePrismaToTransactionType(
+  value: TransactionTypePrisma
+) {
+  switch (value) {
+    case TransactionTypePrisma.COMPRA:
+      return TransactionType.COMPRA;
+    case TransactionTypePrisma.VENDA:
+      return TransactionType.VENDA;
   }
 }
 

@@ -84,6 +84,7 @@ model PurchasedAsset {
   brokerName              String          @db.VarChar(200)
   transactionType         TransactionType
   currencyCode            CurrencyCode
+  assetCode               String?         @db.VarChar(10)
 
   assetId  Int
   ticket   Asset   @relation(fields: [assetId], references: [id])

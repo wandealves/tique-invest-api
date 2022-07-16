@@ -16,6 +16,10 @@ export class Wallet {
   private _purchasedAssets: PurchasedAsset[];
   private _calculatedAssets: CalculatedAsset[];
 
+  get id() {
+    return this._id;
+  }
+
   set name(value: string) {
     this._name = value;
   }

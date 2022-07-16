@@ -25,6 +25,7 @@ export const makeCreatePurchasedAssetRepository = (
       asset.transactionType
     ),
     currencyCode: currencyCodeToCurrencyCodePrisma(asset.currencyCode),
-    assetId: asset.assetId
+    assetId: asset.assetId,
+    assetCode: asset.assetCode
   }));
 };

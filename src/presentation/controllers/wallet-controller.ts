@@ -1,7 +1,8 @@
 import { container } from "tsyringe";
+import _ from "lodash";
 
-import { CreateWalletDto } from "../../usecases/dtos";
-import { CreateWallet } from "../../usecases";
+import { CreateWalletDto, ParamsDto } from "../../usecases/dtos";
+import { CreateWallet, ShowWallet } from "../../usecases";
 
 import { ok, badRequest } from "../helpers";
 import { HttpResponse } from "../protocols";
@@ -21,5 +22,11 @@ export class WalletController {
 
   public async getAll(): Promise<HttpResponse> {
     return ok({ id: 9, name: "OPA0889" });
+  }
+
+  public async get(params: ParamsDto): Promise<HttpResponse> {
+    const showWallet = container.resolve(ShowWallet);
+    const result = await showWallet.execute(_.toNumber(params.id));
+    return ok(result.value);
   }
 }

@@ -6,4 +6,8 @@ export * from "./create-user-dto";
 export * from "./auth-response-dto";
 export * from "./create-wallet-response-dto";
 export * from "./create-user-response-dto";
+export * from "./wallet-show-response-dto";
+export * from "./purchased-asset-response-dto";
+export * from "./calculated-asset-response-dto";
 export * from "./user-dto";
+export * from "./params-dto";

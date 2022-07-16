@@ -52,6 +52,8 @@ export class CalculatePurchasedAssets implements ICalculatePurchasedAssets {
 
       const assetFind = _.find(assets, item => item.code === asset.assetCode);
 
+      asset.assetCode = assetFind?.code ?? "";
+
       if (assetFind) asset.assetId = assetFind.id;
       list.push(asset);
     }

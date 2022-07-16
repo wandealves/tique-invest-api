@@ -6,7 +6,8 @@ import { IWalletRepository } from "../../usecases/interfaces/repositories";
 import { makeCreatePurchasedAssetRepository } from "../../main/factories";
 import {
   currencyCodePrismaToCurrencyCode,
-  currencyCodeToCurrencyCodePrisma
+  currencyCodeToCurrencyCodePrisma,
+  transactionTypePrismaToTransactionType
 } from "../../shared/utils";
 
 export class WalletRepository implements IWalletRepository {
@@ -123,16 +124,40 @@ export class WalletRepository implements IWalletRepository {
       const wallet = await this.prisma.wallet.findUnique({
         where: {
           id
+        },
+        include: {
+          purchasedAssets: true,
+          calculatedAssets: true
         }
       });
 
-      if (wallet)
-        return new Wallet(
+      if (wallet) {
+        const walletReturn = new Wallet(
           wallet.id,
           wallet.name,
           currencyCodePrismaToCurrencyCode(wallet.currencyCode),
           wallet.userId
         );
+
+        walletReturn.purchasedAssets = _.map(
+          wallet.purchasedAssets,
+          purchasedAsset =>
+            new PurchasedAsset(
+              purchasedAsset.id,
+              _.toNumber(purchasedAsset.price),
+              purchasedAsset.quantity,
+              purchasedAsset.assetCode ?? "",
+              purchasedAsset.brokerName,
+              purchasedAsset.date,
+              transactionTypePrismaToTransactionType(
+                purchasedAsset.transactionType
+              ),
+              currencyCodePrismaToCurrencyCode(purchasedAsset.currencyCode)
+            )
+        );
+
+        return walletReturn;
+      }
       return null;
     } catch {
       return null;

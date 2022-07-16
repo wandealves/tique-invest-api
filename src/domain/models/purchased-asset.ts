@@ -23,6 +23,10 @@ export class PurchasedAsset {
   private _assetId: number;
   private _walletId: number;
 
+  get id(): number {
+    return this._id;
+  }
+
   get price(): number {
     return this._price;
   }
