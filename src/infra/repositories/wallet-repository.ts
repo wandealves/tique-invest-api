@@ -4,7 +4,7 @@ import _ from "lodash";
 import { Wallet, PurchasedAsset } from "../../domain/models";
 import { IWalletRepository } from "../../usecases/interfaces/repositories";
 import {
-  makeCreatePurchasedAssetRepository,
+  makeCreatePurchasedAssetsRepository,
   makeWallet
 } from "../../main/factories";
 import {
@@ -22,7 +22,7 @@ export class WalletRepository implements IWalletRepository {
 
   async create(entity: Wallet, assets: PurchasedAsset[]): Promise<number> {
     try {
-      const makeAssets = makeCreatePurchasedAssetRepository(assets);
+      const makeAssets = makeCreatePurchasedAssetsRepository(assets);
       const created = await this.prisma.wallet.create({
         data: {
           name: entity.name,

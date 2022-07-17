@@ -4,7 +4,7 @@ import _ from "lodash";
 import { ICreateUser } from "../../interfaces";
 import { IUserRepository } from "../../interfaces/repositories";
 import { CreateUserDto, CreateUserResponseDto } from "../../dtos";
-import { makeFromDtoToUser } from "../../../main/factories";
+import { makeCreateUser } from "../../../main/factories";
 import { HandleError } from "../../../main/errors";
 import { CreateUserValidation } from "../../validations";
 import { Either, left, right } from "../../../shared";
@@ -31,7 +31,7 @@ export class CreateUser implements ICreateUser {
         new HandleError(validation.name, validation.messages, validation.status)
       );
 
-    const userId = await this._userRepository.create(makeFromDtoToUser(dto));
+    const userId = await this._userRepository.create(makeCreateUser(dto));
 
     return right({
       id: userId

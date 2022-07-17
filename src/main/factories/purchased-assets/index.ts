@@ -1,2 +1,2 @@
-export * from "./make-create-tickets-purchased";
+export * from "./make-create-purchased-assets-repository";
 export * from "./make-purchased-assets";

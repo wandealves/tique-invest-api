@@ -6,7 +6,7 @@ import {
   currencyCodeToCurrencyCodePrisma
 } from "../../../shared/utils";
 
-export const makeCreatePurchasedAssetRepository = (
+export const makeCreatePurchasedAssetsRepository = (
   purchasedAssets: PurchasedAsset[]
 ) => {
   return _.map(purchasedAssets, asset => ({

@@ -3,7 +3,7 @@ import _ from "lodash";
 import { User } from "../../../domain/models";
 import { CreateUserDto } from "../../../usecases/dtos";
 
-export const makeFromDtoToUser = (dto: CreateUserDto) => {
+export const makeCreateUser = (dto: CreateUserDto) => {
   return new User(
     0,
     _.get(dto, "name"),
