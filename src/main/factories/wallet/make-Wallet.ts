@@ -4,11 +4,11 @@ import {
   PurchasedAsset as PurchasedAssetPrisma
 } from "@prisma/client";
 
-import { Wallet, PurchasedAsset } from "../../domain/models";
+import { Wallet, PurchasedAsset } from "../../../domain/models";
 import {
   currencyCodePrismaToCurrencyCode,
   transactionTypePrismaToTransactionType
-} from "../../shared/utils";
+} from "../../../shared/utils";
 
 export const makeWallet = (
   walletPrisma: WalletPrisma,

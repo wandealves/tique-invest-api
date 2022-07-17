@@ -1,11 +1,11 @@
 import _ from "lodash";
 
-import { PurchasedAsset } from "../../domain/models";
-import { CreatePurchasedAssetDto } from "../../usecases/dtos";
+import { PurchasedAsset } from "../../../domain/models";
+import { CreatePurchasedAssetDto } from "../../../usecases/dtos";
 import {
   stringToCurrencyCode,
   stringToTransactionType
-} from "../../shared/utils";
+} from "../../../shared/utils";
 
 export const makePurchasedAssets = (
   dtos: CreatePurchasedAssetDto[]

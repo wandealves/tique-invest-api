@@ -1,11 +1,11 @@
 import _ from "lodash";
 
-import { Wallet } from "../../domain/models";
-import { WalletShowResponseDto } from "../../usecases/dtos";
+import { Wallet } from "../../../domain/models";
+import { WalletShowResponseDto } from "../../../usecases/dtos";
 import {
   currencyCodeToString,
   transactionTypeToString
-} from "../../shared/utils";
+} from "../../../shared/utils";
 
 export const makeWalletShowToResponseDto = (
   entity: Wallet

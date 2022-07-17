@@ -1,10 +1,10 @@
 import _ from "lodash";
 
-import { PurchasedAsset } from "../../domain/models";
+import { PurchasedAsset } from "../../../domain/models";
 import {
   transactionTypeToTransactionTypePrisma,
   currencyCodeToCurrencyCodePrisma
-} from "../../shared/utils";
+} from "../../../shared/utils";
 
 export const makeCreatePurchasedAssetRepository = (
   purchasedAssets: PurchasedAsset[]
