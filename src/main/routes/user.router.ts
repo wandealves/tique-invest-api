@@ -1,11 +1,11 @@
 import { Router } from "express";
 
 import { UserController } from "../../presentation/controllers";
-import { adaptRoute } from "../adapters";
+import { adaptterRoute } from "../adapters";
 
 export default (router: Router): void => {
   const controller = new UserController();
 
-  router.post("/users", adaptRoute(controller.post));
+  router.post("/users", adaptterRoute(controller.post));
   //router.get("/wallets", adaptRoute(controller.getAll));
 };

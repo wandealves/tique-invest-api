@@ -1,13 +1,13 @@
 import { Router } from "express";
 
 import { InvestmentController } from "../../presentation/controllers";
-import { adaptRoute } from "../adapters";
+import { adaptterRoute } from "../adapters";
 
 //import "../../shared/container";
 
 export default (router: Router): void => {
   const controller = new InvestmentController();
 
-  router.post("/investments", adaptRoute(controller.post));
-  router.get("/investments", adaptRoute(controller.getAll));
+  router.post("/investments", adaptterRoute(controller.post));
+  router.get("/investments", adaptterRoute(controller.getAll));
 };

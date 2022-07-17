@@ -13,7 +13,7 @@ jest.mock("bcrypt", () => ({
 
 const salt = 12;
 const makeSut = (): BcryptAdapter => {
-  return new BcryptAdapter(salt);
+  return new BcryptAdapter();
 };
 
 describe("Criptografia", () => {
