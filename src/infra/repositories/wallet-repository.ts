@@ -80,18 +80,20 @@ export class WalletRepository implements IWalletRepository {
 
   async all(): Promise<Wallet[] | null> {
     try {
-      const wallets = await this.prisma.wallet.findMany();
+      const wallets = await this.prisma.wallet.findMany({
+        include: {
+          purchasedAssets: true,
+          calculatedAssets: true
+        }
+      });
 
-      return _.map(
-        wallets,
-        wallet =>
-          new Wallet(
-            wallet.id,
-            wallet.name,
-            currencyCodePrismaToCurrencyCode(wallet.currencyCode),
-            wallet.userId
-          )
-      );
+      const list = [];
+      for (const wallet of wallets) {
+        const item = makeWallet(wallet, wallet.purchasedAssets);
+        list.push(item);
+      }
+
+      return list;
     } catch {
       return null;
     } finally {

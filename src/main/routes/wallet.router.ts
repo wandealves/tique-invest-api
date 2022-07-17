@@ -8,5 +8,6 @@ export default (router: Router): void => {
   const controller = new WalletController();
 
   router.post("/wallets", isAuthorized, adaptterRoute(controller.post));
+  router.get("/wallets", isAuthorized, adaptterRoute(controller.all));
   router.get("/wallets/:id", isAuthorized, adaptterRoute(controller.get));
 };
