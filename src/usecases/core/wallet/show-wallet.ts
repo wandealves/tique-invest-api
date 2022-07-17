@@ -4,7 +4,7 @@ import _ from "lodash";
 import { IShowWallet } from "../../interfaces";
 import { IWalletRepository } from "../../interfaces/repositories";
 import { WalletShowResponseDto } from "../../dtos";
-import { makeWalletShowToResponseDto } from "../../../main/factories";
+import { makeShowWalletResponse } from "../../../main/factories";
 import { HandleError } from "../../../main/errors";
 import { Either, left, right } from "../../../shared";
 
@@ -24,7 +24,7 @@ export class ShowWallet implements IShowWallet {
   ): Promise<Either<HandleError, WalletShowResponseDto | null>> {
     const wallet = await this.walletRepository.findOne(id);
 
-    if (wallet) return right(makeWalletShowToResponseDto(wallet));
+    if (wallet) return right(makeShowWalletResponse(wallet));
 
     return right(null);
   }

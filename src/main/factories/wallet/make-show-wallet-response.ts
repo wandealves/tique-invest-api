@@ -7,7 +7,7 @@ import {
   transactionTypeToString
 } from "../../../shared/utils";
 
-export const makeWalletShowToResponseDto = (
+export const makeShowWalletResponse = (
   entity: Wallet
 ): WalletShowResponseDto => {
   return {
