@@ -1,4 +1,4 @@
-import { Country } from "../../../domain/models";
+import { Country } from "../../../../domain/models";
 
 export interface IQueryCountry {
   all: () => Promise<Country[] | null>;

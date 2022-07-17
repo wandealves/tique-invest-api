@@ -1,6 +1,6 @@
-import { PurchasedAsset } from "../../../domain/models";
-import { CreateWalletError } from "../../errors";
-import { Either } from "../../../shared";
+import { PurchasedAsset } from "../../../../domain/models";
+import { CreateWalletError } from "../../../errors";
+import { Either } from "../../../../shared";
 
 export interface ICalculatePurchasedAssets {
   execute: (
